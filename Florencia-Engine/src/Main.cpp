@@ -1,8 +1,7 @@
 #include "Platform.h"
 
 #ifdef FLO_PLATFORM_WINDOWS
-	#include <Windows.h>
-	int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine, int nCmdShow) {
+	int main() {
 		return 0;
 	}
 #endif

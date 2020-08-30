@@ -6,7 +6,7 @@
 		#define FLO_PLATFORM_WINDOWS
 	#else
 		#define FLO_PLATFORM_WINDOWS
-		//#error "x86 Builds aren't supported"
+		#error "x86 Builds aren't supported"
 	#endif
 #elif defined(__APPLE__) || defined(__MACH__)
 	#include <TargetConditionals.h>
