@@ -1,18 +1,18 @@
-#include "FloEditor.h"
-#include <iostream>
+#include "Florencia.h"
 
 namespace Florencia {
 
-	FloEditor::FloEditor() {
-		std::cout << "Constructed!";
-	}
+	class FloEditor : public Application {
+	public:
+		FloEditor()
+			:Application("Flo Editor")
+		{}
 
-	FloEditor::~FloEditor() {
-
-	}
+		~FloEditor() {}
+	};
 
 	Application* CreateApplication() {
 		return new FloEditor();
 	}
-	
+
 }
