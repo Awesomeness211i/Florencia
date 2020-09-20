@@ -99,15 +99,15 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName)\src;$(SolutionDir)vendor\vulkan\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName)\src;$(SolutionDir)vendor\glew\include;$(SolutionDir)vendor\glfw\include;$(SolutionDir)vendor\vulkan\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)vendor\vulkan\lib\$(Platform);</AdditionalLibraryDirectories>
-      <AdditionalDependencies>vulkan-1.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)vendor\glew\lib\$(Platform);$(SolutionDir)vendor\glfw\lib\$(Platform);$(SolutionDir)vendor\vulkan\lib\$(Platform);</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;glew32s.lib;vulkan-1.lib;</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Lib>
   </ItemDefinitionGroup>
@@ -120,15 +120,15 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName)\src;$(SolutionDir)vendor\vulkan\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName)\src;$(SolutionDir)vendor\glew\include;$(SolutionDir)vendor\glfw\include;$(SolutionDir)vendor\vulkan\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)vendor\vulkan\lib\$(Platform);</AdditionalLibraryDirectories>
-      <AdditionalDependencies>vulkan-1.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)vendor\glew\lib\$(Platform);$(SolutionDir)vendor\glfw\lib\$(Platform);$(SolutionDir)vendor\vulkan\lib\$(Platform);</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;glew32s.lib;vulkan-1.lib;</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Lib>
   </ItemDefinitionGroup>
@@ -143,7 +143,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName)\src;$(SolutionDir)vendor\vulkan\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName)\src;$(SolutionDir)vendor\glew\include;$(SolutionDir)vendor\glfw\include;$(SolutionDir)vendor\vulkan\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -152,8 +152,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)vendor\vulkan\lib\$(Platform);</AdditionalLibraryDirectories>
-      <AdditionalDependencies>vulkan-1.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)vendor\glew\lib\$(Platform);$(SolutionDir)vendor\glfw\lib\$(Platform);$(SolutionDir)vendor\vulkan\lib\$(Platform);</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;glew32s.lib;vulkan-1.lib;</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Lib>
   </ItemDefinitionGroup>
@@ -168,7 +168,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName)\src;$(SolutionDir)vendor\vulkan\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName)\src;$(SolutionDir)vendor\glew\include;$(SolutionDir)vendor\glfw\include;$(SolutionDir)vendor\vulkan\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -177,8 +177,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)vendor\vulkan\lib\$(Platform);</AdditionalLibraryDirectories>
-      <AdditionalDependencies>vulkan-1.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)vendor\glew\lib\$(Platform);$(SolutionDir)vendor\glfw\lib\$(Platform);$(SolutionDir)vendor\vulkan\lib\$(Platform);</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;glew32s.lib;vulkan-1.lib;</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Lib>
   </ItemDefinitionGroup>
@@ -192,6 +192,8 @@
     <ClInclude Include="src\Platform\Platform.h" />
     <ClInclude Include="src\Platform\Windows\Wwindow.h" />
     <ClInclude Include="src\Core\Window.h" />
+    <ClInclude Include="src\Renderer\Renderer.h" />
+    <ClInclude Include="src\Platform\Windows\WRenderer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Console.cpp" />
@@ -202,6 +204,8 @@
     <ClCompile Include="src\Core\EntryPoint.h" />
     <ClCompile Include="src\Platform\Windows\Wwindow.cpp" />
     <ClCompile Include="src\Core\Window.cpp" />
+    <ClCompile Include="src\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\Platform\Windows\WRenderer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

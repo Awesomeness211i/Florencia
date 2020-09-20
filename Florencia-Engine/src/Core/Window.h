@@ -16,8 +16,6 @@ namespace Florencia {
 		virtual void OnUpdate() = 0;
 		virtual void* GetWindowHandle() = 0;
 		static Window* Create(const WindowProps& props);
-	protected:
-		void* m_Handle;
 	private:
 	#ifdef _DEBUG
 		Console* m_Console;

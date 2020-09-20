@@ -8,35 +8,33 @@ namespace Florencia {
 		switch (msg) {
 		case WM_CLOSE:
 			DestroyWindow(hWnd);
-			break;
+			return 0;
 		case WM_DESTROY:
 			PostQuitMessage(0);
-			break;
+			return 0;
 		default:
 			return DefWindowProc(hWnd, msg, wParam, lParam);
 		}
 	}
 
 	Wwindow::Wwindow(const WindowProps& props) {
-		WNDCLASSEXA m_WClass;
-		m_WClass.cbSize = sizeof(WNDCLASSEXA);
-		m_WClass.cbClsExtra = 0;
-		m_WClass.cbWndExtra = 0;
-		m_WClass.hIconSm = nullptr;
-		m_WClass.hInstance = NULL;
-		m_WClass.lpfnWndProc = WndProc;
-		m_WClass.style = CS_HREDRAW | CS_VREDRAW;
-		m_WClass.lpszClassName = "C";
-		m_WClass.lpszMenuName = "Menu";
-		m_WClass.hCursor = LoadCursor(NULL, IDC_ARROW);
-		m_WClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
-		m_WClass.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
-		RegisterClassEx(&m_WClass);
+		HINSTANCE instance = GetModuleHandle(0);
+		WNDCLASSEXA wc = {0};
+		wc.cbSize = sizeof(wc);
+		wc.style = CS_OWNDC;
+		wc.lpfnWndProc = WndProc;
+		wc.cbClsExtra = 0;
+		wc.cbWndExtra = 0;
+		wc.hInstance = instance;
+		wc.hIcon = nullptr; /*LoadIcon(instance, IDI_APPLICATION);*/
+		wc.hCursor = nullptr;/*LoadCursor(instance, IDC_ARROW);*/
+		wc.hbrBackground = nullptr;
+		wc.lpszMenuName = nullptr;
+		wc.lpszClassName = "Window";
+		wc.hIconSm = nullptr;
+		RegisterClassEx(&wc);
 
-		m_Handle = CreateWindowEx(WS_EX_ACCEPTFILES,"C",&props.name[0],WS_OVERLAPPEDWINDOW|WS_VISIBLE,0,0,props.width,props.height,0,0,NULL,0);
-		if (m_Handle == 0) {
-			MessageBoxA(0, "Failed To Create Window", "Error", MB_ICONERROR | MB_ABORTRETRYIGNORE);
-		}
+		m_Handle = CreateWindowEx(0,"Window",&props.name[0],WS_MINIMIZEBOX|WS_CAPTION|WS_SYSMENU|WS_VISIBLE,0,0,props.width,props.height,0,0,instance,0);
 	}
 
 	void Wwindow::OnUpdate() {
