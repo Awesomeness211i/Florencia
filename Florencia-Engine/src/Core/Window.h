@@ -14,9 +14,12 @@ namespace Florencia {
 		Window();
 		virtual ~Window();
 		virtual void OnUpdate() = 0;
+		virtual void* GetWindowHandle() = 0;
 		static Window* Create(const WindowProps& props);
-	#ifdef _DEBUG
+	protected:
+		void* m_Handle;
 	private:
+	#ifdef _DEBUG
 		Console* m_Console;
 	#endif
 	};

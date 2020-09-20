@@ -184,8 +184,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Core\Console.h" />
-    <ClInclude Include="src\Platform\Android\AndroidWindow.h" />
-    <ClInclude Include="src\Platform\IPhone\IWindow.h" />
     <ClInclude Include="src\Platform\Linux\LinuxWindow.h" />
     <ClInclude Include="src\Platform\MacOS\MacWindow.h" />
     <ClInclude Include="src\Platform\Windows\WConsole.h" />
@@ -197,8 +195,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Console.cpp" />
-    <ClCompile Include="src\Platform\Android\AndroidWindow.cpp" />
-    <ClCompile Include="src\Platform\IPhone\IWindow.cpp" />
     <ClCompile Include="src\Platform\Linux\LinuxWindow.cpp" />
     <ClCompile Include="src\Platform\MacOS\MacWindow.cpp" />
     <ClCompile Include="src\Platform\Windows\WConsole.cpp" />

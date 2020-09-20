@@ -5,7 +5,7 @@
 #elif defined(FLO_PLATFORM_WINDOWS_32)
 #include "Platform/Windows/Wwindow.h"
 #elif defined(FLO_PLATFORM_LINUX)
-//#include "Platform/Linux/Window.h"
+#include "Platform/Linux/LinuxWindow.h"
 #endif
 
 namespace Florencia {
