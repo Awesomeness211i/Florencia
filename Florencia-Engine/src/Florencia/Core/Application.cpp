@@ -3,7 +3,7 @@
 namespace Florencia {
 
 	Application::Application(const std::string& name, unsigned width, unsigned height) {
-		m_Window = Window::Create({name, width, height});
+		m_Window = Window::Create(WindowProps(name, width, height));
 	}
 
 	Application::~Application() {

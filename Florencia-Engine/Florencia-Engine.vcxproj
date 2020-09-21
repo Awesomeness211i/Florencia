@@ -99,7 +99,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName)\src;$(SolutionDir)vendor\glew\include;$(SolutionDir)vendor\glfw\include;$(SolutionDir)vendor\vulkan\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName)\src;$(SolutionDir)$(ProjectName)\src\Florencia;$(SolutionDir)vendor\glew\include;$(SolutionDir)vendor\glfw\include;$(SolutionDir)vendor\vulkan\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -120,7 +120,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName)\src;$(SolutionDir)vendor\glew\include;$(SolutionDir)vendor\glfw\include;$(SolutionDir)vendor\vulkan\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName)\src;$(SolutionDir)$(ProjectName)\src\Florencia;$(SolutionDir)vendor\glew\include;$(SolutionDir)vendor\glfw\include;$(SolutionDir)vendor\vulkan\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -143,7 +143,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName)\src;$(SolutionDir)vendor\glew\include;$(SolutionDir)vendor\glfw\include;$(SolutionDir)vendor\vulkan\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName)\src;$(SolutionDir)$(ProjectName)\src\Florencia;$(SolutionDir)vendor\glew\include;$(SolutionDir)vendor\glfw\include;$(SolutionDir)vendor\vulkan\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -168,7 +168,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName)\src;$(SolutionDir)vendor\glew\include;$(SolutionDir)vendor\glfw\include;$(SolutionDir)vendor\vulkan\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName)\src;$(SolutionDir)$(ProjectName)\src\Florencia;$(SolutionDir)vendor\glew\include;$(SolutionDir)vendor\glfw\include;$(SolutionDir)vendor\vulkan\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -183,28 +183,28 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Core\Console.h" />
+    <ClInclude Include="src\Florencia\Core\Console.h" />
     <ClInclude Include="src\Platform\Linux\LinuxWindow.h" />
     <ClInclude Include="src\Platform\MacOS\MacWindow.h" />
     <ClInclude Include="src\Platform\Windows\WConsole.h" />
-    <ClInclude Include="src\Core\Application.h" />
+    <ClInclude Include="src\Florencia\Core\Application.h" />
     <ClInclude Include="src\Florencia.h" />
     <ClInclude Include="src\Platform\Platform.h" />
     <ClInclude Include="src\Platform\Windows\Wwindow.h" />
-    <ClInclude Include="src\Core\Window.h" />
-    <ClInclude Include="src\Renderer\Renderer.h" />
+    <ClInclude Include="src\Florencia\Core\Window.h" />
+    <ClInclude Include="src\Florencia\Renderer\Renderer.h" />
     <ClInclude Include="src\Platform\Windows\WRenderer.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Core\Console.cpp" />
+    <ClCompile Include="src\Florencia\Core\Console.cpp" />
     <ClCompile Include="src\Platform\Linux\LinuxWindow.cpp" />
     <ClCompile Include="src\Platform\MacOS\MacWindow.cpp" />
     <ClCompile Include="src\Platform\Windows\WConsole.cpp" />
-    <ClCompile Include="src\Core\Application.cpp" />
-    <ClCompile Include="src\Core\EntryPoint.h" />
+    <ClCompile Include="src\Florencia\Core\Application.cpp" />
+    <ClCompile Include="src\Florencia\Core\EntryPoint.h" />
     <ClCompile Include="src\Platform\Windows\Wwindow.cpp" />
-    <ClCompile Include="src\Core\Window.cpp" />
-    <ClCompile Include="src\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\Florencia\Core\Window.cpp" />
+    <ClCompile Include="src\Florencia\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Platform\Windows\WRenderer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

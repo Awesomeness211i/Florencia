@@ -5,8 +5,10 @@
 namespace Florencia {
 
 	struct WindowProps {
-		std::string name;
-		unsigned width, height;
+		WindowProps(const std::string& title, unsigned width, unsigned height)
+			: m_Name(title), m_Width(width), m_Height(height) {}
+		std::string m_Name;
+		unsigned m_Width, m_Height;
 	};
 
 	class Window {

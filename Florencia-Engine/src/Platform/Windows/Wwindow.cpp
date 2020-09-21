@@ -10,10 +10,10 @@ namespace Florencia {
 			DestroyWindow(hWnd);
 			return 0;
 		case WM_DESTROY:
-			PostQuitMessage(0);
+			PostQuitMessage(wParam);
 			return 0;
 		default:
-			return DefWindowProc(hWnd, msg, wParam, lParam);
+			return DefWindowProcA(hWnd, msg, wParam, lParam);
 		}
 	}
 
@@ -32,24 +32,26 @@ namespace Florencia {
 		wc.lpszMenuName = nullptr;
 		wc.lpszClassName = "Window";
 		wc.hIconSm = nullptr;
-		RegisterClassEx(&wc);
+		RegisterClassExA(&wc);
 
 		RECT desktop = {0};
 		HWND size = GetDesktopWindow();
 		GetWindowRect(size, &desktop);
 
-		m_Handle = CreateWindowEx(
-			NULL, "Window", &props.name[0],
+		m_Handle = CreateWindowExA(
+			NULL, "Window", &props.m_Name[0],
 			WS_MAXIMIZEBOX|WS_MINIMIZEBOX|WS_CAPTION|WS_SYSMENU|WS_VISIBLE,
-			(desktop.right - props.width) / 2, (desktop.bottom - props.height) / 2, props.width, props.height,
+			(desktop.right - props.m_Width) / 2,
+			(desktop.bottom - props.m_Height) / 2,
+			props.m_Width, props.m_Height,
 			nullptr, nullptr, instance, 0);
 	}
 
 	void Wwindow::OnUpdate() {
 		MSG m_Message = {0};
-		GetMessage(&m_Message, 0, 0, 0);
+		GetMessageA(&m_Message, 0, 0, 0);
 		TranslateMessage(&m_Message);
-		DispatchMessage(&m_Message);
+		DispatchMessageA(&m_Message);
 	}
 
 }
