@@ -1,4 +1,5 @@
 #pragma once
+#include "FloMathematics/Types/BasicTypes.h"
 #include "FloMathematics/Constants.h"
 
 #include "FloMathematics/Functions/Other.h"

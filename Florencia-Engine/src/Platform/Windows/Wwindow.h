@@ -8,6 +8,7 @@ namespace Florencia {
 	class Wwindow : public Window {
 	public:
 		Wwindow(const WindowProps& props);
+		~Wwindow() override;
 
 		void OnUpdate() override;
 		void* GetWindowHandle() override { return m_Handle; }

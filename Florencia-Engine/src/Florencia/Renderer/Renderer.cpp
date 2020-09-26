@@ -1,21 +1,14 @@
 #include "Renderer.h"
-#include <Platform/Platform.h>
 
-#ifdef FLO_PLATFORM_WINDOWS
-	#include <Platform/Windows/WRenderer.h>
-#elif defined(FLO_PLATFORM_WINDOWS_32)
-	#include <Platform/Windows/WRenderer.h>
-#endif
+#include <Renderer/Directx/DirectX12.h>
+#include <Renderer/Directx/DirectX11.h>
+#include <Renderer/Vulkan/Vulkan.h>
+#include <Renderer/OpenGL/OpenGL.h>
+#include <Renderer/Metal/Metal.h>
+
 
 namespace Florencia {
 
-	Renderer* Renderer::Create() {
-		#ifdef FLO_PLATFORM_WINDOWS
-		return new WRenderer();
-		#elif defined(FLO_PLATFORM_WINDOWS_32)
-		return new WRenderer();
-		#endif
-		return nullptr;
-	}
+	
 
 }

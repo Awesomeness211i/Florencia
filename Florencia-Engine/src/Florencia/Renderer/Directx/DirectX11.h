@@ -3,11 +3,6 @@
 
 namespace Florencia {
 
-	class WRenderer : public Renderer {
-	public:
-
-	private:
-
-	};
+	
 
 }

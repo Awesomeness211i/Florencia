@@ -127,10 +127,17 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>
+      </EnableCOMDATFolding>
+      <OptimizeReferences>
+      </OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -156,6 +163,7 @@
     <ClInclude Include="src\FloMathematics\Functions\Exponential.h" />
     <ClInclude Include="src\FloMathematics\Functions\Other.h" />
     <ClInclude Include="src\FloMathematics\Functions\Trigonometric.h" />
+    <ClInclude Include="src\FloMathematics\Types\BasicTypes.h" />
     <ClInclude Include="src\FloMathematics\Types\Matrix.h" />
     <ClInclude Include="src\FloMathematics\Types\Vector.h" />
   </ItemGroup>

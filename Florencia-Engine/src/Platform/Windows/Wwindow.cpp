@@ -1,6 +1,5 @@
 #include "Wwindow.h"
 #include <Windows.h>
-#include <iostream>
 
 namespace Florencia {
 
@@ -10,7 +9,7 @@ namespace Florencia {
 			DestroyWindow(hWnd);
 			return 0;
 		case WM_DESTROY:
-			PostQuitMessage(wParam);
+			PostQuitMessage((int)wParam);
 			return 0;
 		default:
 			return DefWindowProcA(hWnd, msg, wParam, lParam);
@@ -18,7 +17,7 @@ namespace Florencia {
 	}
 
 	Wwindow::Wwindow(const WindowProps& props) {
-		HINSTANCE instance = GetModuleHandle(0);
+		HINSTANCE instance = GetModuleHandleA(0);
 		WNDCLASSEXA wc = {0};
 		wc.cbSize = sizeof(wc);
 		wc.style = CS_OWNDC;
@@ -45,6 +44,11 @@ namespace Florencia {
 			(desktop.bottom - props.m_Height) / 2,
 			props.m_Width, props.m_Height,
 			nullptr, nullptr, instance, 0);
+	}
+
+	Wwindow::~Wwindow() {
+		HINSTANCE instance = GetModuleHandleA(0);
+		UnregisterClass("Window", instance);
 	}
 
 	void Wwindow::OnUpdate() {
