@@ -11,8 +11,6 @@ namespace Florencia {
 		~FloEditor() {}
 	};
 
-	Application* CreateApplication() {
-		return new FloEditor();
-	}
+	FLO_CREATE_APP(FloEditor)
 
 }

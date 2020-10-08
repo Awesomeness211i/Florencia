@@ -23,9 +23,9 @@ namespace Florencia {
 		void* GetWindowHandle() override { return m_Handle; }
 	private:
 		struct WindowData {
-			std::string Name;
-			unsigned int Width, Height;
-			bool VSync;
+			std::string Name = "";
+			unsigned Width = 0, Height = 0;
+			bool VSync = false;
 
 			EventCallbackFn EventCallback;
 		};

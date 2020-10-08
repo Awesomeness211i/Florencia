@@ -61,6 +61,7 @@ namespace Florencia {
 		TranslateMessage(&m_Message);
 		DispatchMessageA(&m_Message);
 		
+		//Test of Cherno's event system
 		AppUpdateEvent event;
 		m_Data.EventCallback(event);
 	}
