@@ -37,12 +37,16 @@ namespace Florencia {
 		HWND size = GetDesktopWindow();
 		GetWindowRect(size, &desktop);
 
+		m_Data.Name = props.Name;
+		m_Data.Width = props.Width;
+		m_Data.Height = props.Height;
+
 		m_Handle = CreateWindowExA(
-			NULL, "Window", &props.m_Name[0],
+			NULL, "Window", &m_Data.Name[0],
 			WS_MAXIMIZEBOX|WS_MINIMIZEBOX|WS_CAPTION|WS_SYSMENU|WS_VISIBLE,
-			(desktop.right - props.m_Width) / 2,
-			(desktop.bottom - props.m_Height) / 2,
-			props.m_Width, props.m_Height,
+			(desktop.right - m_Data.Width) / 2,
+			(desktop.bottom - m_Data.Height) / 2,
+			m_Data.Width, m_Data.Height,
 			nullptr, nullptr, instance, 0);
 	}
 
@@ -56,6 +60,15 @@ namespace Florencia {
 		GetMessageA(&m_Message, 0, 0, 0);
 		TranslateMessage(&m_Message);
 		DispatchMessageA(&m_Message);
+		
+		AppUpdateEvent event;
+		m_Data.EventCallback(event);
 	}
 
+	void Wwindow::SetVSync(bool enabled) {
+	}
+
+	bool Wwindow::IsVSync() const {
+		return false;
+	}
 }

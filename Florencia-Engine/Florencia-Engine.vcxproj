@@ -96,7 +96,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <AdditionalIncludeDirectories>$(SolutionDir)FloMath\src;$(SolutionDir)$(ProjectName)\src;$(SolutionDir)$(ProjectName)\src\Florencia;$(SolutionDir)vendor\glew\include;$(SolutionDir)vendor\glfw\include;$(SolutionDir)vendor\vulkan\include;</AdditionalIncludeDirectories>
@@ -124,7 +124,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <AdditionalIncludeDirectories>$(SolutionDir)FloMath\src;$(SolutionDir)$(ProjectName)\src;$(SolutionDir)$(ProjectName)\src\Florencia;$(SolutionDir)vendor\glew\include;$(SolutionDir)vendor\glfw\include;$(SolutionDir)vendor\vulkan\include;</AdditionalIncludeDirectories>
@@ -147,7 +147,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <AdditionalIncludeDirectories>$(SolutionDir)FloMath\src;$(SolutionDir)$(ProjectName)\src;$(SolutionDir)$(ProjectName)\src\Florencia;$(SolutionDir)vendor\glew\include;$(SolutionDir)vendor\glfw\include;$(SolutionDir)vendor\vulkan\include;</AdditionalIncludeDirectories>
@@ -172,7 +172,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <AdditionalIncludeDirectories>$(SolutionDir)FloMath\src;$(SolutionDir)$(ProjectName)\src;$(SolutionDir)$(ProjectName)\src\Florencia;$(SolutionDir)vendor\glew\include;$(SolutionDir)vendor\glfw\include;$(SolutionDir)vendor\vulkan\include;</AdditionalIncludeDirectories>
@@ -190,6 +190,11 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Florencia\Events\AppEvent.h" />
+    <ClInclude Include="src\Florencia\Events\Event.h" />
+    <ClInclude Include="src\Florencia\Utilities\Macro.h" />
+    <ClInclude Include="src\Platform\Linux\LinuxConsole.h" />
+    <ClInclude Include="src\Platform\MacOS\MacConsole.h" />
     <ClInclude Include="src\Florencia\Renderer\Directx\DirectX12.h" />
     <ClInclude Include="src\Florencia\Renderer\Directx\DirectX11.h" />
     <ClInclude Include="src\Florencia\Core\Console.h" />
@@ -207,6 +212,8 @@
     <ClInclude Include="src\Florencia\Renderer\Renderer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Platform\Linux\LinuxConsole.cpp" />
+    <ClCompile Include="src\Platform\MacOS\MacConsole.cpp" />
     <ClCompile Include="src\Florencia\Renderer\Directx\DirectX12.cpp" />
     <ClCompile Include="src\Florencia\Renderer\Directx\DirectX11.cpp" />
     <ClCompile Include="src\Florencia\Core\Console.cpp" />

@@ -8,11 +8,11 @@ namespace Florencia {
 		WConsole(int16_t minLength);
 		~WConsole() override;
 	private:
-		bool CreateNewConsole() override;
-		bool ReleaseConsole() override;
+		[[nodiscard]] bool CreateNewConsole() override;
+		[[nodiscard]] bool ReleaseConsole() override;
+		[[nodiscard]] bool AttachParentConsole();
+		[[nodiscard]] bool RedirectConsoleIO();
 		void AdjustConsoleBuffer();
-		bool AttachParentConsole();
-		bool RedirectConsoleIO();
-		int16_t m_MinLength;
+		int16 m_MinLength;
 	};
 }

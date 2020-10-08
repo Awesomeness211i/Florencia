@@ -8,11 +8,15 @@ namespace Florencia {
 	WConsole::WConsole(int16_t minLength)
 		: m_MinLength(minLength)
 	{
-		CreateNewConsole();
+		if (!CreateNewConsole()) {
+			//TODO: Implement error handling
+		}
 	}
 
 	WConsole::~WConsole() {
-		ReleaseConsole();
+		if (!ReleaseConsole()) {
+			//TODO: Implement error handling
+		}
 	}
 
 	bool WConsole::CreateNewConsole() {
@@ -74,7 +78,9 @@ namespace Florencia {
 		bool result = false;
 
 		// Release any current console and redirect IO to NUL
-		ReleaseConsole();
+		if(!ReleaseConsole()) {
+			//TODO: Implement error handling
+		}
 
 		// Attempt to attach to parent process's console
 		if (AttachConsole(ATTACH_PARENT_PROCESS)) {
