@@ -2,7 +2,11 @@
 
 #define FLO_CREATE_APP(appname) Application* CreateApplication() { return new appname(); }
 
-#include "FloMath.h"
-
 #include <Core/EntryPoint.h>
-#include <Core/Application.h>
+namespace Florencia {
+	class Application;
+	class Renderer;
+	class Console;
+	class Window;
+	class Event;
+}
