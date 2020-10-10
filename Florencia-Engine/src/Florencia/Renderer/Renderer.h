@@ -1,5 +1,6 @@
 #pragma once
-#include <FloMath.h>
+#include <Renderer/Camera.h>
+#include <Renderer/RenderAPI.h>
 
 namespace Florencia {
 
@@ -10,10 +11,22 @@ namespace Florencia {
 	class Renderer {
 	public:
 		static void Init();
-		static void Draw();
+		static void Shutdown();
+
+		static void SetClearColor();
+
+		static void BeginScene(Camera& camera);
+		static void EndScene();
+
 		static void Submit(const RenderData& data);
+
+		static RenderAPI::API GetAPI() { return RenderAPI::GetAPI(); }
 	private:
-		static Renderer* m_Instance;
+		static void Clear();
+		static void SetViewport();
+		static void DrawIndexed();
+
+		static RenderAPI* s_RenderAPI;
 	};
 
 }

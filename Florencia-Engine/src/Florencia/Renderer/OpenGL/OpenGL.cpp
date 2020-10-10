@@ -3,6 +3,16 @@
 
 namespace Florencia {
 
+    void OpenGL::Init() {
 
+    }
+
+    void OpenGL::Clear() {
+
+    }
+
+    void OpenGL::SetClearColor() {
+
+    }
 
 }

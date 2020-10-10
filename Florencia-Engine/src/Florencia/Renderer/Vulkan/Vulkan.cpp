@@ -3,6 +3,16 @@
 
 namespace Florencia {
 
+    void Vulkan::Init() {
 
+    }
+
+    void Vulkan::Clear() {
+
+    }
+
+    void Vulkan::SetClearColor() {
+
+    }
 
 }

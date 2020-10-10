@@ -1,6 +1,7 @@
 #pragma once
-#include <Events/AppEvent.h>
 #include <Core/Window.h>
+#include <Events/AppEvent.h>
+#include <Renderer/Renderer.h>
 
 #define FLO_BIND_EVENT_FN(fn) [this](auto&&... args)->decltype(auto) { return this->fn(std::forward<decltype(args)>(args)...); }
 

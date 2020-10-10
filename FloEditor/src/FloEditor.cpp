@@ -1,4 +1,4 @@
-#include "Florencia.h"
+#include <Florencia.h>
 
 namespace Florencia {
 
@@ -6,11 +6,14 @@ namespace Florencia {
 	public:
 		FloEditor()
 			:Application("Flo Editor")
-		{}
+		{
 
-		~FloEditor() {}
+		}
+
+		~FloEditor() {
+
+		}
 	};
 
 	FLO_CREATE_APP(FloEditor)
-
 }

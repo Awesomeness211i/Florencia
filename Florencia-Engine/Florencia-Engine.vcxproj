@@ -190,6 +190,8 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Florencia\Renderer\Camera.h" />
+    <ClInclude Include="src\Florencia\Renderer\RenderAPI.h" />
     <ClInclude Include="src\Florencia\Events\AppEvent.h" />
     <ClInclude Include="src\Florencia\Events\Event.h" />
     <ClInclude Include="src\Florencia\Utilities\Macro.h" />
@@ -212,6 +214,8 @@
     <ClInclude Include="src\Florencia\Renderer\Renderer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Florencia\Renderer\Camera.cpp" />
+    <ClCompile Include="src\Florencia\Renderer\RenderAPI.cpp" />
     <ClCompile Include="src\Platform\Linux\LinuxConsole.cpp" />
     <ClCompile Include="src\Platform\MacOS\MacConsole.cpp" />
     <ClCompile Include="src\Florencia\Renderer\Directx\DirectX12.cpp" />

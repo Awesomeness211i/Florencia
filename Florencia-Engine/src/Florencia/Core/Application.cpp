@@ -5,9 +5,12 @@ namespace Florencia {
 	Application::Application(const std::string& name, unsigned width, unsigned height) {
 		m_Window = Window::Create(WindowProps(name, width, height));
 		m_Window->SetEventCallback(FLO_BIND_EVENT_FN(Application::OnEvent));
+
+		Renderer::Init();
 	}
 
 	Application::~Application() {
+		Renderer::Shutdown();
 		delete m_Window;
 	}
 

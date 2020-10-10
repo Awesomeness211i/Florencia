@@ -23,7 +23,9 @@ namespace Florencia {
 		bool result = false;
 
 		// Release any current console and redirect IO to NUL
-		ReleaseConsole();
+		if (!ReleaseConsole()) {
+			//TODO: Implement error handling
+		}
 
 		// Attempt to create new console
 		if (AllocConsole()) {

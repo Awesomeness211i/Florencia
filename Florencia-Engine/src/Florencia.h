@@ -4,9 +4,13 @@
 
 #include <Core/EntryPoint.h>
 namespace Florencia {
+	class OrthographicCamera;
+	class PerspectiveCamera;
 	class Application;
+	struct RenderData;
 	class Renderer;
 	class Console;
+	class Camera;
 	class Window;
 	class Event;
 }

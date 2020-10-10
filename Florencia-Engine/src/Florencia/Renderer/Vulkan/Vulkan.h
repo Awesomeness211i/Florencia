@@ -1,8 +1,15 @@
 #pragma once
-#include <Renderer/Renderer.h>
+#include <Renderer/RenderAPI.h>
 
 namespace Florencia {
 
-	
+	class Vulkan : public RenderAPI {
+	public:
+		void Init() override;
+		void Clear() override;
+		void SetClearColor() override;
+	private:
+
+	};
 
 }
