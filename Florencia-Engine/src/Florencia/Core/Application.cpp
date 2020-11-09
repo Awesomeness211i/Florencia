@@ -6,7 +6,7 @@ namespace Florencia {
 		m_Window = Window::Create(WindowProps(name, width, height));
 		m_Window->SetEventCallback(FLO_BIND_EVENT_FN(Application::OnEvent));
 
-		Renderer::Init();
+		Renderer::Init(m_Window->GetWindowHandle());
 	}
 
 	Application::~Application() {
@@ -22,6 +22,9 @@ namespace Florencia {
 
 	void Application::Run() {
 		while (m_Running) {
+			if (m_Window->IsVSync()) {
+
+			}
 			m_Window->OnUpdate();
 		}
 	}

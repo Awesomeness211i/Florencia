@@ -1,12 +1,12 @@
 #pragma once
-#include <Core/Console.h>
+#include <FloMath.h>
 
 namespace Florencia {
 
-	class MacConsole : public Console {
+	class MacConsole {
 	public:
-		bool CreateNewConsole() override;
-		bool ReleaseConsole() override;
+		bool CreateNewConsole();
+		bool ReleaseConsole();
 	private:
 
 	};

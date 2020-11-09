@@ -1,6 +1,7 @@
 #pragma once
 #include <functional>
-#include <Core/Console.h>
+
+#include <FloMath.h>
 #include <Events/AppEvent.h>
 
 namespace Florencia {
@@ -15,8 +16,7 @@ namespace Florencia {
 	class Window {
 	public:
 		using EventCallbackFn = std::function<void(Event&)>;
-		Window();
-		virtual ~Window();
+		virtual ~Window() = default;
 
 		virtual void OnUpdate() = 0;
 
@@ -31,9 +31,5 @@ namespace Florencia {
 		virtual void* GetWindowHandle() = 0;
 
 		static Window* Create(const WindowProps& props);
-	private:
-	#ifdef _DEBUG
-		Console* m_Console;
-	#endif
 	};
 }

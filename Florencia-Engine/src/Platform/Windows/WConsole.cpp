@@ -5,20 +5,6 @@
 
 namespace Florencia {
 
-	WConsole::WConsole(int16_t minLength)
-		: m_MinLength(minLength)
-	{
-		if (!CreateNewConsole()) {
-			//TODO: Implement error handling
-		}
-	}
-
-	WConsole::~WConsole() {
-		if (!ReleaseConsole()) {
-			//TODO: Implement error handling
-		}
-	}
-
 	bool WConsole::CreateNewConsole() {
 		bool result = false;
 

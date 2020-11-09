@@ -2,7 +2,7 @@
 
 namespace Florencia {
 
-	void Metal::Init() {
+	void Metal::Init(void* window) {
 
 	}
 
@@ -10,7 +10,7 @@ namespace Florencia {
 
 	}
 
-	void Metal::SetClearColor() {
+	void Metal::SetClearColor(float r, float g, float b, float a) {
 
 	}
 

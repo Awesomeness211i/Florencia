@@ -3,7 +3,7 @@
 
 namespace Florencia {
 
-    void OpenGL::Init() {
+    void OpenGL::Init(void* window) {
 
     }
 
@@ -11,7 +11,7 @@ namespace Florencia {
 
     }
 
-    void OpenGL::SetClearColor() {
+    void OpenGL::SetClearColor(float r, float g, float b, float a) {
 
     }
 

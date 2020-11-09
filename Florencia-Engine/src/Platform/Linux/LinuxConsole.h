@@ -1,14 +1,14 @@
 #pragma once
-#include <Core/Console.h>
+#include <FloMath.h>
 
 namespace Florencia {
 
-	class LinuxConsole : public Console {
+	class LinuxConsole {
 	public:
-		bool CreateNewConsole() override;
-		bool ReleaseConsole() override;
+		
 	private:
-
+		bool CreateNewConsole();
+		bool ReleaseConsole();
 	};
 
 }

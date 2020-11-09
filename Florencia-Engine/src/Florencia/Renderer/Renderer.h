@@ -10,10 +10,10 @@ namespace Florencia {
 
 	class Renderer {
 	public:
-		static void Init();
+		static void Init(void* window);
 		static void Shutdown();
 
-		static void SetClearColor();
+		static void SetClearColor(float r, float g, float b, float a = 1.0f);
 
 		static void BeginScene(Camera& camera);
 		static void EndScene();

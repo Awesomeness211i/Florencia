@@ -5,9 +5,9 @@ namespace Florencia {
 
 	RenderAPI* Renderer::s_RenderAPI = RenderAPI::Create();
 
-	void Renderer::Init() {
+	void Renderer::Init(void* window) {
 		if (RenderAPI::GetAPI() != RenderAPI::API::None) {
-			s_RenderAPI->Init();
+			s_RenderAPI->Init(window);
 		}
 	}
 
@@ -15,9 +15,9 @@ namespace Florencia {
 
 	}
 
-	void Renderer::SetClearColor() {
+	void Renderer::SetClearColor(float r, float g, float b, float a) {
 		if (RenderAPI::GetAPI() != RenderAPI::API::None) {
-			s_RenderAPI->SetClearColor();
+			s_RenderAPI->SetClearColor(r, g, b, a);
 		}
 	}
 
@@ -26,7 +26,7 @@ namespace Florencia {
 	}
 
 	void Renderer::EndScene() {
-
+		Clear();
 	}
 
 	void Renderer::Submit(const RenderData& data) {

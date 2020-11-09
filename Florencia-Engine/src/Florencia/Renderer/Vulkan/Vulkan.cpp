@@ -3,7 +3,7 @@
 
 namespace Florencia {
 
-    void Vulkan::Init() {
+    void Vulkan::Init(void* window) {
 
     }
 
@@ -11,7 +11,7 @@ namespace Florencia {
 
     }
 
-    void Vulkan::SetClearColor() {
+    void Vulkan::SetClearColor(float r, float g, float b, float a) {
 
     }
 

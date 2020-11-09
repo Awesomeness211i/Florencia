@@ -1,39 +1,14 @@
 #include "Window.h"
-#include "Platform/Platform.h"
-#ifdef FLO_PLATFORM_WINDOWS
-#include "Platform/Windows/Wwindow.h"
-#elif defined(FLO_PLATFORM_WINDOWS_32)
-#include "Platform/Windows/Wwindow.h"
-#elif defined(FLO_PLATFORM_LINUX)
-#include "Platform/Linux/LinuxWindow.h"
-#endif
+#include <Core/Base.h>
 
 namespace Florencia {
-	Window::Window() {
-		//Create Console
-		#ifdef _DEBUG
-		m_Console = Console::Create();
-		#endif
-	}
-
-	Window::~Window() {
-		//Destroy Console
-		#ifdef _DEBUG
-		delete m_Console;
-		#endif
-	}
 
 	Window* Window::Create(const WindowProps& props) {
-		#ifdef FLO_PLATFORM_WINDOWS
+		#if defined(FLO_PLATFORM_WINDOWS) || defined(FLO_PLATFORM_WINDOWS_32)
 		return new Wwindow(props);
-		#endif
-		#ifdef FLO_PLATFORM_WINDOWS_32
-		return new Wwindow(props);
-		#endif
-		#ifdef FLO_PLATFORM_LINUX
+		#elif defined(FLO_PLATFORM_LINUX)
 		return nullptr;
-		#endif
-		#ifdef FLO_PLATFORM_MACOS
+		#elif defined(FLO_PLATFORM_MACOS)
 		return nullptr;
 		#endif
 	}

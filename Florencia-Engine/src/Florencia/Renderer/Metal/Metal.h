@@ -5,9 +5,9 @@ namespace Florencia {
 
 	class Metal : public RenderAPI {
 	public:
-		void Init() override;
+		void Init(void* window) override;
 		void Clear() override;
-		void SetClearColor() override;
+		void SetClearColor(float r, float g, float b, float a) override;
 	private:
 
 	};

@@ -1,14 +1,14 @@
 #include "RenderAPI.h"
 
-#include <Renderer/Directx/DirectX12.h>
-#include <Renderer/Directx/DirectX11.h>
+#include <Renderer/Directx/12/DirectX12.h>
+#include <Renderer/Directx/11/DirectX11.h>
 #include <Renderer/Vulkan/Vulkan.h>
 #include <Renderer/OpenGL/OpenGL.h>
 #include <Renderer/Metal/Metal.h>
 
 namespace Florencia {
 
-	RenderAPI::API RenderAPI::s_API = RenderAPI::API::None;
+	RenderAPI::API RenderAPI::s_API = RenderAPI::API::DirectX11;
 
 	RenderAPI* RenderAPI::Create() {
 		switch (s_API) {

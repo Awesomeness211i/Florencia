@@ -1,17 +1,18 @@
 #pragma once
-#include <Core/Console.h>
+#include <FloMath.h>
 
 namespace Florencia {
 
-	class WConsole : public Console {
+	class WConsole {
 	public:
-		WConsole(int16_t minLength);
-		~WConsole() override;
+		WConsole(int16_t minLength = 1024)
+			:m_MinLength(minLength)
+		{}
+		bool CreateNewConsole();
+		bool ReleaseConsole();
 	private:
-		[[nodiscard]] bool CreateNewConsole() override;
-		[[nodiscard]] bool ReleaseConsole() override;
-		[[nodiscard]] bool AttachParentConsole();
-		[[nodiscard]] bool RedirectConsoleIO();
+		bool AttachParentConsole();
+		bool RedirectConsoleIO();
 		void AdjustConsoleBuffer();
 		int16 m_MinLength;
 	};
