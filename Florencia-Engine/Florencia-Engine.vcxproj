@@ -114,7 +114,7 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)vendor\glew\lib\$(Platform);$(SolutionDir)vendor\glfw\lib\$(Platform);$(SolutionDir)vendor\vulkan\lib\$(Platform);</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;glew32s.lib;vulkan-1.lib;</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;glew32s.lib;vulkan-1.lib;d3d11.lib;</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Lib>
   </ItemDefinitionGroup>
@@ -135,7 +135,7 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)vendor\glew\lib\$(Platform);$(SolutionDir)vendor\glfw\lib\$(Platform);$(SolutionDir)vendor\vulkan\lib\$(Platform);</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;glew32s.lib;vulkan-1.lib;</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;glew32s.lib;vulkan-1.lib;d3d11.lib;</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Lib>
   </ItemDefinitionGroup>
@@ -160,7 +160,7 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)vendor\glew\lib\$(Platform);$(SolutionDir)vendor\glfw\lib\$(Platform);$(SolutionDir)vendor\vulkan\lib\$(Platform);</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;glew32s.lib;vulkan-1.lib;</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;glew32s.lib;vulkan-1.lib;d3d11.lib;</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Lib>
   </ItemDefinitionGroup>
@@ -185,21 +185,23 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)vendor\glew\lib\$(Platform);$(SolutionDir)vendor\glfw\lib\$(Platform);$(SolutionDir)vendor\vulkan\lib\$(Platform);</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;glew32s.lib;vulkan-1.lib;</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;glew32s.lib;vulkan-1.lib;d3d11.lib;</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Florencia\Core\Base.h" />
     <ClInclude Include="src\Florencia\Renderer\Camera.h" />
+    <ClInclude Include="src\Florencia\Renderer\Directx\11\DirectX11.h" />
+    <ClInclude Include="src\Florencia\Renderer\Directx\11\DX11SwapChain.h" />
+    <ClInclude Include="src\Florencia\Renderer\Directx\12\DirectX12.h" />
     <ClInclude Include="src\Florencia\Renderer\RenderAPI.h" />
     <ClInclude Include="src\Florencia\Events\AppEvent.h" />
     <ClInclude Include="src\Florencia\Events\Event.h" />
+    <ClInclude Include="src\Florencia\Renderer\SwapChain.h" />
     <ClInclude Include="src\Florencia\Utilities\Macro.h" />
     <ClInclude Include="src\Platform\Linux\LinuxConsole.h" />
     <ClInclude Include="src\Platform\MacOS\MacConsole.h" />
-    <ClInclude Include="src\Florencia\Renderer\Directx\DirectX12.h" />
-    <ClInclude Include="src\Florencia\Renderer\Directx\DirectX11.h" />
-    <ClInclude Include="src\Florencia\Core\Console.h" />
     <ClInclude Include="src\Florencia\Renderer\Metal\Metal.h" />
     <ClInclude Include="src\Florencia\Renderer\OpenGL\OpenGL.h" />
     <ClInclude Include="src\Florencia\Renderer\Vulkan\Vulkan.h" />
@@ -215,12 +217,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Florencia\Renderer\Camera.cpp" />
+    <ClCompile Include="src\Florencia\Renderer\Directx\11\DirectX11.cpp" />
+    <ClCompile Include="src\Florencia\Renderer\Directx\11\DX11SwapChain.cpp" />
+    <ClCompile Include="src\Florencia\Renderer\Directx\12\DirectX12.cpp" />
     <ClCompile Include="src\Florencia\Renderer\RenderAPI.cpp" />
+    <ClCompile Include="src\Florencia\Renderer\SwapChain.cpp" />
     <ClCompile Include="src\Platform\Linux\LinuxConsole.cpp" />
     <ClCompile Include="src\Platform\MacOS\MacConsole.cpp" />
-    <ClCompile Include="src\Florencia\Renderer\Directx\DirectX12.cpp" />
-    <ClCompile Include="src\Florencia\Renderer\Directx\DirectX11.cpp" />
-    <ClCompile Include="src\Florencia\Core\Console.cpp" />
     <ClCompile Include="src\Florencia\Renderer\Metal\Metal.cpp" />
     <ClCompile Include="src\Florencia\Renderer\OpenGL\OpenGL.cpp" />
     <ClCompile Include="src\Florencia\Renderer\Vulkan\Vulkan.cpp" />
