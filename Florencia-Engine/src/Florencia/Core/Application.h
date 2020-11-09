@@ -1,5 +1,6 @@
 #pragma once
 #include <Core/Window.h>
+#include <Core/LayerStack.h>
 #include <Events/AppEvent.h>
 #include <Renderer/Renderer.h>
 
@@ -13,6 +14,10 @@ namespace Florencia {
 		virtual ~Application();
 
 		void OnEvent(Event& e);
+
+		void PushLayer(Layer* layer);
+		void PushOverlay(Layer* layer);
+
 		Window& GetWindow() { return *m_Window; }
 
 		void Run();
@@ -21,10 +26,12 @@ namespace Florencia {
 		bool OnAppClose(WindowCloseEvent& e);
 		bool OnWindowResize(WindowResizeEvent& e);
 
-		bool m_Running = true;
 		Window* m_Window;
+
+		bool m_Running = true, m_Minimized = false;
+		float m_LastFrameTime = 0.0f;
+		LayerStack m_LayerStack;
 	};
 
-	//To be implemented in client
 	Application* CreateApplication();
 }

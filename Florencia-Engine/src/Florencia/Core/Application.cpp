@@ -20,6 +20,16 @@ namespace Florencia {
 		dispatcher.Dispatch<WindowResizeEvent>(FLO_BIND_EVENT_FN(Application::OnWindowResize));
 	}
 
+	void Application::PushLayer(Layer* layer) {
+		m_LayerStack.PushLayer(layer);
+		layer->OnAttach();
+	}
+
+	void Application::PushOverlay(Layer* layer) {
+		m_LayerStack.PushOverlay(layer);
+		layer->OnAttach();
+	}
+
 	void Application::Run() {
 		while (m_Running) {
 			if (m_Window->IsVSync()) {

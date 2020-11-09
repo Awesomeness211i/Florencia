@@ -1,18 +1,17 @@
 #include <Florencia.h>
+#include <Florencia/Core/EntryPoint.h>
+
+#include "EditorLayer.h"
 
 namespace Florencia {
 
 	class FloEditor : public Application {
 	public:
-		FloEditor()
-			:Application("Flo Editor")
-		{
-
+		FLO_APP_CONSTRUCTOR(FloEditor, "Florencia Editor") {
+			PushLayer(new EditorLayer);
 		}
 
-		~FloEditor() {
-
-		}
+		~FloEditor() {}
 	};
 
 	FLO_CREATE_APP(FloEditor)

@@ -1,3 +1,5 @@
+#ifndef WINDOW
+#define WINDOW
 #include "Window.h"
 #include <Core/Base.h>
 
@@ -13,3 +15,5 @@ namespace Florencia {
 		#endif
 	}
 }
+
+#endif

@@ -1,6 +1,4 @@
-#ifndef PLATFORM_H
-#define PLATFORM_H
-
+#pragma once
 #ifdef _WIN32
 	#ifdef _WIN64
 		#define FLO_PLATFORM_WINDOWS
@@ -26,6 +24,4 @@
 #else
 	#define FLO_UNDEFINED_PLATFORM
 	#error "Unknown platform!"
-#endif
-
 #endif

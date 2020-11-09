@@ -6,6 +6,8 @@ namespace Florencia {
 
 	LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 		switch (msg) {
+		case WM_QUIT:
+			return 0;
 		case WM_DESTROY:
 			PostQuitMessage((int)wParam);
 			return 0;
@@ -22,14 +24,14 @@ namespace Florencia {
 		HINSTANCE instance = GetModuleHandleA(0);
 		WNDCLASSEXA wc = {0};
 		wc.cbSize = sizeof(wc);
-		wc.style = CS_HREDRAW | CS_VREDRAW;
+		wc.style = CS_OWNDC;
 		wc.lpfnWndProc = WndProc;
 		wc.cbClsExtra = 0;
 		wc.cbWndExtra = 0;
 		wc.hInstance = instance;
 		wc.hIcon = nullptr;
 		wc.hCursor = nullptr;
-		wc.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+		wc.hbrBackground = nullptr;
 		wc.lpszMenuName = nullptr;
 		wc.lpszClassName = "Window";
 		wc.hIconSm = nullptr;
@@ -63,7 +65,7 @@ namespace Florencia {
 		delete m_Console;
 		#endif
 		HINSTANCE instance = GetModuleHandleA(0);
-		UnregisterClass("Window", instance);
+		UnregisterClassW(L"Window", instance);
 	}
 
 	void Wwindow::OnUpdate() {
