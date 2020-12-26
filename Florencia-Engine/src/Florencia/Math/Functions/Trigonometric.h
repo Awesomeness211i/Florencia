@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "../Constants.h"
+#include "Declarations.h"
 #include "Other.h"
 /*
 TODO: Make the trigonometric functions arcsin() arccos() arctan()

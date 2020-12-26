@@ -13,13 +13,12 @@ namespace Florencia {
 		Wwindow(const WindowProps& props);
 		~Wwindow();
 
-		void OnUpdate() override;
+		bool OnUpdate() override;
 
 		Uint32 GetWidth() const override { return m_Data.Width; }
 		Uint32 GetHeight() const override { return m_Data.Height; }
 
 		//Window Attributes
-		void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; }
 		void SetVSync(bool enabled) override;
 		bool IsVSync() const override;
 
@@ -29,8 +28,6 @@ namespace Florencia {
 			std::string Name = "";
 			unsigned Width = 0, Height = 0;
 			bool VSync = true;
-
-			EventCallbackFn EventCallback;
 		};
 		WindowData m_Data;
 		HWND m_Handle;

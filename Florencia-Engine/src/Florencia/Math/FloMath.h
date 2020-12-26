@@ -1,10 +1,12 @@
 #pragma once
-#include "FloMathematics/Types/BasicTypes.h"
-#include "FloMathematics/Constants.h"
+//Declarations
+#include "Declarations.h"
 
-#include "FloMathematics/Functions/Other.h"
-#include "FloMathematics/Functions/Trigonometric.h"
-#include "FloMathematics/Functions/Exponential.h"
+//Functions
+#include "Functions/Other.h"
+#include "Functions/Trigonometric.h"
+#include "Functions/Exponential.h"
 
-#include "FloMathematics/Types/Vector.h"
-#include "FloMathematics/Types/Matrix.h"
+//Types
+#include "Types/Vector.h"
+#include "Types/Matrix.h"

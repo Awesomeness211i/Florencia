@@ -139,7 +139,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName)\src\Florencia;$(SolutionDir)$(ProjectName)\src;$(SolutionDir)vendor\glew\include;$(SolutionDir)vendor\glfw\include;$(SolutionDir)vendor\vulkan\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName)\src\Florencia\Math;$(SolutionDir)$(ProjectName)\src\Florencia;$(SolutionDir)$(ProjectName)\src;$(SolutionDir)vendor\glew\include;$(SolutionDir)vendor\glfw\include;$(SolutionDir)vendor\vulkan\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
@@ -182,16 +182,13 @@
     <ClInclude Include="src\Florencia\Core\Layer.h" />
     <ClInclude Include="src\Florencia\Core\LayerStack.h" />
     <ClInclude Include="src\Florencia\Core\Window.h" />
-    <ClInclude Include="src\Florencia\Events\AppEvent.h" />
-    <ClInclude Include="src\Florencia\Events\Event.h" />
+    <ClInclude Include="src\Florencia\Math\Declarations.h" />
     <ClInclude Include="src\Florencia\Math\FloMath.h" />
-    <ClInclude Include="src\Florencia\Math\FloMathematics\Constants.h" />
-    <ClInclude Include="src\Florencia\Math\FloMathematics\Functions\Exponential.h" />
-    <ClInclude Include="src\Florencia\Math\FloMathematics\Functions\Other.h" />
-    <ClInclude Include="src\Florencia\Math\FloMathematics\Functions\Trigonometric.h" />
-    <ClInclude Include="src\Florencia\Math\FloMathematics\Types\BasicTypes.h" />
-    <ClInclude Include="src\Florencia\Math\FloMathematics\Types\Matrix.h" />
-    <ClInclude Include="src\Florencia\Math\FloMathematics\Types\Vector.h" />
+    <ClInclude Include="src\Florencia\Math\Functions\Exponential.h" />
+    <ClInclude Include="src\Florencia\Math\Functions\Other.h" />
+    <ClInclude Include="src\Florencia\Math\Functions\Trigonometric.h" />
+    <ClInclude Include="src\Florencia\Math\Types\Matrix.h" />
+    <ClInclude Include="src\Florencia\Math\Types\Vector.h" />
     <ClInclude Include="src\Florencia\Renderer\Camera.h" />
     <ClInclude Include="src\Florencia\Renderer\Directx\11\DirectX11.h" />
     <ClInclude Include="src\Florencia\Renderer\Directx\11\DX11SwapChain.h" />

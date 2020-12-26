@@ -1,7 +1,6 @@
 #pragma once
 
 #include <string>
-#include <Florencia/Events/Event.h>
 
 namespace Florencia {
 
@@ -14,7 +13,6 @@ namespace Florencia {
 		virtual void OnDetach() {}
 		virtual void OnUpdate() {}
 		virtual void OnImGuiRender() {}
-		virtual void OnEvent(Event & event) {}
 
 		const std::string& GetName() const { return m_DebugName; }
 	protected:

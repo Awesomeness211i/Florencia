@@ -2,7 +2,6 @@
 #include <functional>
 
 #include <Math/FloMath.h>
-#include <Events/AppEvent.h>
 
 namespace Florencia {
 
@@ -15,16 +14,14 @@ namespace Florencia {
 
 	class Window {
 	public:
-		using EventCallbackFn = std::function<void(Event&)>;
 		virtual ~Window() = default;
 
-		virtual void OnUpdate() = 0;
+		virtual bool OnUpdate() = 0;
 
 		virtual Uint32 GetWidth() const = 0;
 		virtual Uint32 GetHeight() const = 0;
 
 		//Window Attributes
-		virtual void SetEventCallback(const EventCallbackFn& callback) = 0;
 		virtual void SetVSync(bool enabled) = 0;
 		virtual bool IsVSync() const = 0;
 

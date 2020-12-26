@@ -68,15 +68,13 @@ namespace Florencia {
 		UnregisterClassW(L"Window", instance);
 	}
 
-	void Wwindow::OnUpdate() {
-		MSG m_Message = {0};
-		GetMessageA(&m_Message, 0, 0, 0);
-		TranslateMessage(&m_Message);
-		DispatchMessageA(&m_Message);
-		
-		//Test of Cherno's event system
-		AppUpdateEvent event;
-		m_Data.EventCallback(event);
+	bool Wwindow::OnUpdate() {
+		MSG m_Message = { 0 };
+		if (PeekMessageW(&m_Message, 0, 0, 0, PM_REMOVE)) {
+			TranslateMessage(&m_Message);
+			DispatchMessageA(&m_Message);
+		}
+		return m_Message.message != WM_QUIT;
 	}
 
 	void Wwindow::SetVSync(bool enabled) {
