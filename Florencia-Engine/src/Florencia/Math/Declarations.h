@@ -13,9 +13,9 @@ using Uint64 = uint64_t;
 namespace FloMath {
 
 	//Constants
-	constexpr double π = 3.14159265358979323846; //To get this symbol do ALT-227
+	constexpr double π = 3.14159265358979323846; //ALT-227 for π
 	constexpr double e = 2.71828182845904523536;
-	constexpr double inf = 1E300 * 1E300; //To get this symbol do ALT-236
+	constexpr double inf = 1E300 * 1E300; //ALT-236 for ∞
 	constexpr double NaN = inf * 0.0; //Not A Number
 	constexpr double pi = π;
 
@@ -53,20 +53,78 @@ namespace FloMath {
 	template<typename T>
 	using Mat4 = Matrix<T, 4>;
 
-	/*template<typename T, unsigned Dim>
+	//Operators
+	template<typename T, unsigned Dim>
 	Vector<T, Dim> operator+(Vector<T, Dim>& vec1, Vector<T, Dim>& vec2) {
-		
-	}*/
+		Vector<T, Dim> vec;
+		for (int i = 0; i < Dim; i++) {
+			vec[i] = vec1[i] + vec2[i];
+		}
+		return vec;
+	}
+	template<typename T, unsigned Dim>
+	Vector<T, Dim> operator+=(Vector<T, Dim>& vec1, Vector<T, Dim>& vec2) {
+		for (int i = 0; i < Dim; i++) {
+			vec1[i] = vec1[i] + vec2[i];
+		}
+		return vec1;
+	}
 
+	template<typename T, unsigned Dim>
+	Vector<T, Dim> operator*(Vector<T, Dim>& vec, T t) {
+		Vector<T, Dim> retval;
+		for (int i = 0; i < Dim; i++) {
+			retval[i] = vec[i] * t;
+		}
+		return retval;
+	}
+	template<typename T, unsigned Dim>
+	Vector<T, Dim> operator*(T t, Vector<T, Dim>& vec) {
+		return vec * t;
+	}
+	template<typename T, unsigned Dim1, unsigned Dim2>
+	Vector<T, Dim1> operator*(Matrix<T, Dim1, Dim2>& mat, Vector<T, Dim1>& vec) {
+		Vector<T, Dim1> retval;
+		for (int i = 0; i < Dim1; i++) {
+			retval += vec[i] * mat[i];
+		}
+	}
+	template<typename T, unsigned Dim>
+	T operator*(Vector<T, Dim>& vec1, Vector<T, Dim>& vec2) {
+		T retval = (T)0;
+		for (int i = 0; i < Dim; i++) {
+			retval += vec1[i] * vec2[i];
+		}
+		return retval;
+	}
+
+	template<typename T, unsigned Dim1, unsigned Dim2>
+	Matrix<T, Dim1, Dim2> operator*(Matrix<T, Dim1, Dim2>& mat, T t) {
+		Matrix<T, Dim1, Dim2> retval;
+		for (int i = 0; i < Dim2; i++) {
+			retval[i] = mat[i] * t;
+		}
+		return retval;
+	}
+	template<typename T, unsigned Dim1, unsigned Dim2>
+	Matrix<T, Dim1, Dim2> operator*(T t, Matrix<T, Dim1, Dim2>& mat) {
+		return mat * t;
+	}
+	template<typename T, unsigned Dim1, unsigned Dim2>
+	Matrix<T, Dim1, Dim2> operator*=(Matrix<T, Dim1, Dim2>& mat, T t) {
+		mat = mat * t;
+		return mat;
+	}
 	template<typename T, unsigned Dim1, unsigned Dim2, unsigned Dim3>
 	Matrix<T, Dim1, Dim3> operator*(Matrix<T, Dim1, Dim2>& mat1, Matrix<T, Dim2, Dim3>& mat2) {
-		Matrix<T, Dim1, Dim3> mat;
-		for (int i = 0; i < Dim1; i++) {
+		Matrix<T, Dim1, Dim3> retval;
+		for (int i = 0; i < Dim2; i++) {
 			for (int j = 0; j < Dim3; j++) {
-				mat[i][j] = i + j;
+				Vector<T, Dim1> vec = mat1[i] * mat2[j][i];
+				retval[j] += vec;
 			}
 		}
-		return mat;
+		return retval;
 	}
 
 }

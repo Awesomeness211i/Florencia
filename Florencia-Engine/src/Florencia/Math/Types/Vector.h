@@ -5,11 +5,17 @@ namespace FloMath {
 	template<typename T, unsigned Dim>
 	class Vector {
 	public:
-		T& operator[](int index) {
-			if (index < Dim) {
+		template<typename... Args>
+		Vector(Args... args)
+			:data{args...}
+		{}
+		T& operator[](unsigned index) {
+			return data[index];
+		}
+		T& at(unsigned index) {
+			if (index < Dim)
 				return data[index];
-			}
-			//return nullptr;
+			//throw;
 		}
 	private:
 		T data[Dim];

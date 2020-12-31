@@ -5,7 +5,7 @@
 
 namespace Florencia {
 
-	class FloEditor : public Application {
+	FLO_APPLICATION(FloEditor) {
 	public:
 		FLO_APP_CONSTRUCTOR(FloEditor, "Florencia Editor") {
 			PushLayer(new EditorLayer);

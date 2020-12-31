@@ -1,16 +1,22 @@
 #pragma once
-#include <Math/Declarations.h>
+#include <Math/Types/Vector.h>
 
 namespace FloMath {
 
 	template<typename T, unsigned Dim1, unsigned Dim2>
 	class Matrix {
 	public:
-		Vector<T, Dim1>& operator[](int index) {
-			if (index < Dim1) {
+		template<typename... Args>
+		Matrix(Args... args)
+			:data{args...}
+		{}
+		Vector<T, Dim1>& operator[](unsigned index) {
+			return data[index];
+		}
+		Vector<T, Dim1>& at(unsigned index) {
+			if (index < Dim1)
 				return data[index];
-			}
-			//return (Vector<T, Dim1>)0;
+			//throw;
 		}
 	private:
 		Vector<T, Dim1> data[Dim2];
