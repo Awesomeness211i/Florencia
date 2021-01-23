@@ -179,8 +179,6 @@
     <ClInclude Include="src\Florencia.h" />
     <ClInclude Include="src\Florencia\Core\Base.h" />
     <ClInclude Include="src\Florencia\Core\EntryPoint.h" />
-    <ClInclude Include="src\Florencia\Core\Layer.h" />
-    <ClInclude Include="src\Florencia\Core\LayerStack.h" />
     <ClInclude Include="src\Florencia\Core\Window.h" />
     <ClInclude Include="src\Florencia\Math\Declarations.h" />
     <ClInclude Include="src\Florencia\Math\FloMath.h" />
@@ -190,12 +188,12 @@
     <ClInclude Include="src\Florencia\Math\Types\Matrix.h" />
     <ClInclude Include="src\Florencia\Math\Types\Vector.h" />
     <ClInclude Include="src\Florencia\Renderer\Camera.h" />
-    <ClInclude Include="src\Florencia\Renderer\Directx\11\DirectX11.h" />
-    <ClInclude Include="src\Florencia\Renderer\Directx\11\DX11SwapChain.h" />
-    <ClInclude Include="src\Florencia\Renderer\Directx\12\DirectX12.h" />
+    <ClInclude Include="src\Florencia\Renderer\DirectX\DirectX11.h" />
+    <ClInclude Include="src\Florencia\Renderer\DirectX\DX11SwapChain.h" />
+    <ClInclude Include="src\Florencia\Renderer\DirectX\DirectX12.h" />
+    <ClInclude Include="src\Florencia\Renderer\DirectX\Types.h" />
     <ClInclude Include="src\Florencia\Renderer\Metal\Metal.h" />
     <ClInclude Include="src\Florencia\Renderer\OpenGL\OpenGL.h" />
-    <ClInclude Include="src\Florencia\Renderer\RenderAPI.h" />
     <ClInclude Include="src\Florencia\Renderer\Renderer.h" />
     <ClInclude Include="src\Florencia\Renderer\SwapChain.h" />
     <ClInclude Include="src\Florencia\Renderer\Vulkan\Vulkan.h" />
@@ -209,16 +207,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Florencia\Core\Application.cpp" />
-    <ClCompile Include="src\Florencia\Core\Layer.cpp" />
-    <ClCompile Include="src\Florencia\Core\LayerStack.cpp" />
     <ClCompile Include="src\Florencia\Core\Window.cpp" />
     <ClCompile Include="src\Florencia\Renderer\Camera.cpp" />
-    <ClCompile Include="src\Florencia\Renderer\Directx\11\DirectX11.cpp" />
-    <ClCompile Include="src\Florencia\Renderer\Directx\11\DX11SwapChain.cpp" />
-    <ClCompile Include="src\Florencia\Renderer\Directx\12\DirectX12.cpp" />
+    <ClCompile Include="src\Florencia\Renderer\DirectX\DirectX11.cpp" />
+    <ClCompile Include="src\Florencia\Renderer\DirectX\DX11SwapChain.cpp" />
+    <ClCompile Include="src\Florencia\Renderer\DirectX\DirectX12.cpp" />
     <ClCompile Include="src\Florencia\Renderer\Metal\Metal.cpp" />
     <ClCompile Include="src\Florencia\Renderer\OpenGL\OpenGL.cpp" />
-    <ClCompile Include="src\Florencia\Renderer\RenderAPI.cpp" />
     <ClCompile Include="src\Florencia\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Florencia\Renderer\SwapChain.cpp" />
     <ClCompile Include="src\Florencia\Renderer\Vulkan\Vulkan.cpp" />

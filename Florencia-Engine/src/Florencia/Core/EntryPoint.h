@@ -1,5 +1,6 @@
 #pragma once
 #include <Platform/Platform.h>
+
 extern Florencia::Application* Florencia::CreateApplication();
 
 #if defined(FLO_PLATFORM_WINDOWS) || defined(FLO_PLATFORM_WINDOWS_32)

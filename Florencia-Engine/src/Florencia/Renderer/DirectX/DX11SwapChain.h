@@ -1,7 +1,6 @@
 #pragma once
-
-#include <d3d11_4.h>
 #include <Renderer/SwapChain.h>
+#include <Renderer/Directx/Types.h>
 
 namespace Florencia {
 

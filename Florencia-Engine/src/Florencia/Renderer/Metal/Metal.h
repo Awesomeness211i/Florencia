@@ -3,7 +3,7 @@
 
 namespace Florencia {
 
-	class Metal : public RenderAPI {
+	class Metal : public Renderer {
 	public:
 		void Init(void* window) override;
 		void Clear() override;

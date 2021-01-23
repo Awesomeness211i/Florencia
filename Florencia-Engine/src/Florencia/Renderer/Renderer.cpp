@@ -1,54 +1,23 @@
-#include <Renderer/Renderer.h>
-#include <Renderer/RenderAPI.h>
+#include "Renderer.h"
+
+#include <Renderer/DirectX/DirectX12.h>
+#include <Renderer/DirectX/DirectX11.h>
+#include <Renderer/Vulkan/Vulkan.h>
+#include <Renderer/OpenGL/OpenGL.h>
+#include <Renderer/Metal/Metal.h>
 
 namespace Florencia {
 
-	RenderAPI* Renderer::s_RenderAPI = RenderAPI::Create();
-
-	void Renderer::Init(void* window) {
-		if (RenderAPI::GetAPI() != RenderAPI::API::None) {
-			s_RenderAPI->Init(window);
+	Renderer* Renderer::Create(API api) {
+		switch (api) {
+			case Renderer::API::None: return nullptr;
+			case Renderer::API::Metal: return new Metal();
+			case Renderer::API::OpenGL: return new OpenGL();
+			case Renderer::API::Vulkan: return new Vulkan();
+			case Renderer::API::DirectX11: return new DirectX11();
+			case Renderer::API::DirectX12: return new DirectX12();
 		}
-	}
-
-	void Renderer::Shutdown() {
-
-	}
-
-	void Renderer::SetClearColor(float r, float g, float b, float a) {
-		if (RenderAPI::GetAPI() != RenderAPI::API::None) {
-			s_RenderAPI->SetClearColor(r, g, b, a);
-		}
-	}
-
-	void Renderer::BeginScene(Camera& camera) {
-
-	}
-
-	void Renderer::EndScene() {
-		Clear();
-	}
-
-	void Renderer::Submit(const RenderData& data) {
-
-	}
-
-	void Renderer::Clear() {
-		if (RenderAPI::GetAPI() != RenderAPI::API::None) {
-			s_RenderAPI->Clear();
-		}
-	}
-
-	void Renderer::SetViewport() {
-		/*if (RenderAPI::GetAPI() != RenderAPI::API::None) {
-			s_RenderAPI->SetViewport();
-		}*/
-	}
-
-	void Renderer::DrawIndexed() {
-		/*if (RenderAPI::GetAPI() != RenderAPI::API::None) {
-			s_RenderAPI->DrawIndexed();
-		}*/
+		return nullptr;
 	}
 
 }

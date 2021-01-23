@@ -1,12 +1,11 @@
 #pragma once
-#include <Renderer/RenderAPI.h>
-
-#include "DX11SwapChain.h"
+#include <Renderer/Renderer.h>
+#include <Renderer/Directx/Types.h>
 
 namespace Florencia {
 
 	//Test Functions for now
-	class DirectX11 : public RenderAPI {
+	class DirectX11 : public Renderer {
 	public:
 		void Init(void* window) override;
 		void Clear() override;

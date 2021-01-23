@@ -47,8 +47,8 @@ namespace Florencia {
 		RECT desktop = {0}, window = { 0, 0, m_Data.Width, m_Data.Height };
 		HWND size = GetDesktopWindow();
 		GetWindowRect(size, &desktop);
-
 		AdjustWindowRect(&window, WS_OVERLAPPEDWINDOW, false);
+
 		m_Handle = CreateWindowExA(
 			NULL, "Window", &m_Data.Name[0],
 			WS_MAXIMIZEBOX|WS_MINIMIZEBOX|WS_CAPTION|WS_SYSMENU|WS_VISIBLE,
@@ -56,6 +56,10 @@ namespace Florencia {
 			(desktop.bottom - m_Data.Height) / 2,
 			window.right - window.left, window.bottom - window.top,
 			nullptr, nullptr, instance, 0);
+		
+		//Setup Renderer
+		renderer = renderer->Create(Renderer::API::DirectX11);
+		renderer->Init(m_Handle);
 	}
 
 	Wwindow::~Wwindow() {
@@ -69,6 +73,7 @@ namespace Florencia {
 	}
 
 	bool Wwindow::OnUpdate() {
+		renderer->Clear();
 		MSG m_Message = { 0 };
 		if (PeekMessageW(&m_Message, 0, 0, 0, PM_REMOVE)) {
 			TranslateMessage(&m_Message);

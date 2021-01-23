@@ -3,7 +3,7 @@
 
 namespace Florencia {
 
-	class OpenGL : public RenderAPI {
+	class OpenGL : public Renderer {
 	public:
 		void Init(void* window) override;
 		void Clear() override;

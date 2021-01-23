@@ -155,16 +155,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\EditorLayer.cpp" />
     <ClCompile Include="src\FloEditor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Florencia-Engine\Florencia-Engine.vcxproj">
       <Project>{102693b7-c140-4442-8675-d0bccfad2486}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\EditorLayer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

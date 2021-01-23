@@ -1,9 +1,9 @@
 #pragma once
-#include <Renderer/RenderAPI.h>
+#include <Renderer/Renderer.h>
 
 namespace Florencia {
 
-	class DirectX12 : public RenderAPI {
+	class DirectX12 : public Renderer {
 	public:
 		void Init(void* window) override;
 		void Clear() override;

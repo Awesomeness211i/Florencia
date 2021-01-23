@@ -1,9 +1,12 @@
-#include "DirectX11.h"
+#include <d3d11_4.h>
 #include <wrl.h>
+
+#include "DirectX11.h"
 
 namespace Florencia {
 
 	void DirectX11::Init(void* window) {
+		m_api = Renderer::API::DirectX11;
 		DXGI_SWAP_CHAIN_DESC swapdescriptor = {};
 		swapdescriptor.BufferDesc.Width = 0;
 		swapdescriptor.BufferDesc.Height = 0;

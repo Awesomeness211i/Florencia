@@ -29,8 +29,10 @@ namespace Florencia {
 			unsigned Width = 0, Height = 0;
 			bool VSync = true;
 		};
+		Renderer* renderer;
 		WindowData m_Data;
 		HWND m_Handle;
+
 		#ifdef _DEBUG
 		WConsole* m_Console;
 		#endif

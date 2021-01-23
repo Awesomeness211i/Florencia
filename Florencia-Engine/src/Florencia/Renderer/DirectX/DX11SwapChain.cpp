@@ -1,3 +1,5 @@
+#include <d3d11_4.h>
+
 #include "DX11SwapChain.h"
 
 namespace Florencia {

@@ -1,9 +1,9 @@
 #pragma once
-#include <Renderer/RenderAPI.h>
+#include <Renderer/Renderer.h>
 
 namespace Florencia {
 
-	class Vulkan : public RenderAPI {
+	class Vulkan : public Renderer {
 	public:
 		void Init(void* window) override;
 		void Clear() override;
