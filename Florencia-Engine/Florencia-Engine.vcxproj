@@ -192,6 +192,7 @@
     <ClInclude Include="src\Florencia\Renderer\DirectX\DirectX12.h" />
     <ClInclude Include="src\Florencia\Renderer\DirectX\Types.h" />
     <ClInclude Include="src\Florencia\Renderer\Metal\Metal.h" />
+    <ClInclude Include="src\Florencia\Renderer\None\NoRenderer.h" />
     <ClInclude Include="src\Florencia\Renderer\OpenGL\OpenGL.h" />
     <ClInclude Include="src\Florencia\Renderer\Renderer.h" />
     <ClInclude Include="src\Florencia\Renderer\SwapChain.h" />
@@ -214,6 +215,7 @@
     <ClCompile Include="src\Florencia\Renderer\DirectX\DX11SwapChain.cpp" />
     <ClCompile Include="src\Florencia\Renderer\DirectX\DirectX12.cpp" />
     <ClCompile Include="src\Florencia\Renderer\Metal\Metal.cpp" />
+    <ClCompile Include="src\Florencia\Renderer\None\NoRenderer.cpp" />
     <ClCompile Include="src\Florencia\Renderer\OpenGL\OpenGL.cpp" />
     <ClCompile Include="src\Florencia\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Florencia\Renderer\SwapChain.cpp" />

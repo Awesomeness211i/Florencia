@@ -5,7 +5,7 @@ namespace Florencia {
 
 	FLO_APPLICATION(FloEditor) {
 	public:
-		FLO_APP_CONSTRUCTOR(FloEditor, "Florencia Editor") {
+		FLO_APP_CONSTRUCTOR(FloEditor) {
 			
 		}
 	};
@@ -16,7 +16,7 @@ namespace Florencia {
 		m_Data.Width = 1080;
 		m_Data.Height = 720;
 		m_Data.VSync = true;
-		m_Data.API = Renderer::API::None;
+		m_Data.API = Renderer::API::DirectX11;
 		return new FloEditor(m_Data);
 	}
 }
