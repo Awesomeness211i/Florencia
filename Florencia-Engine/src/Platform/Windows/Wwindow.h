@@ -1,36 +1,32 @@
 #pragma once
 #include <Core/Window.h>
+#include <Platform/Windows/WConsole.h>
 
 struct HWND__; typedef HWND__* HWND;
 
 namespace Florencia {
-	#if defined(_DEBUG)
-	class WConsole;
-	#endif
 
 	class Wwindow : public Window {
 	public:
 		Wwindow(const WindowProps& props);
 		~Wwindow();
 
+		void OnRender() override;
 		bool OnUpdate() override;
 
 		Uint32 GetWidth() const override { return m_Data.Width; }
 		Uint32 GetHeight() const override { return m_Data.Height; }
 
 		//Window Attributes
-		void SetVSync(bool enabled) override;
 		bool IsVSync() const override;
+		void SetVSync(bool enabled) override;
+		void SetWidth(Uint32 width) override;
+		void SetHeight(Uint32 height) override;
 
 		void* GetWindowHandle() override { return m_Handle; }
 	private:
-		struct WindowData {
-			std::string Name = "";
-			unsigned Width = 0, Height = 0;
-			bool VSync = true;
-		};
 		Renderer* renderer;
-		WindowData m_Data;
+		WindowProps m_Data;
 		HWND m_Handle;
 
 		#ifdef _DEBUG

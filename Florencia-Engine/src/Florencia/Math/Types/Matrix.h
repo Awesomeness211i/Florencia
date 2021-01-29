@@ -3,23 +3,23 @@
 
 namespace FloMath {
 
-	template<typename T, unsigned Dim1, unsigned Dim2>
+	template<typename T, unsigned Rows, unsigned Columns>
 	class Matrix {
 	public:
 		template<typename... Args>
 		Matrix(Args... args)
 			:data{args...}
 		{}
-		Vector<T, Dim1>& operator[](unsigned index) {
+		Vector<T, Rows>& operator[](unsigned index) {
 			return data[index];
 		}
-		Vector<T, Dim1>& at(unsigned index) {
-			if (index < Dim1)
+		Vector<T, Rows>& at(unsigned index) {
+			if (index < Columns)
 				return data[index];
 			//throw;
 		}
 	private:
-		Vector<T, Dim1> data[Dim2];
+		Vector<T, Rows> data[Columns];
 	};
 
 }

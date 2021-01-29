@@ -3,6 +3,10 @@
 
 namespace Florencia {
 
+    OpenGL::OpenGL(API api) : Renderer(api) {
+
+    }
+
     void OpenGL::Init(void* window) {
 
     }

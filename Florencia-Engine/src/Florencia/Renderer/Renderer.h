@@ -12,16 +12,17 @@ namespace Florencia {
 			Metal,
 			None
 		};
+		Renderer(API api);
 		virtual ~Renderer() = default;
-
 		virtual void Init(void* window) = 0;
+
 		virtual void Clear() = 0;
 		virtual void SetClearColor(float r, float g, float b, float a) = 0;
 
 		API GetAPI() { return m_Api; }
 		Renderer* Create(API api);
 	protected:
-		API m_Api;
+		API m_Api = Renderer::API::None;
 	};
 
 }

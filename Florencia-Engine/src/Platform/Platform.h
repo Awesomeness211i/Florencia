@@ -1,9 +1,16 @@
 #pragma once
+
+#define ANDROID 1
+
 #ifdef _WIN32
-	#ifdef _WIN64
+	#if defined(_WIN64)
+		#include <Windows.h>
 		#define FLO_PLATFORM_WINDOWS
-	#else
+	#elif ANDROID == 0
+		#include <Windows.h>
 		#define FLO_PLATFORM_WINDOWS_32
+	#else
+		#define FLO_PLATFORM_ANDROID
 	#endif
 #elif defined(__APPLE__) || defined(__MACH__)
 	#include <TargetConditionals.h>

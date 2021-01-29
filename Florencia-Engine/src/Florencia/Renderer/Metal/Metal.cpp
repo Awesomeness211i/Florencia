@@ -2,6 +2,10 @@
 
 namespace Florencia {
 
+	Metal::Metal(API api) : Renderer(api) {
+		m_Api = api;
+	}
+
 	void Metal::Init(void* window) {
 
 	}

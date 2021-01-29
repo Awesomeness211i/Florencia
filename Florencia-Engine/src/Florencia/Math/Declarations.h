@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include <stdint.h>
 
 using int8 = int8_t;
@@ -13,17 +13,17 @@ using Uint64 = uint64_t;
 namespace FloMath {
 
 	//Constants
-	constexpr double π = 3.14159265358979323846; //ALT-227 for π
+	//constexpr double π = 3.14159265358979323846; //ALT-227 for symbol
+	constexpr double pi = 3.14159265358979323846;
 	constexpr double e = 2.71828182845904523536;
-	constexpr double inf = 1E300 * 1E300; //ALT-236 for ∞
+	constexpr double inf = 1E154 * 1E154; //ALT-236 for ∞
 	constexpr double NaN = inf * 0.0; //Not A Number
-	constexpr double pi = π;
 
 	//Classes
-	template<typename T, unsigned Dim>
+	template<typename T, unsigned Rows>
 	class Vector;
 
-	template<typename T, unsigned Dim1, unsigned Dim2 = Dim1>
+	template<typename T, unsigned Rows, unsigned Columns = Rows>
 	class Matrix;
 
 	//Types
@@ -54,93 +54,89 @@ namespace FloMath {
 	using Mat4 = Matrix<T, 4>;
 
 	//////////////////////////////////////Vector Addition/////////////////////////////////////
-	template<typename T, unsigned Dim>
-	Vector<T, Dim> operator+(Vector<T, Dim>& vec1, Vector<T, Dim>& vec2) {
-		Vector<T, Dim> vec;
-		for (int i = 0; i < Dim; i++) {
+	template<typename T, unsigned Rows>
+	Vector<T, Rows> operator+(Vector<T, Rows>& vec1, Vector<T, Rows>& vec2) {
+		Vector<T, Rows> vec;
+		for (int i = 0; i < Rows; i++) {
 			vec[i] = vec1[i] + vec2[i];
 		}
 		return vec;
 	}
-	template<typename T, unsigned Dim>
-	void operator+=(Vector<T, Dim>& vec1, Vector<T, Dim>& vec2) {
-		for (int i = 0; i < Dim; i++) {
+	template<typename T, unsigned Rows>
+	void operator+=(Vector<T, Rows>& vec1, Vector<T, Rows>& vec2) {
+		for (int i = 0; i < Rows; i++) {
 			vec1[i] = vec1[i] + vec2[i];
 		}
 	}
 	//////////////////////////////////Vector Multiplication///////////////////////////////////
-	template<typename T, unsigned Dim>
-	Vector<T, Dim> operator*(Vector<T, Dim>& vec, T t) {
-		Vector<T, Dim> retval;
-		for (int i = 0; i < Dim; i++) {
+	template<typename T, unsigned Rows>
+	Vector<T, Rows> operator*(Vector<T, Rows>& vec, T t) {
+		Vector<T, Rows> retval;
+		for (int i = 0; i < Rows; i++) {
 			retval[i] = vec[i] * t;
 		}
 		return retval;
 	}
-	template<typename T, unsigned Dim>
-	Vector<T, Dim> operator*(T t, Vector<T, Dim>& vec) {
+	template<typename T, unsigned Rows>
+	Vector<T, Rows> operator*(T t, Vector<T, Rows>& vec) {
 		return vec * t;
 	}
-	template<typename T, unsigned Dim>
-	T operator*(Vector<T, Dim>& vec1, Vector<T, Dim>& vec2) {
+	template<typename T, unsigned Rows>
+	T operator*(Vector<T, Rows>& vec1, Vector<T, Rows>& vec2) {
 		T retval = 0;
-		for (int i = 0; i < Dim; i++) {
+		for (int i = 0; i < Rows; i++) {
 			retval += vec1[i] * vec2[i];
 		}
 		return retval;
 	}
 	////////////////////////////////////Matrix Addition///////////////////////////////////////
-	template<typename T, unsigned Dim1, unsigned Dim2>
-	Matrix<T, Dim1, Dim2> operator+(Matrix<T, Dim1, Dim2>& mat, Matrix<T, Dim1, Dim2>& mat2) {
-		Matrix<T, Dim1, Dim2> retval;
-		for (int i = 0; i < Dim2; i++) {
+	template<typename T, unsigned Rows, unsigned Columns>
+	Matrix<T, Rows, Columns> operator+(Matrix<T, Rows, Columns>& mat, Matrix<T, Rows, Columns>& mat2) {
+		Matrix<T, Rows, Columns> retval;
+		for (int i = 0; i < Columns; i++) {
 			retval[i] += mat[i] + mat2[i];
 		}
 		return retval;
 	}
 	/////////////////////////////////Matrix Multiplication////////////////////////////////////
-	template<typename T, unsigned Dim1, unsigned Dim2>
-	Vector<T, Dim1> operator*(Matrix<T, Dim1, Dim2>& mat, Vector<T, Dim2>& vec) {
-		Vector<T, Dim1> retval;
-		for (int i = 0; i < Dim2; i++) {
-			Vector<T, Dim1> temp = vec[i] * mat[i];
+	template<typename T, unsigned Rows, unsigned Columns>
+	Vector<T, Columns> operator*(Matrix<T, Rows, Columns>& mat, Vector<T, Columns>& vec) {
+		Vector<T, Columns> retval;
+		for (int i = 0; i < Columns; i++) {
+			Vector<T, Columns> temp = vec[i] * mat[i];
 			retval += temp;
 		}
 		return retval;
 	}
-	template<typename T, unsigned Dim1, unsigned Dim2>
-	Vector<T, Dim1> operator*(Vector<T, Dim1>& vec, Matrix<T, Dim1, Dim2>& mat) {
-		return mat * vec;
-	}
-	template<typename T, unsigned Dim1, unsigned Dim2>
-	Matrix<T, Dim1, Dim2> operator*(Matrix<T, Dim1, Dim2>& mat, T t) {
-		Matrix<T, Dim1, Dim2> retval;
-		for (int i = 0; i < Dim2; i++) {
+	template<typename T, unsigned Rows, unsigned Columns>
+	Matrix<T, Rows, Columns> operator*(Matrix<T, Rows, Columns>& mat, T t) {
+		Matrix<T, Rows, Columns> retval;
+		for (int i = 0; i < Columns; i++) {
 			retval[i] = mat[i] * t;
 		}
 		return retval;
 	}
-	template<typename T, unsigned Dim1, unsigned Dim2, unsigned Dim3>
-	Matrix<T, Dim1, Dim3> operator*(Matrix<T, Dim1, Dim2>& mat1, Matrix<T, Dim2, Dim3>& mat2) {
-		Matrix<T, Dim1, Dim3> retval;
-		for (int i = 0; i < Dim2; i++) {
-			for (int j = 0; j < Dim3; j++) {
-				Vector<T, Dim1> vec = mat1[i] * mat2[j][i];
+	template<typename T, unsigned Rows, unsigned Columns1, unsigned Columns2>
+	Matrix<T, Rows, Columns2> operator*(Matrix<T, Rows, Columns1>& mat1, Matrix<T, Columns1, Columns2>& mat2) {
+		Matrix<T, Rows, Columns2> retval;
+		for (int i = 0; i < Columns1; i++) {
+			for (int j = 0; j < Columns2; j++) {
+				Vector<T, Rows> vec = mat1[i] * mat2[j][i];
 				retval[j] += vec;
 			}
 		}
 		return retval;
 	}
-	template<typename T, unsigned Dim1, unsigned Dim2>
-	Matrix<T, Dim1, Dim2> operator*(T t, Matrix<T, Dim1, Dim2>& mat) {
+	template<typename T, unsigned Rows, unsigned Columns>
+	Matrix<T, Rows, Columns> operator*(T t, Matrix<T, Rows, Columns>& mat) {
 		return mat * t;
 	}
-	template<typename T, unsigned Dim1, unsigned Dim2>
-	void operator*=(Matrix<T, Dim1, Dim2>& mat, T t) {
+	template<typename T, unsigned Rows, unsigned Columns>
+	void operator*=(Matrix<T, Rows, Columns>& mat, T t) {
 		mat = mat * t;
 	}
-	template<typename T, unsigned Dim1>
-	void operator*=(Matrix<T, Dim1>& mat1, Matrix<T, Dim1>& mat2) {
+	template<typename T, unsigned Rows>
+	void operator*=(Matrix<T, Rows>& mat1, Matrix<T, Rows>& mat2) {
 		mat1 = mat1 * mat2;
 	}
 }

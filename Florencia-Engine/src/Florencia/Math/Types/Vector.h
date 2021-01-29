@@ -2,7 +2,7 @@
 
 namespace FloMath {
 
-	template<typename T, unsigned Dim>
+	template<typename T, unsigned Rows>
 	class Vector {
 	public:
 		template<typename... Args>
@@ -13,12 +13,12 @@ namespace FloMath {
 			return data[index];
 		}
 		T& at(unsigned index) {
-			if (index < Dim)
+			if (index < Rows)
 				return data[index];
 			//throw;
 		}
 	private:
-		T data[Dim];
+		T data[Rows];
 	};
 
 }

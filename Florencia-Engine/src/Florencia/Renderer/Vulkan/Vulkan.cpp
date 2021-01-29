@@ -3,6 +3,10 @@
 
 namespace Florencia {
 
+    Vulkan::Vulkan(API api) : Renderer(api) {
+        m_Api = api;
+    }
+
     void Vulkan::Init(void* window) {
 
     }

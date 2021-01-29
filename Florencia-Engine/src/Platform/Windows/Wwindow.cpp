@@ -16,11 +16,7 @@ namespace Florencia {
 		}
 	}
 
-	Wwindow::Wwindow(const WindowProps& props) {
-		m_Data.Name = props.Name;
-		m_Data.Width = props.Width;
-		m_Data.Height = props.Height;
-
+	Wwindow::Wwindow(const WindowProps& props) : m_Data(props) {
 		HINSTANCE instance = GetModuleHandleA(0);
 		WNDCLASSEXA wc = {0};
 		wc.cbSize = sizeof(wc);
@@ -44,11 +40,10 @@ namespace Florencia {
 		#endif
 
 		//Create Window
-		RECT desktop = {0}, window = { 0, 0, m_Data.Width, m_Data.Height };
+		RECT desktop = {0}, window = { 0, 0, (LONG)m_Data.Width, (LONG)m_Data.Height };
 		HWND size = GetDesktopWindow();
 		GetWindowRect(size, &desktop);
 		AdjustWindowRect(&window, WS_OVERLAPPEDWINDOW, false);
-
 		m_Handle = CreateWindowExA(
 			NULL, "Window", &m_Data.Name[0],
 			WS_MAXIMIZEBOX|WS_MINIMIZEBOX|WS_CAPTION|WS_SYSMENU|WS_VISIBLE,
@@ -58,7 +53,7 @@ namespace Florencia {
 			nullptr, nullptr, instance, 0);
 		
 		//Setup Renderer
-		renderer = renderer->Create(Renderer::API::DirectX11);
+		renderer = renderer->Create(m_Data.API);
 		renderer->Init(m_Handle);
 	}
 
@@ -72,8 +67,11 @@ namespace Florencia {
 		UnregisterClassW(L"Window", instance);
 	}
 
-	bool Wwindow::OnUpdate() {
+	void Wwindow::OnRender() {
 		renderer->Clear();
+	}
+
+	bool Wwindow::OnUpdate() {
 		MSG m_Message = { 0 };
 		if (PeekMessageW(&m_Message, 0, 0, 0, PM_REMOVE)) {
 			TranslateMessage(&m_Message);
@@ -84,6 +82,14 @@ namespace Florencia {
 
 	void Wwindow::SetVSync(bool enabled) {
 		m_Data.VSync = enabled;
+	}
+
+	void Wwindow::SetWidth(Uint32 width) {
+		m_Data.Width = width;
+	}
+
+	void Wwindow::SetHeight(Uint32 height) {
+		m_Data.Height = height;
 	}
 
 	bool Wwindow::IsVSync() const {

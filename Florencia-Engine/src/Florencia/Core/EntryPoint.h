@@ -4,14 +4,11 @@
 extern Florencia::Application* Florencia::CreateApplication();
 
 #if defined(FLO_PLATFORM_WINDOWS) || defined(FLO_PLATFORM_WINDOWS_32)
-#include <Windows.h>
-
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
+int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow) {
 	auto app = Florencia::CreateApplication();
 	app->Run();
 	delete app;
 }
-
 #elif defined(FLO_PLATFORM_LINUX)
 int main(int argc, char** argv) {
 	auto app = Florencia::CreateApplication();
@@ -37,7 +34,7 @@ int main(int argc, char** argv) {
 	delete app;
 }
 #elif defined(FLO_PLATFORM_ANDROID)
-int main(int argc, char** argv) {
+void android_main(struct android_app* state) {
 	auto app = Florencia::CreateApplication();
 	app->Run();
 	delete app;

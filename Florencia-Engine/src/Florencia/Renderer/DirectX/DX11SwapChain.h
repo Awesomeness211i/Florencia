@@ -1,6 +1,5 @@
 #pragma once
 #include <Renderer/SwapChain.h>
-#include <Renderer/Directx/Types.h>
 
 namespace Florencia {
 

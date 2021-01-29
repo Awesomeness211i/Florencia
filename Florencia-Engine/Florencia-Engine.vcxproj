@@ -177,7 +177,6 @@
   <ItemGroup>
     <ClInclude Include="src\Florencia\Core\Application.h" />
     <ClInclude Include="src\Florencia.h" />
-    <ClInclude Include="src\Florencia\Core\Base.h" />
     <ClInclude Include="src\Florencia\Core\EntryPoint.h" />
     <ClInclude Include="src\Florencia\Core\Window.h" />
     <ClInclude Include="src\Florencia\Math\Declarations.h" />
@@ -197,6 +196,8 @@
     <ClInclude Include="src\Florencia\Renderer\Renderer.h" />
     <ClInclude Include="src\Florencia\Renderer\SwapChain.h" />
     <ClInclude Include="src\Florencia\Renderer\Vulkan\Vulkan.h" />
+    <ClInclude Include="src\Platform\Android\AndroidConsole.h" />
+    <ClInclude Include="src\Platform\Android\AndroidWindow.h" />
     <ClInclude Include="src\Platform\Linux\LinuxConsole.h" />
     <ClInclude Include="src\Platform\Linux\LinuxWindow.h" />
     <ClInclude Include="src\Platform\MacOS\MacConsole.h" />
@@ -217,6 +218,8 @@
     <ClCompile Include="src\Florencia\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Florencia\Renderer\SwapChain.cpp" />
     <ClCompile Include="src\Florencia\Renderer\Vulkan\Vulkan.cpp" />
+    <ClCompile Include="src\Platform\Android\AndroidConsole.cpp" />
+    <ClCompile Include="src\Platform\Android\AndroidWindow.cpp" />
     <ClCompile Include="src\Platform\Linux\LinuxConsole.cpp" />
     <ClCompile Include="src\Platform\Linux\LinuxWindow.cpp" />
     <ClCompile Include="src\Platform\MacOS\MacConsole.cpp" />
