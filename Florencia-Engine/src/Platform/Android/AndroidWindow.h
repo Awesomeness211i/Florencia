@@ -3,7 +3,7 @@
 
 namespace Florencia {
 
-	class LinuxWindow : public Window {
+	class AndroidWindow : public Window {
 	public:
 
 	private:

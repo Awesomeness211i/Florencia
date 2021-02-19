@@ -8,6 +8,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	auto app = Florencia::CreateApplication();
 	app->Run();
 	delete app;
+	return 0;
 }
 #elif defined(FLO_PLATFORM_LINUX)
 int main(int argc, char** argv) {

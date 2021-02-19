@@ -1,6 +1,6 @@
 ﻿#pragma once
-#include <Math/Declarations.h>
 #include <math.h>
+#include "../Declarations.h"
 
 namespace FloMath {
 

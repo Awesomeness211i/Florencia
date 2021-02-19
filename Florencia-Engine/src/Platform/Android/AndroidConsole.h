@@ -3,9 +3,9 @@
 
 namespace Florencia {
 
-	class LinuxConsole {
+	class AndroidConsole {
 	public:
-		
+
 	private:
 		bool CreateNewConsole();
 		bool ReleaseConsole();

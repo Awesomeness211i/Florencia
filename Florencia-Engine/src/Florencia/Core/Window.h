@@ -1,7 +1,7 @@
 #pragma once
 #include <functional>
-#include <Math/FloMath.h>
-#include <Renderer/Renderer.h>
+#include "../Math/FloMath.h"
+#include "../Renderer/Renderer.h"
 
 namespace Florencia {
 

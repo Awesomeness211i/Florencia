@@ -1,15 +1,14 @@
 #include "Renderer.h"
-#include <Renderer/Vulkan/Vulkan.h>
-#include <Renderer/OpenGL/OpenGL.h>
-#include <Renderer/None/NoRenderer.h>
+#include "Vulkan/Vulkan.h"
+#include "OpenGL/OpenGL.h"
+#include "None/NoRenderer.h"
 
 #include <Platform/Platform.h>
 #if defined(FLO_PLATFORM_WINDOWS) || defined(FLO_PLATFORM_WINDOWS_32)
-	#include <Renderer/DirectX/DirectX12.h>
-	#include <Renderer/DirectX/DirectX11.h>
-	#include <Renderer/Vulkan/Vulkan.h>
+	#include "DirectX/DirectX12.h"
+	#include "DirectX/DirectX11.h"
 #elif defined(FLO_PLATFORM_MACOS)
-	#include <Renderer/Metal/Metal.h>
+	#include "Metal/Metal.h"
 #endif
 
 namespace Florencia {

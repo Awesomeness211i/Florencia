@@ -24,6 +24,8 @@ namespace Florencia {
 		return nullptr;
 		#elif defined(FLO_PLATFORM_IPHONE)
 		return nullptr;
+		#else
+		return nullptr;
 		#endif
 	}
 }

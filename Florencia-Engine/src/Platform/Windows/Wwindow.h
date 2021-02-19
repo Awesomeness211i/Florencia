@@ -1,6 +1,6 @@
 #pragma once
-#include <Core/Window.h>
-#include <Platform/Windows/WConsole.h>
+#include "../../Florencia/Core/Window.h"
+#include "WConsole.h"
 
 struct HWND__; typedef HWND__* HWND;
 

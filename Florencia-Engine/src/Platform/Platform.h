@@ -1,10 +1,10 @@
 #pragma once
 
-#ifdef _WIN32
-	#if defined(_WIN64)
+#if defined(_WIN32)
+	#if defined(_WIN64) && !defined(ARM)
 		#include <Windows.h>
 		#define FLO_PLATFORM_WINDOWS
-	#else
+	#elif !defined(ARM)
 		#include <Windows.h>
 		#define FLO_PLATFORM_WINDOWS_32
 	#endif

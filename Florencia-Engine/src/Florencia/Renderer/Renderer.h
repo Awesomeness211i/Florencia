@@ -22,7 +22,7 @@ namespace Florencia {
 		API GetAPI() { return m_Api; }
 		Renderer* Create(API api);
 	protected:
-		API m_Api = Renderer::API::None;
+		API m_Api;
 	};
 
 }

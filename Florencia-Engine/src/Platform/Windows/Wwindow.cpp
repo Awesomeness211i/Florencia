@@ -1,6 +1,6 @@
 #include <Windows.h>
-#include <Platform/Windows/Wwindow.h>
-#include <Platform/Windows/WConsole.h>
+#include "Wwindow.h"
+#include "WConsole.h"
 
 namespace Florencia {
 
@@ -51,7 +51,7 @@ namespace Florencia {
 			(desktop.bottom - m_Data.Height) / 2,
 			window.right - window.left, window.bottom - window.top,
 			nullptr, nullptr, instance, 0);
-		
+
 		//Setup Renderer
 		renderer = renderer->Create(m_Data.API);
 		renderer->Init(m_Handle);
