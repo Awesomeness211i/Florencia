@@ -35,7 +35,7 @@ int main(int argc, char** argv) {
 	delete app;
 }
 #elif defined(FLO_PLATFORM_ANDROID)
-void android_main(struct android_app* state) {
+int main(int argc, char** argv) {
 	auto app = Florencia::CreateApplication();
 	app->Run();
 	delete app;

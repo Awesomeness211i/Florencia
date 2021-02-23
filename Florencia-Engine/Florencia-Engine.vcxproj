@@ -361,6 +361,8 @@
     <ClInclude Include="src\Florencia\Renderer\Vulkan\Vulkan.h" />
     <ClInclude Include="src\Platform\Android\AndroidConsole.h" />
     <ClInclude Include="src\Platform\Android\AndroidWindow.h" />
+    <ClInclude Include="src\Platform\IPhone\IPhoneConsole.h" />
+    <ClInclude Include="src\Platform\IPhone\IPhoneWindow.h" />
     <ClInclude Include="src\Platform\Linux\LinuxConsole.h" />
     <ClInclude Include="src\Platform\Linux\LinuxWindow.h" />
     <ClInclude Include="src\Platform\MacOS\MacConsole.h" />
@@ -384,6 +386,8 @@
     <ClCompile Include="src\Florencia\Renderer\Vulkan\Vulkan.cpp" />
     <ClCompile Include="src\Platform\Android\AndroidConsole.cpp" />
     <ClCompile Include="src\Platform\Android\AndroidWindow.cpp" />
+    <ClCompile Include="src\Platform\IPhone\IPhoneConsole.cpp" />
+    <ClCompile Include="src\Platform\IPhone\IPhoneWindow.cpp" />
     <ClCompile Include="src\Platform\Linux\LinuxConsole.cpp" />
     <ClCompile Include="src\Platform\Linux\LinuxWindow.cpp" />
     <ClCompile Include="src\Platform\MacOS\MacConsole.cpp" />
