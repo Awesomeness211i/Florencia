@@ -1,28 +1,21 @@
 #pragma once
+#include "RendererAPI.h"
 
 namespace Florencia {
 
 	class Renderer {
 	public:
-		enum class API {
-			DirectX11,
-			DirectX12,
-			OpenGL,
-			Vulkan,
-			Metal,
-			None
-		};
-		Renderer(API api);
-		virtual ~Renderer() = default;
-		virtual void Init(void* window) = 0;
+		static void Init();
+		static void Shutdown();
 
-		virtual void Clear() = 0;
-		virtual void SetClearColor(float r, float g, float b, float a) = 0;
+		static void OnWindowResize(Uint32 width, Uint32 height);
 
-		API GetAPI() { return m_Api; }
-		Renderer* Create(API api);
-	protected:
-		API m_Api;
+		static void BeginScene();
+		static void EndScene();
+
+		//static void Submit(const Ref<Shader>& shader, const Ref<VertexArray>& vertexArray, const FloMath::Mat4<float>& transform);
+		
+		static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
 	};
 
 }

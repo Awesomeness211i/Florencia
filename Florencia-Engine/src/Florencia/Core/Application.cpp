@@ -2,8 +2,9 @@
 
 namespace Florencia {
 
-	Application::Application(const WindowProps& props) {
-		m_Window = Window::Create(props);
+	Application::Application(const ApplicationProps& props) {
+		m_Window = Window::Create(WindowProps(props.Title, props.Width, props.Height, props.VSync));
+		Renderer::Init();
 	}
 
 	Application::~Application() {
@@ -12,7 +13,9 @@ namespace Florencia {
 
 	void Application::Run() {
 		while (m_Running) {
-			m_Window->OnRender();
+			if (m_Window->IsVSync()) {
+
+			}
 			m_Running = m_Window->OnUpdate();
 		}
 	}

@@ -1,17 +1,17 @@
 #pragma once
-#include <Renderer/Renderer.h>
+#include <Renderer/RendererAPI.h>
 
 namespace Florencia {
 
 	//Test Functions for now
-	class DirectX11 : public Renderer {
+	class DirectX11 : public RendererAPI {
 	public:
-		DirectX11(API api);
+		DirectX11();
 
-		void Init(void* window) override;
+		void Init() override;
 
 		void Clear() override;
-		void SetClearColor(float r, float g, float b, float a) override;
+		void SetClearColor(const FloMath::Vec4<float>& color) override;
 	private:
 
 	};

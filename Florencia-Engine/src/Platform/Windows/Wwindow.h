@@ -11,7 +11,6 @@ namespace Florencia {
 		Wwindow(const WindowProps& props);
 		~Wwindow();
 
-		void OnRender() override;
 		bool OnUpdate() override;
 
 		Uint32 GetWidth() const override { return m_Data.Width; }
@@ -25,7 +24,6 @@ namespace Florencia {
 
 		void* GetWindowHandle() override { return m_Handle; }
 	private:
-		Renderer* renderer;
 		WindowProps m_Data;
 		HWND m_Handle;
 

@@ -1,5 +1,5 @@
 #pragma once
-#include <Platform/Platform.h>
+#include <Florencia/Core/PlatformDetection.h>
 
 extern Florencia::Application* Florencia::CreateApplication();
 

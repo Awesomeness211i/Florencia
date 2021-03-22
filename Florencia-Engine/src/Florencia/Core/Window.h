@@ -1,22 +1,21 @@
 #pragma once
 #include <functional>
-#include "../Math/FloMath.h"
-#include "../Renderer/Renderer.h"
+#include <Math/FloMath.h>
 
 namespace Florencia {
 
 	struct WindowProps {
+		WindowProps(const std::string& title, Uint32 width, Uint32 height, bool vsync)
+			: VSync(vsync), Title(title), Width(width), Height(height) {}
 		bool VSync = true;
-		std::string Name = "";
-		unsigned Width = 0, Height = 0;
-		Renderer::API API = Renderer::API::None;
+		std::string Title = "";
+		Uint32 Width = 0, Height = 0;
 	};
 
 	class Window {
 	public:
 		virtual ~Window() = default;
 
-		virtual void OnRender() = 0;
 		virtual bool OnUpdate() = 0;
 
 		virtual Uint32 GetWidth() const = 0;

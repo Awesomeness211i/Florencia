@@ -171,7 +171,7 @@
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName)\src\Florencia;$(SolutionDir)$(ProjectName)\src;$(SolutionDir)vendor\glew\include;$(SolutionDir)vendor\glfw\include;$(SolutionDir)vendor\vulkan\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName)\src\Florencia;$(SolutionDir)$(ProjectName)\src;$(SolutionDir)vendor\glfw\include;$(SolutionDir)vendor\vulkan\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
@@ -179,8 +179,10 @@
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)vendor\glew\lib\$(Platform);$(SolutionDir)vendor\glfw\lib\$(Platform);$(SolutionDir)vendor\vulkan\lib\$(Platform);</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;glew32s.lib;vulkan-1.lib;D3DCompiler.lib;d3d11.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -192,7 +194,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName)\src\Florencia;$(SolutionDir)$(ProjectName)\src;$(SolutionDir)vendor\glew\include;$(SolutionDir)vendor\glfw\include;$(SolutionDir)vendor\vulkan\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName)\src\Florencia;$(SolutionDir)$(ProjectName)\src;$(SolutionDir)vendor\glfw\include;$(SolutionDir)vendor\vulkan\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
@@ -202,8 +204,10 @@
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)vendor\glew\lib\$(Platform);$(SolutionDir)vendor\glfw\lib\$(Platform);$(SolutionDir)vendor\vulkan\lib\$(Platform);</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;glew32s.lib;vulkan-1.lib;D3DCompiler.lib;d3d11.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -213,7 +217,7 @@
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName)\src\Florencia\Math;$(SolutionDir)$(ProjectName)\src\Florencia;$(SolutionDir)$(ProjectName)\src;$(SolutionDir)vendor\glew\include;$(SolutionDir)vendor\glfw\include;$(SolutionDir)vendor\vulkan\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName)\src\Florencia;$(SolutionDir)$(ProjectName)\src;$(SolutionDir)vendor\glfw\include;$(SolutionDir)vendor\vulkan\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
@@ -221,8 +225,10 @@
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)vendor\glew\lib\$(Platform);$(SolutionDir)vendor\glfw\lib\$(Platform);$(SolutionDir)vendor\vulkan\lib\$(Platform);</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;glew32s.lib;vulkan-1.lib;D3DCompiler.lib;d3d11.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
@@ -232,7 +238,7 @@
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName)\src\Florencia\Math;$(SolutionDir)$(ProjectName)\src\Florencia;$(SolutionDir)$(ProjectName)\src;$(SolutionDir)vendor\glew\include;$(SolutionDir)vendor\glfw\include;$(SolutionDir)vendor\vulkan\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName)\src\Florencia;$(SolutionDir)$(ProjectName)\src;$(SolutionDir)vendor\glfw\include;$(SolutionDir)vendor\vulkan\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
@@ -240,7 +246,8 @@
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)vendor\glew\lib\$(Platform);$(SolutionDir)vendor\glfw\lib\$(Platform);$(SolutionDir)vendor\vulkan\lib\$(Platform);</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
       <AdditionalDependencies>
       </AdditionalDependencies>
     </Lib>
@@ -252,7 +259,7 @@
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName)\src\Florencia\Math;$(SolutionDir)$(ProjectName)\src\Florencia;$(SolutionDir)$(ProjectName)\src;$(SolutionDir)vendor\glew\include;$(SolutionDir)vendor\glfw\include;$(SolutionDir)vendor\vulkan\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName)\src\Florencia;$(SolutionDir)$(ProjectName)\src;$(SolutionDir)vendor\glfw\include;$(SolutionDir)vendor\vulkan\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
@@ -260,7 +267,8 @@
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)vendor\glew\lib\$(Platform);$(SolutionDir)vendor\glfw\lib\$(Platform);$(SolutionDir)vendor\vulkan\lib\$(Platform);</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
       <AdditionalDependencies>
       </AdditionalDependencies>
     </Lib>
@@ -274,7 +282,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName)\src\Florencia;$(SolutionDir)$(ProjectName)\src;$(SolutionDir)vendor\glew\include;$(SolutionDir)vendor\glfw\include;$(SolutionDir)vendor\vulkan\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName)\src\Florencia;$(SolutionDir)$(ProjectName)\src;$(SolutionDir)vendor\glfw\include;$(SolutionDir)vendor\vulkan\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
@@ -284,8 +292,10 @@
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)vendor\glew\lib\$(Platform);$(SolutionDir)vendor\glfw\lib\$(Platform);$(SolutionDir)vendor\vulkan\lib\$(Platform);</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;glew32s.lib;vulkan-1.lib;D3DCompiler.lib;d3d11.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
@@ -297,7 +307,7 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName)\src\Florencia;$(SolutionDir)$(ProjectName)\src;$(SolutionDir)vendor\glew\include;$(SolutionDir)vendor\glfw\include;$(SolutionDir)vendor\vulkan\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName)\src\Florencia;$(SolutionDir)$(ProjectName)\src;$(SolutionDir)vendor\glfw\include;$(SolutionDir)vendor\vulkan\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
@@ -307,7 +317,8 @@
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)vendor\glew\lib\$(Platform);$(SolutionDir)vendor\glfw\lib\$(Platform);$(SolutionDir)vendor\vulkan\lib\$(Platform);</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
       <AdditionalDependencies>
       </AdditionalDependencies>
     </Lib>
@@ -321,7 +332,7 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName)\src\Florencia;$(SolutionDir)$(ProjectName)\src;$(SolutionDir)vendor\glew\include;$(SolutionDir)vendor\glfw\include;$(SolutionDir)vendor\vulkan\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName)\src\Florencia;$(SolutionDir)$(ProjectName)\src;$(SolutionDir)vendor\glfw\include;$(SolutionDir)vendor\vulkan\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
@@ -331,12 +342,15 @@
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)vendor\glew\lib\$(Platform);$(SolutionDir)vendor\glfw\lib\$(Platform);$(SolutionDir)vendor\vulkan\lib\$(Platform);</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
       <AdditionalDependencies>
       </AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Florencia\Renderer\RendererAPI.h" />
+    <ClInclude Include="src\Florencia\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Florencia\Core\Application.h" />
     <ClInclude Include="src\Florencia.h" />
     <ClInclude Include="src\Florencia\Core\EntryPoint.h" />
@@ -352,10 +366,8 @@
     <ClInclude Include="src\Florencia\Renderer\DirectX\DirectX11.h" />
     <ClInclude Include="src\Florencia\Renderer\DirectX\DirectX12.h" />
     <ClInclude Include="src\Florencia\Renderer\Metal\Metal.h" />
-    <ClInclude Include="src\Florencia\Renderer\None\NoRenderer.h" />
     <ClInclude Include="src\Florencia\Renderer\OpenGL\OpenGL.h" />
     <ClInclude Include="src\Florencia\Renderer\Renderer.h" />
-    <ClInclude Include="src\Florencia\Renderer\SwapChain.h" />
     <ClInclude Include="src\Florencia\Renderer\Vulkan\Vulkan.h" />
     <ClInclude Include="src\Platform\Android\AndroidConsole.h" />
     <ClInclude Include="src\Platform\Android\AndroidWindow.h" />
@@ -365,21 +377,21 @@
     <ClInclude Include="src\Platform\Linux\LinuxWindow.h" />
     <ClInclude Include="src\Platform\MacOS\MacConsole.h" />
     <ClInclude Include="src\Platform\MacOS\MacWindow.h" />
-    <ClInclude Include="src\Platform\Platform.h" />
+    <ClInclude Include="src\Florencia\Core\PlatformDetection.h" />
     <ClInclude Include="src\Platform\Windows\WConsole.h" />
     <ClInclude Include="src\Platform\Windows\Wwindow.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Florencia\Renderer\RendererAPI.cpp" />
+    <ClCompile Include="src\Florencia\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\Florencia\Core\Application.cpp" />
     <ClCompile Include="src\Florencia\Core\Window.cpp" />
     <ClCompile Include="src\Florencia\Renderer\Camera.cpp" />
     <ClCompile Include="src\Florencia\Renderer\DirectX\DirectX11.cpp" />
     <ClCompile Include="src\Florencia\Renderer\DirectX\DirectX12.cpp" />
     <ClCompile Include="src\Florencia\Renderer\Metal\Metal.cpp" />
-    <ClCompile Include="src\Florencia\Renderer\None\NoRenderer.cpp" />
     <ClCompile Include="src\Florencia\Renderer\OpenGL\OpenGL.cpp" />
     <ClCompile Include="src\Florencia\Renderer\Renderer.cpp" />
-    <ClCompile Include="src\Florencia\Renderer\SwapChain.cpp" />
     <ClCompile Include="src\Florencia\Renderer\Vulkan\Vulkan.cpp" />
     <ClCompile Include="src\Platform\Android\AndroidConsole.cpp" />
     <ClCompile Include="src\Platform\Android\AndroidWindow.cpp" />

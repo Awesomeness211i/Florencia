@@ -1,11 +1,11 @@
 #include "DirectX12.h"
 
 namespace Florencia {
-	DirectX12::DirectX12(API api) : Renderer(api) {
-		m_Api = api;
+	DirectX12::DirectX12() {
+
 	}
 
-	void DirectX12::Init(void* window) {
+	void DirectX12::Init() {
 
 	}
 
@@ -13,7 +13,7 @@ namespace Florencia {
 
 	}
 
-	void DirectX12::SetClearColor(float r, float g, float b, float a) {
+	void DirectX12::SetClearColor(const FloMath::Vec4<float>& color) {
 
 	}
 

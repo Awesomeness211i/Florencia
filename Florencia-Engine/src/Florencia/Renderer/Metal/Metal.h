@@ -1,16 +1,16 @@
 #pragma once
-#include <Renderer/Renderer.h>
+#include <Renderer/RendererAPI.h>
 
 namespace Florencia {
 
-	class Metal : public Renderer {
+	class Metal : public RendererAPI {
 	public:
-		Metal(API api);
+		Metal();
 
-		void Init(void* window) override;
+		void Init() override;
 
 		void Clear() override;
-		void SetClearColor(float r, float g, float b, float a) override;
+		void SetClearColor(const FloMath::Vec4<float>& color) override;
 	private:
 
 	};

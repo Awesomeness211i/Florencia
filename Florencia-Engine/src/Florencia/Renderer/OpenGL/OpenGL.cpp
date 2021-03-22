@@ -1,22 +1,23 @@
 #include "OpenGL.h"
-#include <GL/glew.h>
+#include <iostream>
+#include <GLFW/glfw3.h>
 
 namespace Florencia {
 
-    OpenGL::OpenGL(API api) : Renderer(api) {
+	OpenGL::OpenGL() {
+		
+	}
 
-    }
+	void OpenGL::Init() {
+		
+	}
 
-    void OpenGL::Init(void* window) {
+	void OpenGL::Clear() {
 
-    }
+	}
 
-    void OpenGL::Clear() {
+	void OpenGL::SetClearColor(const FloMath::Vec4<float>& color) {
 
-    }
-
-    void OpenGL::SetClearColor(float r, float g, float b, float a) {
-
-    }
-
+	}
+	
 }

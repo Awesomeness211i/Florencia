@@ -1,5 +1,5 @@
 #include "Window.h"
-#include <Platform/Platform.h>
+#include <Florencia/Core/PlatformDetection.h>
 
 #if defined(FLO_PLATFORM_WINDOWS) || defined(FLO_PLATFORM_WINDOWS_32)
 	#include <Platform/Windows/Wwindow.h>

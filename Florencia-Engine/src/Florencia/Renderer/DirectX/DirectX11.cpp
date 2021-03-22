@@ -2,11 +2,11 @@
 #include "DirectX11.h"
 
 namespace Florencia {
-	DirectX11::DirectX11(API api) : Renderer(api) {
+	DirectX11::DirectX11() {
 
 	}
 
-	void DirectX11::Init(void* window) {
+	void DirectX11::Init() {
 
 	}
 
@@ -14,7 +14,7 @@ namespace Florencia {
 		
 	}
 
-	void DirectX11::SetClearColor(float r, float g, float b, float a) {
+	void DirectX11::SetClearColor(const FloMath::Vec4<float>& color) {
 		
 	}
 

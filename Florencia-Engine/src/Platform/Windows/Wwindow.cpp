@@ -45,16 +45,12 @@ namespace Florencia {
 		GetWindowRect(size, &desktop);
 		AdjustWindowRect(&window, WS_OVERLAPPEDWINDOW, false);
 		m_Handle = CreateWindowExA(
-			NULL, "Window", &m_Data.Name[0],
+			NULL, "Window", &m_Data.Title[0],
 			WS_MAXIMIZEBOX|WS_MINIMIZEBOX|WS_CAPTION|WS_SYSMENU|WS_VISIBLE,
 			(desktop.right - m_Data.Width) / 2,
 			(desktop.bottom - m_Data.Height) / 2,
 			window.right - window.left, window.bottom - window.top,
 			nullptr, nullptr, instance, 0);
-
-		//Setup Renderer
-		renderer = renderer->Create(m_Data.API);
-		renderer->Init(m_Handle);
 	}
 
 	Wwindow::~Wwindow() {
@@ -65,10 +61,6 @@ namespace Florencia {
 		#endif
 		HINSTANCE instance = GetModuleHandleA(0);
 		UnregisterClassW(L"Window", instance);
-	}
-
-	void Wwindow::OnRender() {
-		renderer->Clear();
 	}
 
 	bool Wwindow::OnUpdate() {

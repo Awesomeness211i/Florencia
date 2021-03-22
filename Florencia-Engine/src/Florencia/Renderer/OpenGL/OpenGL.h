@@ -1,18 +1,18 @@
 #pragma once
-#include <Renderer/Renderer.h>
+#include <Renderer/RendererAPI.h>
 
 namespace Florencia {
 
-	class OpenGL : public Renderer {
+	class OpenGL : public RendererAPI {
 	public:
-		OpenGL(API api);
+		OpenGL();
 
-		void Init(void* window) override;
+		void Init() override;
 
 		void Clear() override;
-		void SetClearColor(float r, float g, float b, float a) override;
+		void SetClearColor(const FloMath::Vec4<float>& color) override;
 	private:
-
+		
 	};
 
 }

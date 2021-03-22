@@ -2,11 +2,10 @@
 
 namespace Florencia {
 
-	Metal::Metal(API api) : Renderer(api) {
-		m_Api = api;
+	Metal::Metal() {
 	}
 
-	void Metal::Init(void* window) {
+	void Metal::Init() {
 
 	}
 
@@ -14,7 +13,7 @@ namespace Florencia {
 
 	}
 
-	void Metal::SetClearColor(float r, float g, float b, float a) {
+	void Metal::SetClearColor(const FloMath::Vec4<float>& color) {
 
 	}
 

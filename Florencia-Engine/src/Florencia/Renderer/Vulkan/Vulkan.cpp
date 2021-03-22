@@ -1,13 +1,12 @@
 #include "Vulkan.h"
-#include <vulkan/vulkan.h>
 
 namespace Florencia {
 
-    Vulkan::Vulkan(API api) : Renderer(api) {
-        m_Api = api;
+    Vulkan::Vulkan() {
+
     }
 
-    void Vulkan::Init(void* window) {
+    void Vulkan::Init() {
 
     }
 
@@ -15,7 +14,7 @@ namespace Florencia {
 
     }
 
-    void Vulkan::SetClearColor(float r, float g, float b, float a) {
+    void Vulkan::SetClearColor(const FloMath::Vec4<float>& color) {
 
     }
 
