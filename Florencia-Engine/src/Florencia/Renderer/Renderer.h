@@ -13,7 +13,7 @@ namespace Florencia {
 		static void BeginScene();
 		static void EndScene();
 
-		//static void Submit(const Ref<Shader>& shader, const Ref<VertexArray>& vertexArray, const FloMath::Mat4<float>& transform);
+		//static void Submit(const Shader& shader, const VertexArray& vertexArray, const FloMath::Mat4<float>& transform);
 		
 		static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
 	};

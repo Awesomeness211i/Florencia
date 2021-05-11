@@ -1,4 +1,3 @@
-#include <wrl.h>
 #include "DirectX11.h"
 
 namespace Florencia {

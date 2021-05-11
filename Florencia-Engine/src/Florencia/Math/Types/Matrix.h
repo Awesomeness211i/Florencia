@@ -3,7 +3,7 @@
 
 namespace FloMath {
 
-	template<typename T, unsigned Rows, unsigned Columns>
+	template<typename T, size_t Rows, size_t Columns>
 	class Matrix {
 	public:
 		template<typename... Args>
@@ -16,7 +16,7 @@ namespace FloMath {
 		Vector<T, Rows>& at(unsigned index) {
 			if (index < Columns)
 				return data[index];
-			//throw;
+			throw std::runtime_error("Memory Access Violation");
 		}
 	private:
 		Vector<T, Rows> data[Columns];

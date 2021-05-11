@@ -5,7 +5,7 @@ namespace Florencia {
 	FLO_APPLICATION(FloEditor) {
 	public:
 		FloEditor(const ApplicationProps& props) : Application(props) {
-
+			
 		}
 
 	};

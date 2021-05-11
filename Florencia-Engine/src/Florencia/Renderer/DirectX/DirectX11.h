@@ -3,7 +3,6 @@
 
 namespace Florencia {
 
-	//Test Functions for now
 	class DirectX11 : public RendererAPI {
 	public:
 		DirectX11();

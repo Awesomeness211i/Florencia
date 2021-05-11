@@ -1,8 +1,9 @@
 #pragma once
+#include <stdexcept>
 
 namespace FloMath {
 
-	template<typename T, unsigned Rows>
+	template<typename T, size_t Rows>
 	class Vector {
 	public:
 		template<typename... Args>
@@ -15,7 +16,7 @@ namespace FloMath {
 		T& at(unsigned index) {
 			if (index < Rows)
 				return data[index];
-			//throw;
+			throw std::runtime_error("Memory Access Violation");
 		}
 	private:
 		T data[Rows];

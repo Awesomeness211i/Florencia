@@ -23,7 +23,7 @@ namespace Florencia {
 
 	}
 
-	/*void Submit(const Ref<Shader>& shader, const Ref<VertexArray>& vertexArray, const FloMath::Mat4<float>& transform) {
+	/*void Submit(const Shader& shader, const VertexArray& vertexArray, const FloMath::Mat4<float>& transform) {
 
 	}*/
 
