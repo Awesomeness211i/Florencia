@@ -12,7 +12,7 @@
 
 namespace Florencia {
 
-	RendererAPI::API RendererAPI::s_API = RendererAPI::API::None;
+	RendererAPI::API RendererAPI::s_API = RendererAPI::API::OpenGL;
 
 	RendererAPI* RendererAPI::Create() {
 		switch (s_API) {

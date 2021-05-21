@@ -1,15 +1,15 @@
 #pragma once
 #include <functional>
-#include <Math/FloMath.h>
+#include <Florencia/Math/FloMath.h>
 
 namespace Florencia {
 
 	struct WindowProps {
-		WindowProps(const std::string& title, Uint32 width, Uint32 height, bool vsync)
+		WindowProps(const std::string& title, Uint32 width = 0, Uint32 height = 0, bool vsync = true)
 			: VSync(vsync), Title(title), Width(width), Height(height) {}
-		bool VSync = true;
-		std::string Title = "";
-		Uint32 Width = 0, Height = 0;
+		bool VSync;
+		std::string Title;
+		Uint32 Width, Height;
 	};
 
 	class Window {

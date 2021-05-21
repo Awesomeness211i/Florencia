@@ -1,8 +1,9 @@
 #pragma once
-#include "../../Florencia/Core/Window.h"
+#include <Florencia/Core/Window.h>
+#include <Florencia/Renderer/GraphicsContext.h>
 #include "WConsole.h"
 
-struct HWND__; typedef HWND__* HWND;
+struct HWND__;
 
 namespace Florencia {
 
@@ -24,8 +25,12 @@ namespace Florencia {
 
 		void* GetWindowHandle() override { return m_Handle; }
 	private:
+		void Init(const WindowProps& props);
+		void Shutdown();
+
+		HWND__* m_Handle;
 		WindowProps m_Data;
-		HWND m_Handle;
+		GraphicsContext* m_Context;
 
 		#ifdef _DEBUG
 		WConsole* m_Console;

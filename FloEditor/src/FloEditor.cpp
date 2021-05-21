@@ -4,14 +4,14 @@ namespace Florencia {
 
 	FLO_APPLICATION(FloEditor) {
 	public:
-		FloEditor(const ApplicationProps& props) : Application(props) {
+		FloEditor(const WindowProps& props) : Application(props) {
 			
 		}
 
 	};
 
 	Application* CreateApplication() {
-		ApplicationProps m_Data("FloEditor");
+		WindowProps m_Data("FloEditor", 1080, 720);
 		return new FloEditor(m_Data);
 	}
 }

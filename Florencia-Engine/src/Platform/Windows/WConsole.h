@@ -1,5 +1,5 @@
 #pragma once
-#include "../../Florencia/Math/FloMath.h"
+#include <Florencia/Math/FloMath.h>
 
 namespace Florencia {
 

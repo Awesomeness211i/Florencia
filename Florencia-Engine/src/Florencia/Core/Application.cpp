@@ -2,14 +2,12 @@
 
 namespace Florencia {
 
-	Application::Application(const ApplicationProps& props) {
-		m_Window = Window::Create(WindowProps(props.Title, props.Width, props.Height, props.VSync));
+	Application::Application(const WindowProps& props) {
+		m_Window = Window::Create(WindowProps(props));
 		Renderer::Init();
 	}
 
-	Application::~Application() {
-		delete m_Window;
-	}
+	Application::~Application() { delete m_Window; }
 
 	void Application::Run() {
 		while (m_Running) {

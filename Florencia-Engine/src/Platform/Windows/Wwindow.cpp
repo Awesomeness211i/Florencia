@@ -16,9 +16,18 @@ namespace Florencia {
 		}
 	}
 
-	Wwindow::Wwindow(const WindowProps& props) : m_Data(props) {
+	Wwindow::Wwindow(const WindowProps& props) : m_Data(props) { Init(props); }
+
+	void Wwindow::Init(const WindowProps& props)
+	{
+		//Create Console
+		#ifdef _DEBUG
+		m_Console = new WConsole();
+		m_Console->CreateNewConsole();
+		#endif
+		
 		HINSTANCE instance = GetModuleHandleA(0);
-		WNDCLASSEXA wc = {0};
+		WNDCLASSEXA wc = { 0 };
 		wc.cbSize = sizeof(wc);
 		wc.style = CS_OWNDC;
 		wc.lpfnWndProc = WndProc;
@@ -33,28 +42,26 @@ namespace Florencia {
 		wc.hIconSm = nullptr;
 		RegisterClassExA(&wc);
 
-		//Create Console
-		#ifdef _DEBUG
-		m_Console = new WConsole();
-		m_Console->CreateNewConsole();
-		#endif
-
 		//Create Window
-		RECT desktop = {0}, window = { 0, 0, (LONG)m_Data.Width, (LONG)m_Data.Height };
+		RECT desktop = { 0 }, window = { 0, 0, (LONG)m_Data.Width, (LONG)m_Data.Height };
 		HWND size = GetDesktopWindow();
 		GetWindowRect(size, &desktop);
 		AdjustWindowRect(&window, WS_OVERLAPPEDWINDOW, false);
 		m_Handle = CreateWindowExA(
 			NULL, "Window", &m_Data.Title[0],
-			WS_MAXIMIZEBOX|WS_MINIMIZEBOX|WS_CAPTION|WS_SYSMENU|WS_VISIBLE,
+			WS_MAXIMIZEBOX | WS_MINIMIZEBOX | WS_CAPTION | WS_SYSMENU | WS_VISIBLE,
 			(desktop.right - m_Data.Width) / 2,
 			(desktop.bottom - m_Data.Height) / 2,
 			window.right - window.left, window.bottom - window.top,
 			nullptr, nullptr, instance, 0);
+
+		m_Context = GraphicsContext::Create(m_Handle);
+		if (m_Context) { m_Context->Init(); }
 	}
 
-	Wwindow::~Wwindow() {
-		//Destroy Console
+	Wwindow::~Wwindow() { Shutdown(); }
+
+	void Wwindow::Shutdown() {
 		#ifdef _DEBUG
 		m_Console->ReleaseConsole();
 		delete m_Console;
