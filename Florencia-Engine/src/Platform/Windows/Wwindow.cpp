@@ -21,7 +21,7 @@ namespace Florencia {
 	void Wwindow::Init(const WindowProps& props)
 	{
 		//Create Console
-		#ifdef _DEBUG
+		#ifdef FLO_DEBUG
 		m_Console = new WConsole();
 		m_Console->CreateNewConsole();
 		#endif

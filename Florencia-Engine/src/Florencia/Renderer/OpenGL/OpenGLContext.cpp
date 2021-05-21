@@ -13,7 +13,7 @@ namespace Florencia {
 	void OpenGLContext::Init() {
 		glfwMakeContextCurrent(m_WindowHandle);
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-		//if (!status) { __debugbreak(); }
+		if (!status) { __debugbreak(); }
 	}
 
 	void OpenGLContext::SwapBuffers() {

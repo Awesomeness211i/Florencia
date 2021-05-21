@@ -32,7 +32,7 @@ namespace Florencia {
 		WindowProps m_Data;
 		GraphicsContext* m_Context;
 
-		#ifdef _DEBUG
+		#ifdef FLO_DEBUG
 		WConsole* m_Console;
 		#endif
 	};
