@@ -6,20 +6,15 @@ namespace Florencia {
 
 	LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 		switch (msg) {
-		case WM_QUIT:
-			return 0;
-		case WM_DESTROY:
-			PostQuitMessage((int)wParam);
-			return 0;
-		default:
-			return DefWindowProcA(hWnd, msg, wParam, lParam);
+		case WM_QUIT: return 0;
+		case WM_DESTROY: PostQuitMessage((int)wParam); return 0;
+		default: return DefWindowProcA(hWnd, msg, wParam, lParam);
 		}
 	}
 
 	Wwindow::Wwindow(const WindowProps& props) : m_Data(props) { Init(props); }
 
-	void Wwindow::Init(const WindowProps& props)
-	{
+	void Wwindow::Init(const WindowProps& props) {
 		//Create Console
 		#ifdef FLO_DEBUG
 		m_Console = new WConsole();
@@ -48,7 +43,7 @@ namespace Florencia {
 		GetWindowRect(size, &desktop);
 		AdjustWindowRect(&window, WS_OVERLAPPEDWINDOW, false);
 		m_Handle = CreateWindowExA(
-			NULL, "Window", &m_Data.Title[0],
+			NULL, "Window", m_Data.Title.c_str(),
 			WS_MAXIMIZEBOX | WS_MINIMIZEBOX | WS_CAPTION | WS_SYSMENU | WS_VISIBLE,
 			(desktop.right - m_Data.Width) / 2,
 			(desktop.bottom - m_Data.Height) / 2,
@@ -76,11 +71,12 @@ namespace Florencia {
 			TranslateMessage(&m_Message);
 			DispatchMessageA(&m_Message);
 		}
+		if (m_Context) { m_Context->SwapBuffers(); }
 		return m_Message.message != WM_QUIT;
 	}
 
 	void Wwindow::SetVSync(bool enabled) {
-		m_Data.VSync = enabled;
+		if (m_Context) { m_Context->SetVSync(enabled); }
 	}
 
 	void Wwindow::SetWidth(Uint32 width) {
@@ -92,6 +88,8 @@ namespace Florencia {
 	}
 
 	bool Wwindow::IsVSync() const {
-		return m_Data.VSync;
+		if (m_Context) { return m_Context->IsVSync(); }
+
+		return false;
 	}
 }

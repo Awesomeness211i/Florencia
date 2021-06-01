@@ -5,9 +5,8 @@
 namespace Florencia {
 
 	struct WindowProps {
-		WindowProps(const std::string& title, Uint32 width = 0, Uint32 height = 0, bool vsync = true)
-			: VSync(vsync), Title(title), Width(width), Height(height) {}
-		bool VSync;
+		WindowProps(const std::string& title, Uint32 width = 0, Uint32 height = 0)
+			:Title(title), Width(width), Height(height) {}
 		std::string Title;
 		Uint32 Width, Height;
 	};
