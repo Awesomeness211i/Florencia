@@ -4,8 +4,8 @@
 
 #include <Florencia/Core/PlatformDetection.h>
 #if defined(FLO_PLATFORM_WINDOWS) || defined(FLO_PLATFORM_WINDOWS_32)
-#include "DirectX/DirectX12.h"
-#include "DirectX/DirectX11.h"
+#include "DirectX11/DirectX11.h"
+#include "DirectX12/DirectX12.h"
 #elif defined(FLO_PLATFORM_MACOS)
 #include "Metal/Metal.h"
 #endif

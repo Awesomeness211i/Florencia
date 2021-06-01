@@ -57,7 +57,7 @@ namespace Florencia {
 	Wwindow::~Wwindow() { Shutdown(); }
 
 	void Wwindow::Shutdown() {
-		#ifdef _DEBUG
+		#ifdef FLO_DEBUG
 		m_Console->ReleaseConsole();
 		delete m_Console;
 		#endif
@@ -75,21 +75,14 @@ namespace Florencia {
 		return m_Message.message != WM_QUIT;
 	}
 
-	void Wwindow::SetVSync(bool enabled) {
-		if (m_Context) { m_Context->SetVSync(enabled); }
-	}
+	void Wwindow::SetVSync(bool enabled) { if (m_Context) { m_Context->SetVSync(enabled); } }
 
-	void Wwindow::SetWidth(Uint32 width) {
-		m_Data.Width = width;
-	}
+	void Wwindow::SetWidth(Uint32 width) { m_Data.Width = width; }
 
-	void Wwindow::SetHeight(Uint32 height) {
-		m_Data.Height = height;
-	}
+	void Wwindow::SetHeight(Uint32 height) { m_Data.Height = height; }
 
 	bool Wwindow::IsVSync() const {
 		if (m_Context) { return m_Context->IsVSync(); }
-
 		return false;
 	}
 }

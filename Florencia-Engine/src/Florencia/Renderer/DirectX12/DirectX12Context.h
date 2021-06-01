@@ -1,21 +1,18 @@
 #pragma once
 #include <Florencia/Renderer/GraphicsContext.h>
 
-struct GLFWwindow;
-
 namespace Florencia {
 
-	class OpenGLContext : public GraphicsContext {
+	class DirectX12Context : public GraphicsContext {
 	public:
-		OpenGLContext(GLFWwindow* windowHandle, bool vsync);
+		DirectX12Context(void* window, bool vsync);
 
 		void Init() override;
 		void SwapBuffers() override;
 		bool IsVSync() const override;
 		void SetVSync(bool enabled) override;
 	private:
-		GLFWwindow* m_WindowHandle;
-		bool m_Vsync;
+
 	};
 
 }

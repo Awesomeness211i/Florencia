@@ -11,7 +11,7 @@ namespace Florencia {
 		virtual bool IsVSync() const = 0;
 		virtual void SetVSync(bool enabled) = 0;
 
-		static GraphicsContext* Create(void* window);
+		static GraphicsContext* Create(void* window, bool vsync = true);
 	};
 
 }
