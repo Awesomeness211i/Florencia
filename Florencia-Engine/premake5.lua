@@ -5,8 +5,8 @@ project "Florencia-Engine"
 	cppdialect "C++17"
 	staticruntime "off"
 	--output dirs
-	targetdir ("%{wks.location}/bin/" .. outputdir .. "%{prj.name}")
-	objdir ("%{wks.location}/bin-int/" .. outputdir .. "%{prj.name}")
+	targetdir ("%{wks.location}/bin/" .. outputdir .. "/%{prj.name}")
+	objdir ("%{wks.location}/bin-int/" .. outputdir .. "/%{prj.name}")
 	--file types and directories to include
 	files {
 		"src/**.h",
