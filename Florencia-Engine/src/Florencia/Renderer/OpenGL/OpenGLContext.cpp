@@ -6,19 +6,19 @@
 
 namespace Florencia {
 
-	OpenGLContext::OpenGLContext(GLFWwindow* windowHandle, bool vsync)
+	OpenGLContext::OpenGLContext(void* windowHandle, bool vsync)
 		:m_WindowHandle(windowHandle), m_Vsync(vsync)
 	{
 	}
 
 	void OpenGLContext::Init() {
-		glfwMakeContextCurrent(m_WindowHandle);
+		glfwMakeContextCurrent(nullptr);
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		if (!status) { std::cout << "failed to load glad!\n"; }
 	}
 
 	void OpenGLContext::SwapBuffers() {
-		glfwSwapBuffers(m_WindowHandle);
+		glfwSwapBuffers(nullptr);
 	}
 
 	bool OpenGLContext::IsVSync() const {

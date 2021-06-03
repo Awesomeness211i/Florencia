@@ -12,7 +12,8 @@ namespace Florencia {
 		bool IsVSync() const override;
 		void SetVSync(bool enabled) override;
 	private:
-
+		void* m_WindowHandle;
+		bool m_Vsync;
 	};
 
 }

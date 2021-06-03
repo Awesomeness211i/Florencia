@@ -1,11 +1,12 @@
-#include <Florencia.h>
+#include "EditorLayer.h"
+#include <Florencia/Core/EntryPoint.h>
 
 namespace Florencia {
 
 	FLO_APPLICATION(FloEditor) {
 	public:
 		FloEditor(const WindowProps& props) : Application(props) {
-			
+			AddLayer(new EditorLayer());
 		}
 
 	};
