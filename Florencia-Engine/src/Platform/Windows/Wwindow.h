@@ -14,14 +14,14 @@ namespace Florencia {
 
 		bool OnUpdate() override;
 
-		Uint32 GetWidth() const override { return m_Data.Width; }
-		Uint32 GetHeight() const override { return m_Data.Height; }
+		uint32_t GetWidth() const override { return m_Data.Width; }
+		uint32_t GetHeight() const override { return m_Data.Height; }
 
 		//Window Attributes
 		bool IsVSync() const override;
 		void SetVSync(bool enabled) override;
-		void SetWidth(Uint32 width) override;
-		void SetHeight(Uint32 height) override;
+		void SetWidth(uint32_t width) override;
+		void SetHeight(uint32_t height) override;
 
 		void* GetWindowHandle() override { return m_Handle; }
 	private:

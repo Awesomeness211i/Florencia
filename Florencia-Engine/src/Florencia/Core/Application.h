@@ -5,6 +5,11 @@
 #include <Florencia/Core/Layer.h>
 #include <Florencia/Core/LayerStack.h>
 
+#include <Florencia/Events/Event.h>
+#include <Florencia/Events/KeyEvent.h>
+#include <Florencia/Events/MouseEvent.h>
+#include <Florencia/Events/ApplicationEvent.h>
+
 namespace Florencia {
 
 	/*struct ApplicationProps {
@@ -22,6 +27,8 @@ namespace Florencia {
 
 		void Run();
 
+		void OnEvent(Event& e);
+
 		void AddLayer(Layer* layer);
 		void AddOverlay(Layer* layer);
 		void RemoveLayer(Layer* layer);
@@ -30,10 +37,15 @@ namespace Florencia {
 		Window* GetWindow() { return m_Window; }
 		
 	private:
+		bool OnWindowClose(WindowCloseEvent& e);
+		bool OnWindowResize(WindowResizeEvent& e);
+
 		Window* m_Window;
 		LayerStack m_LayerStack;
 		float m_LastFrameTime = 0.0f;
 		bool m_Running = true, m_Minimized = false;
+	protected:
+		EventDispatcher m_EventDispatcher;
 	};
 
 	Application* CreateApplication();

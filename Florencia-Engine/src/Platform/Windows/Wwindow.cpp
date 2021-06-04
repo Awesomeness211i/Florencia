@@ -77,9 +77,9 @@ namespace Florencia {
 
 	void Wwindow::SetVSync(bool enabled) { if (m_Context) { m_Context->SetVSync(enabled); } }
 
-	void Wwindow::SetWidth(Uint32 width) { m_Data.Width = width; }
+	void Wwindow::SetWidth(uint32_t width) { m_Data.Width = width; }
 
-	void Wwindow::SetHeight(Uint32 height) { m_Data.Height = height; }
+	void Wwindow::SetHeight(uint32_t height) { m_Data.Height = height; }
 
 	bool Wwindow::IsVSync() const {
 		if (m_Context) { return m_Context->IsVSync(); }

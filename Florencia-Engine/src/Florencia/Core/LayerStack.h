@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
+#include <stdint.h>
 #include <Florencia/Core/Layer.h>
-#include <Florencia/Math/FloMath.h>
 
 namespace Florencia {
 
@@ -27,7 +27,7 @@ namespace Florencia {
 
 	private:
 		std::vector<Layer*> m_Layers;
-		Uint32 m_InsertIndex = 0;
+		uint32_t m_InsertIndex = 0;
 	};
 
 }

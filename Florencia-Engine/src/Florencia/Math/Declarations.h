@@ -1,14 +1,4 @@
 #pragma once
-#include <stdint.h>
-
-using int8 = int8_t;
-using int16 = int16_t;
-using int32 = int32_t;
-using int64 = int64_t;
-using Uint8 = uint8_t;
-using Uint16 = uint16_t;
-using Uint32 = uint32_t;
-using Uint64 = uint64_t;
 
 namespace FloMath {
 
