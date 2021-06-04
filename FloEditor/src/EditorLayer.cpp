@@ -1,15 +1,18 @@
 #include "EditorLayer.h"
 
 namespace Florencia {
-	EditorLayer::EditorLayer() {
 
-	}
-
-	EditorLayer::~EditorLayer() {
-
-	}
+	EditorLayer::EditorLayer() {}
 
 	void EditorLayer::OnAdd() {
+
+	}
+
+	void EditorLayer::Update(Timestep ts) {
+
+	}
+
+	void EditorLayer::Render() {
 
 	}
 
@@ -18,14 +21,6 @@ namespace Florencia {
 	}
 
 	void EditorLayer::OnRemove() {
-
-	}
-
-	void EditorLayer::Render() {
-
-	}
-
-	void EditorLayer::Update(Timestep ts) {
 
 	}
 
