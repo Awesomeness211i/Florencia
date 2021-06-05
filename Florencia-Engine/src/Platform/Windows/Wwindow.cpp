@@ -65,14 +65,13 @@ namespace Florencia {
 		UnregisterClassW(L"Window", instance);
 	}
 
-	bool Wwindow::OnUpdate() {
+	void Wwindow::OnUpdate() {
 		MSG m_Message = { 0 };
 		if (PeekMessageW(&m_Message, 0, 0, 0, PM_REMOVE)) {
 			TranslateMessage(&m_Message);
 			DispatchMessageA(&m_Message);
 		}
 		if (m_Context) { m_Context->SwapBuffers(); }
-		return m_Message.message != WM_QUIT;
 	}
 
 	void Wwindow::SetVSync(bool enabled) { if (m_Context) { m_Context->SetVSync(enabled); } }

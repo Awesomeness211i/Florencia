@@ -12,10 +12,12 @@ namespace Florencia {
 		Wwindow(const WindowProps& props);
 		~Wwindow();
 
-		bool OnUpdate() override;
+		void OnUpdate() override;
 
 		uint32_t GetWidth() const override { return m_Data.Width; }
 		uint32_t GetHeight() const override { return m_Data.Height; }
+
+		void SetEventCallback(const EventCallbackFn& Fn) { m_CallbackFunction = Fn; }
 
 		//Window Attributes
 		bool IsVSync() const override;
@@ -31,6 +33,8 @@ namespace Florencia {
 		HWND__* m_Handle;
 		WindowProps m_Data;
 		GraphicsContext* m_Context;
+
+		EventCallbackFn m_CallbackFunction;
 
 		#ifdef FLO_DEBUG
 		WConsole* m_Console;
