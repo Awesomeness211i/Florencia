@@ -1,6 +1,7 @@
 #pragma once
 #include <stdint.h>
 #include <functional>
+#include <Florencia/Events/Event.h>
 
 namespace Florencia {
 
@@ -12,12 +13,16 @@ namespace Florencia {
 
 	class Window {
 	public:
+		using EventCallbackFn = std::function<void(Event&)>;
+
 		virtual ~Window() = default;
 
-		virtual bool OnUpdate() = 0;
+		virtual void OnUpdate() = 0;
 
 		virtual uint32_t GetWidth() const = 0;
 		virtual uint32_t GetHeight() const = 0;
+
+		virtual void SetEventCallback(const EventCallbackFn& Fn) = 0;
 
 		//Window Attributes
 		virtual bool IsVSync() const = 0;

@@ -1,9 +1,10 @@
 ﻿#pragma once
 #include <math.h>
-#include "../Declarations.h"
+#include <Florencia/Math/Declarations.h>
 
 namespace FloMath {
 
+	//index determines accuracy of computation
 	template<typename T, unsigned index = 5>
 	T ln(T x) {
 		double sum = 0.0;

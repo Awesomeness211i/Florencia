@@ -2,9 +2,7 @@
 
 namespace Florencia {
 
-	VulkanContext::VulkanContext(void* windowHandle, bool vsync) {
-
-	}
+	VulkanContext::VulkanContext(void* window, bool vsync) : m_WindowHandle(window), m_Vsync(vsync) {}
 
 	void VulkanContext::Init() {
 

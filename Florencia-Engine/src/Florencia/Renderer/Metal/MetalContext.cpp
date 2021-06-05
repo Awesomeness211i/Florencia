@@ -2,9 +2,7 @@
 
 namespace Florencia {
 
-	MetalContext::MetalContext(void* windowHandle, bool vsync) {
-
-	}
+	MetalContext::MetalContext(void* window, bool vsync) : m_WindowHandle(window), m_Vsync(vsync) {}
 
 	void MetalContext::Init() {
 

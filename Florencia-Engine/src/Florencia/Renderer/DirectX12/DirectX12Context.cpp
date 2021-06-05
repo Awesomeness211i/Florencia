@@ -2,9 +2,7 @@
 
 namespace Florencia {
 
-    DirectX12Context::DirectX12Context(void* window, bool vsync) {
-
-    }
+    DirectX12Context::DirectX12Context(void* window, bool vsync) : m_WindowHandle(window), m_Vsync(vsync) {}
 
     void DirectX12Context::Init() {
 

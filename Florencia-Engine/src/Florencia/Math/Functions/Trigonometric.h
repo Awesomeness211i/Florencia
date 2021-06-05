@@ -1,9 +1,9 @@
 ﻿#pragma once
-#include "../Declarations.h"
-#include "Other.h"
-/*
-TODO: Make the trigonometric functions arcsin() arccos() arctan()
-*/
+#include <Florencia/Math/Declarations.h>
+#include <Florencia/Math/Functions/Other.h>
+
+//TODO: Make the trigonometric functions arcsin() arccos() arctan()
+
 namespace FloMath {
 
 	//In radians

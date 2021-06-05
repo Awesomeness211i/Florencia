@@ -44,8 +44,6 @@ namespace Florencia {
 		LayerStack m_LayerStack;
 		float m_LastFrameTime = 0.0f;
 		bool m_Running = true, m_Minimized = false;
-	protected:
-		EventDispatcher m_EventDispatcher;
 	};
 
 	Application* CreateApplication();

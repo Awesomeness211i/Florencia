@@ -6,6 +6,7 @@ namespace Florencia {
 
 	Application::Application(const WindowProps& props) {
 		m_Window = Window::Create(WindowProps(props));
+		m_Window->SetEventCallback([this](Event& e) ->void { return this->Application::OnEvent(e); });
 		Renderer::Init();
 	}
 
@@ -24,13 +25,14 @@ namespace Florencia {
 					layer->Render();
 				}
 			}
-			m_Running = m_Window->OnUpdate();
+			m_Window->OnUpdate();
 		}
 	}
 
 	void Application::OnEvent(Event& e) {
-		m_EventDispatcher.Dispatch<WindowCloseEvent>(e, [this](auto&&... args) -> decltype(auto) { return this->Application::OnWindowClose(std::forward<decltype(args)>(args)...); });
-		m_EventDispatcher.Dispatch<WindowResizeEvent>(e, [this](auto&&... args) -> decltype(auto) { return this->Application::OnWindowResize(std::forward<decltype(args)>(args)...); });
+		EventDispatcher eventHandler;
+		eventHandler.Dispatch<WindowCloseEvent>(e, [this](WindowCloseEvent& e) -> bool { return this->Application::OnWindowClose(e); });
+		eventHandler.Dispatch<WindowResizeEvent>(e, [this](WindowResizeEvent& e) -> bool { return this->Application::OnWindowResize(e); });
 
 		for (auto it = m_LayerStack.rbegin(); it != m_LayerStack.rend(); ++it) {
 			if (e.Handled) break;
