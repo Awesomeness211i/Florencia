@@ -4,15 +4,23 @@
 
 namespace Florencia {
 
-	LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+	Wwindow::Wwindow(const WindowProps& props) : m_Data(props) { Init(props); }
+
+	long long Wwindow::SetupWindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 		switch (msg) {
-		case WM_QUIT: return 0;
-		case WM_DESTROY: PostQuitMessage((int)wParam); return 0;
-		default: return DefWindowProcA(hWnd, msg, wParam, lParam);
+			case WM_QUIT:
+				return 0;
+			case WM_DESTROY:
+				PostQuitMessage((int)wParam);
+				return 0;
+			default:
+				return DefWindowProcA(hWnd, msg, wParam, lParam);
 		}
 	}
 
-	Wwindow::Wwindow(const WindowProps& props) : m_Data(props) { Init(props); }
+	long long Wwindow::WindowProcedure(UINT msg, WPARAM wParam, LPARAM lParam) {
+		return 0;
+	}
 
 	void Wwindow::Init(const WindowProps& props) {
 		//Create Console
@@ -25,7 +33,7 @@ namespace Florencia {
 		WNDCLASSEXA wc = { 0 };
 		wc.cbSize = sizeof(wc);
 		wc.style = CS_OWNDC;
-		wc.lpfnWndProc = WndProc;
+		wc.lpfnWndProc = SetupWindowProcedure;
 		wc.cbClsExtra = 0;
 		wc.cbWndExtra = 0;
 		wc.hInstance = instance;
