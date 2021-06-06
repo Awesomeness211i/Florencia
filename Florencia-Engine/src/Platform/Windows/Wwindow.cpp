@@ -7,19 +7,33 @@ namespace Florencia {
 	Wwindow::Wwindow(const WindowProps& props) : m_Data(props) { Init(props); }
 
 	long long Wwindow::SetupWindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-		switch (msg) {
-			case WM_QUIT:
-				return 0;
-			case WM_DESTROY:
-				PostQuitMessage((int)wParam);
-				return 0;
-			default:
-				return DefWindowProcA(hWnd, msg, wParam, lParam);
+		Wwindow* pParent;
+		if (msg == WM_NCCREATE) {
+			LPCREATESTRUCT lpcs = reinterpret_cast<LPCREATESTRUCT>(lParam);
+			pParent = static_cast<Wwindow*>(lpcs->lpCreateParams);
+			SetWindowLongPtrW(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(pParent));
 		}
+		else {
+			pParent = reinterpret_cast<Wwindow*>(GetWindowLongPtrW(hWnd, GWLP_USERDATA));
+			if (!pParent) return DefWindowProc(hWnd, msg, wParam, lParam);
+		}
+		if(pParent) return pParent->WindowProcedure(hWnd, msg, wParam, lParam);
+		return DefWindowProcA(hWnd, msg, wParam, lParam);
 	}
 
-	long long Wwindow::WindowProcedure(UINT msg, WPARAM wParam, LPARAM lParam) {
-		return 0;
+	long long Wwindow::WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+		switch (msg) {
+		case WM_QUIT:
+			return 0;
+		case WM_DESTROY: {
+				WindowCloseEvent e;
+				m_CallbackFunction(e);
+			}
+			PostQuitMessage((int)wParam);
+			return 0;
+		default:
+			return DefWindowProcA(hWnd, msg, wParam, lParam);
+		}
 	}
 
 	void Wwindow::Init(const WindowProps& props) {
@@ -56,7 +70,7 @@ namespace Florencia {
 			(desktop.right - m_Data.Width) / 2,
 			(desktop.bottom - m_Data.Height) / 2,
 			window.right - window.left, window.bottom - window.top,
-			nullptr, nullptr, instance, 0);
+			nullptr, nullptr, instance, this);
 
 		m_Context = GraphicsContext::Create(m_Handle);
 		if (m_Context) { m_Context->Init(); }

@@ -28,7 +28,7 @@ namespace Florencia {
 		void* GetWindowHandle() override { return m_Handle; }
 
 		static long long SetupWindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-		long long WindowProcedure(UINT msg, WPARAM wParam, LPARAM lParam);
+		long long WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 	private:
 		void Init(const WindowProps& props);
 		void Shutdown();

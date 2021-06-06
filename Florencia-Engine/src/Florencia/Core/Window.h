@@ -1,7 +1,7 @@
 #pragma once
 #include <stdint.h>
 #include <functional>
-#include <Florencia/Events/Event.h>
+#include <Florencia/Events/ApplicationEvent.h>
 
 namespace Florencia {
 
