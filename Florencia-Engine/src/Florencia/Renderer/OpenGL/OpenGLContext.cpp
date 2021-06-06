@@ -6,7 +6,7 @@
 
 namespace Florencia {
 
-	OpenGLContext::OpenGLContext(void* window, bool vsync) :m_WindowHandle(window), m_Vsync(vsync) {}
+	OpenGLContext::OpenGLContext(void* window, bool vsync) : m_WindowHandle(window), m_Vsync(vsync) {}
 
 	void OpenGLContext::Init() {
 		glfwMakeContextCurrent(nullptr);
