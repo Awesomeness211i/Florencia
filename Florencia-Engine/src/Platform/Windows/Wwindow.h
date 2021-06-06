@@ -3,8 +3,6 @@
 #include <Florencia/Renderer/GraphicsContext.h>
 #include "WConsole.h"
 
-struct HWND__;
-
 namespace Florencia {
 
 	class Wwindow : public Window {
@@ -27,8 +25,8 @@ namespace Florencia {
 
 		void* GetWindowHandle() override { return m_Handle; }
 
-		static long long SetupWindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-		long long WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+		static long long SetupWindowProcedure(HWND__* hWnd, unsigned int msg, unsigned long long wParam, long long lParam);
+		long long WindowProcedure(HWND__* hWnd, unsigned int msg, unsigned long long wParam, long long lParam);
 	private:
 		void Init(const WindowProps& props);
 		void Shutdown();
