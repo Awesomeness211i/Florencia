@@ -6,7 +6,7 @@ namespace Florencia {
 	FLO_APPLICATION(FloEditor) {
 	public:
 		FloEditor(const WindowProps& props) : Application(props) {
-			AddLayer(new EditorLayer());
+			AddLayer(new EditorLayer(m_EventHandler));
 		}
 
 	};

@@ -35,7 +35,7 @@ namespace Florencia {
 		void RemoveOverlay(Layer* layer);
 
 		Window* GetWindow() { return m_Window; }
-		
+
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
 		bool OnWindowResize(WindowResizeEvent& e);
@@ -44,6 +44,9 @@ namespace Florencia {
 		LayerStack m_LayerStack;
 		float m_LastFrameTime = 0.0f;
 		bool m_Running = true, m_Minimized = false;
+
+	protected:
+		EventDispatcher m_EventHandler;
 	};
 
 	Application* CreateApplication();

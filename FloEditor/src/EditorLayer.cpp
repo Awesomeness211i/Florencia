@@ -2,9 +2,15 @@
 
 namespace Florencia {
 
-	EditorLayer::EditorLayer() {}
+	EditorLayer::EditorLayer(EventDispatcher& dispatcher) : m_EventHandler(dispatcher) {
+
+	}
 
 	void EditorLayer::OnAdd() {
+
+	}
+
+	void EditorLayer::OnRemove() {
 
 	}
 
@@ -12,15 +18,11 @@ namespace Florencia {
 
 	}
 
-	void EditorLayer::Render() {
-
-	}
-
 	void EditorLayer::OnEvent(Event& e) {
-		
+		//m_EventHandler.Dispatch<KeyPressedEvent>(e, [this](WindowCloseEvent& e) -> bool { return this->EditorLayer::Test(e); });
 	}
 
-	void EditorLayer::OnRemove() {
+	void EditorLayer::Render() {
 
 	}
 
