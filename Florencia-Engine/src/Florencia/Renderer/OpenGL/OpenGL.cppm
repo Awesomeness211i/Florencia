@@ -1,11 +1,12 @@
-#pragma once
-#include <Florencia/Renderer/RendererAPI.h>
+export module OpenGL;
+import <GLFW/glfw3.h>;
+import RendererAPI;
 
-namespace Florencia {
+export namespace Florencia {
 
-	class DirectX11 : public RendererAPI {
+	class OpenGL : public RendererAPI {
 	public:
-		DirectX11();
+		OpenGL();
 
 		void Init() override;
 

@@ -2,10 +2,8 @@
 
 #if defined(_WIN32)
 	#if defined(_WIN64)
-		#include <Windows.h>
 		#define FLO_PLATFORM_WINDOWS
 	#else
-		#include <Windows.h>
 		#define FLO_PLATFORM_WINDOWS_32
 	#endif
 #elif defined(__APPLE__) || defined(__MACH__)

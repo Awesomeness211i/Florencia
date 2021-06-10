@@ -1,8 +1,9 @@
-#pragma once
-#include <Florencia/Events/Event.h>
-#include <Florencia/Core/Timestep.h>
+module;
+export module Layer;
+import Timestep;
+import Event;
 
-namespace Florencia {
+export namespace Florencia {
 
 	class Layer {
 	public:

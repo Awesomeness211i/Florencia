@@ -1,7 +1,9 @@
-#pragma once
-#include "RendererAPI.h"
+module;
+#include <Florencia/Math/FloMath.h>
+export module Renderer;
+import RendererAPI;
 
-namespace Florencia {
+export namespace Florencia {
 
 	class Renderer {
 	public:
@@ -14,7 +16,7 @@ namespace Florencia {
 		static void EndScene();
 
 		//static void Submit(const Shader& shader, const VertexArray& vertexArray, const FloMath::Mat4<float>& transform);
-		
+
 		static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
 	};
 

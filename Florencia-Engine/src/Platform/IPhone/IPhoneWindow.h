@@ -1,5 +1,5 @@
 #pragma once
-#include <Florencia/Core/Window.h>
+import Window;
 
 namespace Florencia {
 

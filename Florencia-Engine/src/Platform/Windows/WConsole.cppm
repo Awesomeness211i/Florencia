@@ -1,11 +1,12 @@
-#pragma once
-#include <stdint.h>
+export module WConsole;
+import <iostream>;
+import <stdint.h>;
 
-namespace Florencia {
+export namespace Florencia {
 
 	class WConsole {
 	public:
-		WConsole(int16_t minLength = 1024) :m_MinLength(minLength) {}
+		WConsole(int16_t minLength = 1024);
 		bool CreateNewConsole();
 		bool ReleaseConsole();
 	private:

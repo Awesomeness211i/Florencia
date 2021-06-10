@@ -1,6 +1,6 @@
-#pragma once
+export module GraphicsContext;
 
-namespace Florencia {
+export namespace Florencia {
 
 	class GraphicsContext {
 	public:

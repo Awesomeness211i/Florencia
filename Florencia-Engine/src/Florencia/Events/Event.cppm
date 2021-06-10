@@ -1,9 +1,7 @@
-#pragma once
-#include <string>
-#include <sstream>
-#include <ostream>
+export module Event;
+import <iostream>;
 
-namespace Florencia {
+export namespace Florencia {
 
 	enum class EventType {
 		None = 0,

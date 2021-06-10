@@ -1,18 +1,18 @@
-#pragma once
-#include <Florencia/Renderer/RendererAPI.h>
+export module DirectX11;
+import RendererAPI;
 
-namespace Florencia {
+export namespace Florencia {
 
-	class OpenGL : public RendererAPI {
+	class DirectX11 : public RendererAPI {
 	public:
-		OpenGL();
+		DirectX11();
 
 		void Init() override;
 
 		void Clear() override;
 		void SetClearColor(const FloMath::Vec4<float>& color) override;
 	private:
-		
+
 	};
 
 }

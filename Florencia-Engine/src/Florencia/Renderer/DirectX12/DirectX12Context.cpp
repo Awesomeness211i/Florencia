@@ -1,4 +1,4 @@
-#include "DirectX12Context.h"
+module DirectX12Context;
 
 namespace Florencia {
 

@@ -1,7 +1,8 @@
-#pragma once
+module;
 #include <stdint.h>
+export module KeyCodes;
 
-namespace Florencia {
+export namespace Florencia {
 
 	using KeyCode = uint16_t;
 

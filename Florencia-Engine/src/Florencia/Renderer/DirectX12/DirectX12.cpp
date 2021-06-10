@@ -1,4 +1,4 @@
-#include "DirectX12.h"
+module DirectX12;
 
 namespace Florencia {
 	DirectX12::DirectX12() {

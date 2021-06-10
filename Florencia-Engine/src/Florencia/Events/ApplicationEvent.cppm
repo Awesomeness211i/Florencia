@@ -1,7 +1,8 @@
-#pragma once
-#include <Florencia/Events/Event.h>
+export module Event.Application;
+import <sstream>;
+import Event;
 
-namespace Florencia {
+export namespace Florencia {
 
 	class WindowResizeEvent : public Event {
 	public:
@@ -30,7 +31,7 @@ namespace Florencia {
 		WindowCloseEvent() = default;
 
 		int GetCategoryFlags() const override { return (int)EventCategory::EventCategoryApplication; }
-		
+
 		const char* GetName() const override { return "WindowClose"; }
 		static EventType GetStaticType() { return EventType::WindowClose; }
 		EventType GetEventType() const override { return GetStaticType(); }

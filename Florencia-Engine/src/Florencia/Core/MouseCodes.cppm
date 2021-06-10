@@ -1,7 +1,8 @@
-#pragma once
+module;
 #include <stdint.h>
+export module MouseCodes;
 
-namespace Florencia {
+export namespace Florencia {
 
 	using MouseCode = uint16_t;
 

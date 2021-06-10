@@ -1,4 +1,4 @@
-#include "Metal.h"
+module Metal;
 
 namespace Florencia {
 

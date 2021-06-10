@@ -1,6 +1,5 @@
-#include <Platform/Windows/FloWindows.h>
-#include "Wwindow.h"
-#include "WConsole.h"
+module Wwindow;
+import WConsole;
 
 namespace Florencia {
 

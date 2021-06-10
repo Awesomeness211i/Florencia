@@ -1,8 +1,6 @@
-#pragma once
+export module Timestep;
 
-#pragma once
-
-namespace Florencia {
+export namespace Florencia {
 
 	class Timestep {
 	public:

@@ -1,7 +1,7 @@
-#pragma once
-#include <Florencia/Renderer/RendererAPI.h>
+export module Metal;
+import RendererAPI;
 
-namespace Florencia {
+export namespace Florencia {
 
 	class Metal : public RendererAPI {
 	public:

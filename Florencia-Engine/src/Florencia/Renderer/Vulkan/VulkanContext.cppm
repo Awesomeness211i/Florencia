@@ -1,11 +1,11 @@
-#pragma once
-#include <Florencia/Renderer/GraphicsContext.h>
+export module VulkanContext;
+import GraphicsContext;
 
-namespace Florencia {
+export namespace Florencia {
 
-	class DirectX11Context : public GraphicsContext {
+	class VulkanContext : public GraphicsContext {
 	public:
-		DirectX11Context(void* window, bool vsync);
+		VulkanContext(void* windowHandle, bool vsync);
 
 		void Init() override;
 		void SwapBuffers() override;

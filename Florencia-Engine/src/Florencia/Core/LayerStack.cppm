@@ -1,9 +1,9 @@
-#pragma once
-#include <vector>
-#include <stdint.h>
-#include <Florencia/Core/Layer.h>
+export module LayerStack;
+import <stdint.h>;
+import <vector>;
+import Layer;
 
-namespace Florencia {
+export namespace Florencia {
 
 	class LayerStack {
 	public:

@@ -1,9 +1,11 @@
-#pragma once
-#include <Florencia/Core/Window.h>
-#include <Florencia/Renderer/GraphicsContext.h>
-#include "WConsole.h"
+export module Wwindow;
+import Event.Application;
+import GraphicsContext;
+import <Windows.h>;
+import WConsole;
+import Window;
 
-namespace Florencia {
+export namespace Florencia {
 
 	class Wwindow : public Window {
 	public:

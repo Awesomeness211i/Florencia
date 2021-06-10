@@ -1,9 +1,9 @@
-#pragma once
-#include <stdint.h>
-#include <functional>
-#include <Florencia/Events/ApplicationEvent.h>
+export module Window;
+import <functional>;
+import <stdint.h>;
+import Event;
 
-namespace Florencia {
+export namespace Florencia {
 
 	struct WindowProps {
 		WindowProps(const std::string& title, uint32_t width = 0, uint32_t height = 0) :Title(title), Width(width), Height(height) {}

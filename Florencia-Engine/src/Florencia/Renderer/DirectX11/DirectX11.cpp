@@ -1,4 +1,4 @@
-#include "DirectX11.h"
+module DirectX11;
 
 namespace Florencia {
 	DirectX11::DirectX11() {

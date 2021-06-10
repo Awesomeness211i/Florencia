@@ -1,8 +1,9 @@
-#pragma once
-#include <Florencia/Events/Event.h>
-#include <Florencia/Core/KeyCodes.h>
+export module Event.Key;
+import <sstream>;
+import KeyCodes;
+import Event;
 
-namespace Florencia {
+export namespace Florencia {
 
 	class KeyEvent : public Event {
 	public:

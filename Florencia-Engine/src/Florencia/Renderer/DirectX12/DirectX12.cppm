@@ -1,11 +1,11 @@
-#pragma once
-#include <Florencia/Renderer/RendererAPI.h>
+export module DirectX12;
+import RendererAPI;
 
-namespace Florencia {
+export namespace Florencia {
 
-	class Vulkan : public RendererAPI {
+	class DirectX12 : public RendererAPI {
 	public:
-		Vulkan();
+		DirectX12();
 
 		void Init() override;
 

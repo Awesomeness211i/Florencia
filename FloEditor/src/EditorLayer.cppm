@@ -1,7 +1,7 @@
-#pragma once
-#include <Florencia.h>
+export module EditorLayer;
+import Layer;
 
-namespace Florencia {
+export namespace Florencia {
 
 	class EditorLayer : public Layer {
 	public:

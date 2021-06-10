@@ -1,13 +1,14 @@
-#include "RendererAPI.h"
-#include "Vulkan/Vulkan.h"
-#include "OpenGL/OpenGL.h"
-
+module;
 #include <Florencia/Core/PlatformDetection.h>
+module RendererAPI;
+import Vulkan;
+import OpenGL;
+
 #if defined(FLO_PLATFORM_WINDOWS) || defined(FLO_PLATFORM_WINDOWS_32)
-#include "DirectX11/DirectX11.h"
-#include "DirectX12/DirectX12.h"
+import DirectX11;
+import DirectX12;
 #elif defined(FLO_PLATFORM_MACOS)
-#include "Metal/Metal.h"
+import Metal;
 #endif
 
 namespace Florencia {

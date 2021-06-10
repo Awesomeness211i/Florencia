@@ -1,11 +1,11 @@
-#pragma once
-#include <Florencia/Renderer/GraphicsContext.h>
+export module DirectX11Context;
+import GraphicsContext;
 
-namespace Florencia {
+export namespace Florencia {
 
-	class DirectX12Context : public GraphicsContext {
+	class DirectX11Context : public GraphicsContext {
 	public:
-		DirectX12Context(void* window, bool vsync);
+		DirectX11Context(void* window, bool vsync);
 
 		void Init() override;
 		void SwapBuffers() override;

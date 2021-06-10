@@ -1,4 +1,5 @@
-#include "VulkanContext.h"
+module VulkanContext;
+import GraphicsContext;
 
 namespace Florencia {
 

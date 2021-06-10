@@ -1,6 +1,7 @@
-#pragma once
-#include <Florencia/Events/Event.h>
-#include <Florencia/Core/MouseCodes.h>
+export module Event.Mouse;
+import <sstream>;
+import MouseCodes;
+import Event;
 
 namespace Florencia {
 

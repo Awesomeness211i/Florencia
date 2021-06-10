@@ -1,7 +1,8 @@
-#pragma once
+module;
 #include <Florencia/Math/FloMath.h>
+export module RendererAPI;
 
-namespace Florencia {
+export namespace Florencia {
 
 	class RendererAPI {
 	public:

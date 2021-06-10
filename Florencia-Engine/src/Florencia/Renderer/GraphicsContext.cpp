@@ -1,16 +1,15 @@
-#include "GraphicsContext.h"
-
+module;
 #include <Florencia/Core/PlatformDetection.h>
+module GraphicsContext;
 #if defined(FLO_PLATFORM_WINDOWS) || defined(FLO_PLATFORM_WINDOWS_32)
-#include <Florencia/Renderer/DirectX11/DirectX11Context.h>
-#include <Florencia/Renderer/DirectX12/DirectX12Context.h>
+import DirectX11Context;
+import DirectX12Context;
 #elif defined(FLO_PLATFORM_MACOS)
-#include <Florencia/Renderer/Metal/MetalContext.h>
+import MetalContext;
 #endif
-
-#include <Florencia/Renderer/Renderer.h>
-#include <Florencia/Renderer/Vulkan/VulkanContext.h>
-#include <Florencia/Renderer/OpenGL/OpenGLContext.h>
+import OpenGLContext;
+import VulkanContext;
+import Renderer;
 
 namespace Florencia {
 

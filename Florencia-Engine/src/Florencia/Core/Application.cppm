@@ -1,24 +1,15 @@
-#pragma once
-#include <Florencia/Core/Window.h>
-#include <Florencia/Renderer/Renderer.h>
+export module Application;
+import Event.Application;
+import Event.Mouse;
+import Event.Key;
+import Event;
 
-#include <Florencia/Core/Layer.h>
-#include <Florencia/Core/LayerStack.h>
+import LayerStack;
+import Renderer;
+import Window;
+import Layer;
 
-#include <Florencia/Events/Event.h>
-#include <Florencia/Events/KeyEvent.h>
-#include <Florencia/Events/MouseEvent.h>
-#include <Florencia/Events/ApplicationEvent.h>
-
-namespace Florencia {
-
-	/*struct ApplicationProps {
-		ApplicationProps(const std::string& title, Uint32 width = 1080, Uint32 height = 720, bool vsync = true)
-			: VSync(vsync), Title(title), Width(width), Height(height) {}
-		bool VSync;
-		std::string Title;
-		Uint32 Width, Height;
-	};*/
+export namespace Florencia {
 
 	class Application {
 	public:

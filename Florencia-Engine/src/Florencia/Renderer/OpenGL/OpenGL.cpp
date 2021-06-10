@@ -1,5 +1,4 @@
-#include "OpenGL.h"
-#include <GLFW/glfw3.h>
+module OpenGL;
 
 namespace Florencia {
 

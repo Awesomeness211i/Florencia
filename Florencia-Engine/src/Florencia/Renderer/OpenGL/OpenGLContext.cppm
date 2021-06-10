@@ -1,9 +1,9 @@
-#pragma once
-#include <Florencia/Renderer/GraphicsContext.h>
+export module OpenGLContext;
+import GraphicsContext;
 
 struct GLFWwindow;
 
-namespace Florencia {
+export namespace Florencia {
 
 	class OpenGLContext : public GraphicsContext {
 	public:
