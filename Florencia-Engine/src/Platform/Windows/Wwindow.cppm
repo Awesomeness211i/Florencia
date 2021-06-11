@@ -17,8 +17,6 @@ export namespace Florencia {
 		uint32_t GetWidth() const override { return m_Data.Width; }
 		uint32_t GetHeight() const override { return m_Data.Height; }
 
-		void SetEventCallback(const EventCallbackFn& Fn) { m_CallbackFunction = Fn; }
-
 		//Window Attributes
 		bool IsVSync() const override;
 		void SetVSync(bool enabled) override;
@@ -36,8 +34,6 @@ export namespace Florencia {
 		HWND m_Handle;
 		WindowProps m_Data;
 		GraphicsContext* m_Context;
-
-		EventCallbackFn m_CallbackFunction;
 
 		#if defined(FLO_DEBUG) || defined(FLO_RELEASE)
 		WConsole* m_Console;

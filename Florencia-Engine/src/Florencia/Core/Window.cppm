@@ -13,6 +13,14 @@ export namespace Florencia {
 
 	class Window {
 	public:
+		enum class Platform {
+			Windows,
+			Android,
+			IPhone,
+			Linux,
+			MacOS,
+			None
+		};
 		using EventCallbackFn = std::function<void(Event&)>;
 
 		virtual ~Window() = default;
@@ -22,7 +30,7 @@ export namespace Florencia {
 		virtual uint32_t GetWidth() const = 0;
 		virtual uint32_t GetHeight() const = 0;
 
-		virtual void SetEventCallback(const EventCallbackFn& Fn) = 0;
+		void SetEventCallback(const EventCallbackFn& Fn) { m_CallbackFunction = Fn; }
 
 		//Window Attributes
 		virtual bool IsVSync() const = 0;
@@ -33,5 +41,9 @@ export namespace Florencia {
 		virtual void* GetWindowHandle() = 0;
 
 		static Window* Create(const WindowProps& props);
+	private:
+		static Platform s_Platform;
+	protected:
+		EventCallbackFn m_CallbackFunction;
 	};
 }
