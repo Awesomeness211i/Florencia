@@ -1,7 +1,9 @@
 export module OpenGLContext;
 import GraphicsContext;
+import <GLFW/glfw3.h>;
+import <glad/glad.h>;
+import <iostream>;
 
-struct GLFWwindow;
 
 export namespace Florencia {
 

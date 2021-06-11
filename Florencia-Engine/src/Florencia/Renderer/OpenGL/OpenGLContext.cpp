@@ -1,7 +1,3 @@
-module;
-#include <iostream>
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
 module OpenGLContext;
 
 namespace Florencia {

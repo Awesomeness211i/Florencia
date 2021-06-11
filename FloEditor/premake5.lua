@@ -9,8 +9,7 @@ project "FloEditor"
 
 	files {
 		"src/**.h",
-		"src/**.cpp",
-		"src/**.cppm"
+		"src/**.cpp"
 	}
 
 	includedirs {
