@@ -6,7 +6,7 @@ namespace Florencia {
 
 	Application::Application(const WindowProps& props) {
 		m_Window = Window::Create(WindowProps(props));
-		m_Window->SetEventCallback([this](Event& e) ->void { return this->Application::OnEvent(e); });
+		if(m_Window) m_Window->SetEventCallback([this](Event& e) ->void { return this->Application::OnEvent(e); });
 		Renderer::Init();
 	}
 
@@ -25,7 +25,7 @@ namespace Florencia {
 					layer->Render();
 				}
 			}
-			m_Window->OnUpdate();
+			if (m_Window) m_Window->OnUpdate();
 		}
 	}
 

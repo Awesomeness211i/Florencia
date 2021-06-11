@@ -1,6 +1,6 @@
 ﻿export module Declarations;
-export import Vector;
-export import Matrix;
+import Vector;
+import Matrix;
 
 export namespace FloMath {
 

@@ -1,5 +1,4 @@
 module WConsole;
-import <Windows.h>;
 
 namespace Florencia {
 

@@ -10,7 +10,8 @@ project "Florencia-Engine"
 	--file types and directories to include
 	files {
 		"src/**.h",
-		"src/**.cpp"
+		"src/**.cpp",
+		"src/**.cppm"
 	}
 
 	defines {

@@ -27,19 +27,19 @@ export namespace Florencia {
 
 		void* GetWindowHandle() override { return m_Handle; }
 
-		static long long SetupWindowProcedure(HWND__* hWnd, unsigned int msg, unsigned long long wParam, long long lParam);
-		long long WindowProcedure(HWND__* hWnd, unsigned int msg, unsigned long long wParam, long long lParam);
+		static LONG_PTR SetupWindowProcedure(HWND hWnd, UINT msg, UINT_PTR wParam, LONG_PTR lParam);
+		LONG_PTR WindowProcedure(HWND hWnd, UINT msg, UINT_PTR wParam, LONG_PTR lParam);
 	private:
 		void Init(const WindowProps& props);
 		void Shutdown();
 
-		HWND__* m_Handle;
+		HWND m_Handle;
 		WindowProps m_Data;
 		GraphicsContext* m_Context;
 
 		EventCallbackFn m_CallbackFunction;
 
-		#ifdef FLO_DEBUG
+		#if defined(FLO_DEBUG) || defined(FLO_RELEASE)
 		WConsole* m_Console;
 		#endif
 	};

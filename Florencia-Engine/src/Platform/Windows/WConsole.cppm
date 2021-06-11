@@ -1,4 +1,5 @@
 export module WConsole;
+import <Windows.h>;
 import <iostream>;
 import <stdint.h>;
 
