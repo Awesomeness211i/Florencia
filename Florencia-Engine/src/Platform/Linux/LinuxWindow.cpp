@@ -1,4 +1,4 @@
-#include "LinuxWindow.h"
+module LinuxWindow;
 
 namespace Florencia {
 

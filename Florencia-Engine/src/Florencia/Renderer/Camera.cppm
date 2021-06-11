@@ -1,6 +1,6 @@
-#pragma once
+export module Camera;
 
-namespace Florencia {
+export namespace Florencia {
 
 	class Camera {
 	public:

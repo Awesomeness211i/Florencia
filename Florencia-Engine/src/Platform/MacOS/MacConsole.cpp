@@ -1,4 +1,4 @@
-#include "MacConsole.h"
+module MacConsole;
 
 namespace Florencia {
 

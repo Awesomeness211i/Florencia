@@ -1,4 +1,4 @@
-#include "MacWindow.h"
+module MacWindow;
 
 namespace Florencia {
 

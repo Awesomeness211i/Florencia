@@ -1,6 +1,6 @@
-#pragma once
+export module IPhoneConsole;
 
-namespace Florencia {
+export namespace Florencia {
 
 	class IPhoneConsole {
 	public:

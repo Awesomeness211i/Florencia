@@ -1,4 +1,4 @@
-#include "AndroidWindow.h"
+module AndroidWindow;
 
 namespace Florencia {
 

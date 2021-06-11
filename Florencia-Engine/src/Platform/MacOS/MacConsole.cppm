@@ -1,6 +1,6 @@
-#pragma once
+export module MacConsole;
 
-namespace Florencia {
+export namespace Florencia {
 
 	class MacConsole {
 	public:

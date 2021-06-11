@@ -1,4 +1,4 @@
-#include "IPhoneWindow.h"
+module IPhoneWindow;
 
 namespace Florencia {
 

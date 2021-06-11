@@ -1,4 +1,4 @@
-#include "AndroidConsole.h"
+module AndroidConsole;
 
 namespace Florencia {
 

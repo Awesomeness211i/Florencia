@@ -4,11 +4,13 @@ module Window;
 #if defined(FLO_PLATFORM_WINDOWS) || defined(FLO_PLATFORM_WINDOWS_32)
 import Wwindow;
 #elif defined(FLO_PLATFORM_LINUX)
-//#include <Platform/Linux/LinuxWindow.h>
+import LinuxWindow;
 #elif defined(FLO_PLATFORM_ANDROID)
-//#include <Platform/Android/AndroidWindow.h>
+import AndroidWindow;
+#elif defined(FLO_PLATFORM_IPHONE)
+import IPhoneWindow;
 #elif defined(FLO_PLATFORM_MACOS)
-//#include <Platform/MacOS/MacWindow.h>
+import MacWindow;
 #endif
 
 namespace Florencia {
@@ -17,15 +19,14 @@ namespace Florencia {
 		#if defined(FLO_PLATFORM_WINDOWS) || defined(FLO_PLATFORM_WINDOWS_32)
 		return new Wwindow(props);
 		#elif defined(FLO_PLATFORM_LINUX)
-		return nullptr;
+		return new LinuxWindow(props);
 		#elif defined(FLO_PLATFORM_ANDROID)
-		return nullptr;
+		return new AndroidWindow(props);
 		#elif defined(FLO_PLATFORM_MACOS)
-		return nullptr;
-		#elif defined(FLO_PLATFORM_IPHONE)
-		return nullptr;
-		#else
-		return nullptr;
+		return new MacWindow(props);
+		#else defined(FLO_PLATFORM_IPHONE)
+		return new IPhoneWindow(props);
 		#endif
+		return nullptr;
 	}
 }

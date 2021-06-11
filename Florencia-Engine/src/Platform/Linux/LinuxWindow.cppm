@@ -1,7 +1,7 @@
-#pragma once
+export module LinuxWindow;
 import Window;
 
-namespace Florencia {
+export namespace Florencia {
 
 	class LinuxWindow : public Window {
 	public:

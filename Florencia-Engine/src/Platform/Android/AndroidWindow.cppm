@@ -1,7 +1,7 @@
-#pragma once
+export module AndroidWindow;
 import Window;
 
-namespace Florencia {
+export namespace Florencia {
 
 	class AndroidWindow : public Window {
 	public:

@@ -1,13 +1,13 @@
-#pragma once
+export module LinuxConsole;
 
-namespace Florencia {
+export namespace Florencia {
 
 	class LinuxConsole {
 	public:
 		bool CreateNewConsole();
 		bool ReleaseConsole();
 	private:
-		
+
 	};
 
 }

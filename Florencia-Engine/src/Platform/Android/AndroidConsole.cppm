@@ -1,13 +1,13 @@
-#pragma once
+export module AndroidConsole;
 
-namespace Florencia {
+export namespace Florencia {
 
 	class AndroidConsole {
 	public:
 		bool CreateNewConsole();
 		bool ReleaseConsole();
 	private:
-		
+
 	};
 
 }

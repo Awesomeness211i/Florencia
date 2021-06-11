@@ -1,7 +1,7 @@
-#pragma once
+export module MacWindow;
 import Window;
 
-namespace Florencia {
+export namespace Florencia {
 
 	class MacWindow : public Window {
 	public:

@@ -1,4 +1,4 @@
-#include "IPhoneConsole.h"
+module IPhoneConsole;
 
 namespace Florencia {
 
