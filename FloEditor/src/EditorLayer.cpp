@@ -1,5 +1,4 @@
 module EditorLayer;
-import Florencia;
 
 namespace Florencia {
 

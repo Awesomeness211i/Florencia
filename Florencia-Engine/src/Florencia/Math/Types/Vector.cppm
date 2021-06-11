@@ -1,14 +1,14 @@
-#pragma once
-#include <stdexcept>
+export module Vector;
+import <stdexcept>;
 
-namespace FloMath {
+export namespace FloMath {
 
 	template<typename T, size_t Rows>
 	class Vector {
 	public:
 		template<typename... Args>
 		Vector(Args... args)
-			:data{args...}
+			:data{ args... }
 		{}
 		T& operator[](unsigned index) {
 			return data[index];

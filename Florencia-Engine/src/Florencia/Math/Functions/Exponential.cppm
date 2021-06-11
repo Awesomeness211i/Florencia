@@ -1,6 +1,6 @@
-﻿#pragma once
-#include <math.h>
-#include <Florencia/Math/Declarations.h>
+export module Exponential;
+import Declarations;
+import <math.h>;
 
 namespace FloMath {
 

@@ -1,14 +1,15 @@
-#pragma once
-#include "Vector.h"
+export module Matrix;
+import <stdexcept>;
+import Vector;
 
-namespace FloMath {
+export namespace FloMath {
 
-	template<typename T, size_t Rows, size_t Columns>
+	template<typename T, size_t Rows, size_t Columns = Rows>
 	class Matrix {
 	public:
 		template<typename... Args>
 		Matrix(Args... args)
-			:data{args...}
+			:data{ args... }
 		{}
 		Vector<T, Rows>& operator[](unsigned index) {
 			return data[index];

@@ -1,7 +1,6 @@
-module;
-#include <Florencia/Math/FloMath.h>
 module Renderer;
 import RenderCommand;
+import FloMath;
 
 namespace Florencia {
 

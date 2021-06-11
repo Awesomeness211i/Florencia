@@ -1,6 +1,8 @@
-#pragma once
+﻿export module Declarations;
+export import Vector;
+export import Matrix;
 
-namespace FloMath {
+export namespace FloMath {
 
 	//Constants
 	constexpr double π = 3.141592653589793; //ALT-227 for symbol
@@ -8,13 +10,6 @@ namespace FloMath {
 	constexpr double e = 2.71828182845904523536;
 	constexpr double inf = 1E154 * 1E154; //ALT-236 for ∞
 	constexpr double NaN = inf * 0.0; //Not A Number
-
-	//Classes
-	template<typename T, size_t Rows>
-	class Vector;
-
-	template<typename T, size_t Rows, size_t Columns = Rows>
-	class Matrix;
 
 	//Types
 	template<typename T>

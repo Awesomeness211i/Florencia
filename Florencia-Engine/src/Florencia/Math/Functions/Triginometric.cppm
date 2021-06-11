@@ -1,6 +1,6 @@
-﻿#pragma once
-#include <Florencia/Math/Declarations.h>
-#include <Florencia/Math/Functions/Other.h>
+export module Triginometric;
+import Declarations;
+import Other;
 
 //TODO: Make the trigonometric functions arcsin() arccos() arctan()
 

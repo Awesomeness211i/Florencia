@@ -1,7 +1,7 @@
-#pragma once
+export module Other;
 
-namespace FloMath {
-	
+export namespace FloMath {
+
 	template<typename T>
 	T abs(T x) {
 		if (x < 0) {
