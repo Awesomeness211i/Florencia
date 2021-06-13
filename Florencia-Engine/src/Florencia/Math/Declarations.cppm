@@ -1,4 +1,5 @@
 ﻿export module Declarations;
+import <type_traits>;
 import Vector;
 import Matrix;
 
@@ -11,35 +12,41 @@ export namespace FloMath {
 	constexpr double inf = 1E154 * 1E154; //ALT-236 for ∞
 	constexpr double NaN = inf * 0.0; //Not A Number
 
+	template<typename T>
+	concept Integral_Type = requires {
+		typename std::enable_if_t<std::is_integral_v<T>>;
+		typename std::enable_if_t<std::is_floating_point_v<T>>;
+	};
+
 	//Types
-	template<typename T>
+	template<Integral_Type T>
 	using Vec2 = Vector<T, 2>;
-	template<typename T>
+	template<Integral_Type T>
 	using Vec3 = Vector<T, 3>;
-	template<typename T>
+	template<Integral_Type T>
 	using Vec4 = Vector<T, 4>;
 
-	template<typename T>
+	template<Integral_Type T>
 	using Mat2 = Matrix<T, 2>;
-	template<typename T>
+	template<Integral_Type T>
 	using Mat2x3 = Matrix<T, 2, 3>;
-	template<typename T>
+	template<Integral_Type T>
 	using Mat2x4 = Matrix<T, 2, 4>;
-	template<typename T>
+	template<Integral_Type T>
 	using Mat3x2 = Matrix<T, 3, 2>;
-	template<typename T>
+	template<Integral_Type T>
 	using Mat3 = Matrix<T, 3>;
-	template<typename T>
+	template<Integral_Type T>
 	using Mat3x4 = Matrix<T, 3, 4>;
-	template<typename T>
+	template<Integral_Type T>
 	using Mat4x2 = Matrix<T, 4, 2>;
-	template<typename T>
+	template<Integral_Type T>
 	using Mat4x3 = Matrix<T, 4, 3>;
-	template<typename T>
+	template<Integral_Type T>
 	using Mat4 = Matrix<T, 4>;
 
 	//////////////////////////////////////Vector Addition/////////////////////////////////////
-	template<typename T, size_t Rows>
+	template<Integral_Type T, size_t Rows>
 	Vector<T, Rows> operator+(Vector<T, Rows>& vec1, Vector<T, Rows>& vec2) {
 		Vector<T, Rows> vec;
 		for (int i = 0; i < Rows; i++) {
@@ -47,14 +54,14 @@ export namespace FloMath {
 		}
 		return vec;
 	}
-	template<typename T, size_t Rows>
+	template<Integral_Type T, size_t Rows>
 	void operator+=(Vector<T, Rows>& vec1, Vector<T, Rows>& vec2) {
 		for (int i = 0; i < Rows; i++) {
 			vec1[i] = vec1[i] + vec2[i];
 		}
 	}
 	//////////////////////////////////Vector Multiplication///////////////////////////////////
-	template<typename T, size_t Rows>
+	template<Integral_Type T, size_t Rows>
 	Vector<T, Rows> operator*(Vector<T, Rows>& vec, T t) {
 		Vector<T, Rows> retval;
 		for (int i = 0; i < Rows; i++) {
@@ -62,11 +69,11 @@ export namespace FloMath {
 		}
 		return retval;
 	}
-	template<typename T, size_t Rows>
+	template<Integral_Type T, size_t Rows>
 	Vector<T, Rows> operator*(T t, Vector<T, Rows>& vec) {
 		return vec * t;
 	}
-	template<typename T, size_t Rows>
+	template<Integral_Type T, size_t Rows>
 	T operator*(Vector<T, Rows>& vec1, Vector<T, Rows>& vec2) {
 		T retval = 0;
 		for (int i = 0; i < Rows; i++) {
@@ -75,7 +82,7 @@ export namespace FloMath {
 		return retval;
 	}
 	////////////////////////////////////Matrix Addition///////////////////////////////////////
-	template<typename T, size_t Rows, size_t Columns>
+	template<Integral_Type T, size_t Rows, size_t Columns>
 	Matrix<T, Rows, Columns> operator+(Matrix<T, Rows, Columns>& mat, Matrix<T, Rows, Columns>& mat2) {
 		Matrix<T, Rows, Columns> retval;
 		for (int i = 0; i < Columns; i++) {
@@ -84,7 +91,7 @@ export namespace FloMath {
 		return retval;
 	}
 	/////////////////////////////////Matrix Multiplication////////////////////////////////////
-	template<typename T, size_t Rows, size_t Columns>
+	template<Integral_Type T, size_t Rows, size_t Columns>
 	Vector<T, Columns> operator*(Matrix<T, Rows, Columns>& mat, Vector<T, Columns>& vec) {
 		Vector<T, Columns> retval;
 		for (int i = 0; i < Columns; i++) {
@@ -93,7 +100,7 @@ export namespace FloMath {
 		}
 		return retval;
 	}
-	template<typename T, size_t Rows, size_t Columns>
+	template<Integral_Type T, size_t Rows, size_t Columns>
 	Matrix<T, Rows, Columns> operator*(Matrix<T, Rows, Columns>& mat, T t) {
 		Matrix<T, Rows, Columns> retval;
 		for (int i = 0; i < Columns; i++) {
@@ -101,7 +108,7 @@ export namespace FloMath {
 		}
 		return retval;
 	}
-	template<typename T, size_t Rows, size_t Columns1, size_t Columns2>
+	template<Integral_Type T, size_t Rows, size_t Columns1, size_t Columns2>
 	Matrix<T, Rows, Columns2> operator*(Matrix<T, Rows, Columns1>& mat1, Matrix<T, Columns1, Columns2>& mat2) {
 		Matrix<T, Rows, Columns2> retval;
 		for (int i = 0; i < Columns1; i++) {
@@ -112,15 +119,15 @@ export namespace FloMath {
 		}
 		return retval;
 	}
-	template<typename T, size_t Rows, size_t Columns>
+	template<Integral_Type T, size_t Rows, size_t Columns>
 	Matrix<T, Rows, Columns> operator*(T t, Matrix<T, Rows, Columns>& mat) {
 		return mat * t;
 	}
-	template<typename T, size_t Rows, size_t Columns>
+	template<Integral_Type T, size_t Rows, size_t Columns>
 	void operator*=(Matrix<T, Rows, Columns>& mat, T t) {
 		mat = mat * t;
 	}
-	template<typename T, size_t Rows>
+	template<Integral_Type T, size_t Rows>
 	void operator*=(Matrix<T, Rows>& mat1, Matrix<T, Rows>& mat2) {
 		mat1 = mat1 * mat2;
 	}
