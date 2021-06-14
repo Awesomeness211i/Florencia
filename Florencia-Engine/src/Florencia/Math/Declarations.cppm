@@ -13,10 +13,7 @@ export namespace FloMath {
 	constexpr double NaN = inf * 0.0; //Not A Number
 
 	template<typename T>
-	concept Integral_Type = requires {
-		typename std::enable_if_t<std::is_integral_v<T>>;
-		typename std::enable_if_t<std::is_floating_point_v<T>>;
-	};
+	concept Integral_Type = std::is_integral_v<T> || std::is_floating_point_v<T>;
 
 	//Types
 	template<Integral_Type T>
