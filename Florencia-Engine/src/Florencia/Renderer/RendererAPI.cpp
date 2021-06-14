@@ -1,5 +1,5 @@
 module;
-#include <Florencia/Core/PlatformDetection.h>
+#include "../../Florencia/Core/PlatformDetection.h"
 module RendererAPI;
 import Vulkan;
 import OpenGL;
@@ -13,7 +13,7 @@ import Metal;
 
 namespace Florencia {
 
-	RendererAPI::API RendererAPI::s_API = RendererAPI::API::OpenGL;
+	RendererAPI::API RendererAPI::s_API = RendererAPI::API::None;
 
 	RendererAPI* RendererAPI::Create() {
 		switch (s_API) {
