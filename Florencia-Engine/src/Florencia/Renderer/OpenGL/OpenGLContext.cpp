@@ -1,3 +1,6 @@
+module;
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 module OpenGLContext;
 
 namespace Florencia {
@@ -7,7 +10,7 @@ namespace Florencia {
 	void OpenGLContext::Init() {
 		glfwMakeContextCurrent(nullptr);
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-		if (!status) { std::cout << "failed to load glad!\n"; }
+		if (!status) {}
 	}
 
 	void OpenGLContext::SwapBuffers() {
