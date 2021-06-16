@@ -1,4 +1,4 @@
-#include "LayerStack.h"
+module LayerStack;
 
 namespace Florencia {
 

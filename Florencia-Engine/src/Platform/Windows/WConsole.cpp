@@ -1,9 +1,8 @@
-#include "WConsole.h"
-#include <Windows.h>
-#include <iostream>
-#include <sstream>
+module WConsole;
 
 namespace Florencia {
+
+	WConsole::WConsole(int16_t minLength) : m_MinLength(minLength) {}
 
 	bool WConsole::CreateNewConsole() {
 		bool result = false;

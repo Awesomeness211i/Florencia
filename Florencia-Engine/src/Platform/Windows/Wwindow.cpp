@@ -1,12 +1,10 @@
-#include <Platform/Windows/FloWindows.h>
-#include "Wwindow.h"
-#include "WConsole.h"
+module Wwindow;
 
 namespace Florencia {
 
 	Wwindow::Wwindow(const WindowProps& props) : m_Data(props) { Init(props); }
 
-	long long Wwindow::SetupWindowProcedure(HWND__* hWnd, unsigned int msg, unsigned long long wParam, long long lParam) {
+	LONG_PTR WINAPI Wwindow::SetupWindowProcedure(HWND hWnd, UINT msg, UINT_PTR wParam, LONG_PTR lParam) {
 		Wwindow* pParent;
 		if (msg == WM_NCCREATE) {
 			LPCREATESTRUCT lpcs = reinterpret_cast<LPCREATESTRUCT>(lParam);
@@ -21,7 +19,7 @@ namespace Florencia {
 		return DefWindowProcA(hWnd, msg, wParam, lParam);
 	}
 
-	long long Wwindow::WindowProcedure(HWND__* hWnd, unsigned int msg, unsigned long long wParam, long long lParam) {
+	LONG_PTR WINAPI Wwindow::WindowProcedure(HWND hWnd, UINT msg, UINT_PTR wParam, LONG_PTR lParam) {
 		switch (msg) {
 		case WM_QUIT:
 			return 0;
@@ -38,7 +36,7 @@ namespace Florencia {
 
 	void Wwindow::Init(const WindowProps& props) {
 		//Create Console
-		#ifdef FLO_DEBUG
+		#if defined(FLO_DEBUG) || defined(FLO_RELEASE)
 		m_Console = new WConsole();
 		m_Console->CreateNewConsole();
 		#endif

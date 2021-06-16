@@ -1,4 +1,4 @@
-#include "EditorLayer.h"
+module EditorLayer;
 
 namespace Florencia {
 

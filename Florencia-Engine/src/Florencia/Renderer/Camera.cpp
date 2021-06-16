@@ -1,4 +1,4 @@
-#include "Camera.h"
+module Camera;
 
 namespace Florencia {
 

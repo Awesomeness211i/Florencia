@@ -1,5 +1,6 @@
-#include "Renderer.h"
-#include "RenderCommand.h"
+module Renderer;
+import RenderCommand;
+import FloMath;
 
 namespace Florencia {
 

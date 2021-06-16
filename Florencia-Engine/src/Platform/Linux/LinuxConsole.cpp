@@ -1,4 +1,4 @@
-#include "LinuxConsole.h"
+module LinuxConsole;
 
 namespace Florencia {
 

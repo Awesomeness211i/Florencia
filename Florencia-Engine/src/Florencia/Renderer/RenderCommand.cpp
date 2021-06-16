@@ -1,4 +1,5 @@
-#include "RenderCommand.h"
+module RenderCommand;
+import RendererAPI;
 
 namespace Florencia {
 

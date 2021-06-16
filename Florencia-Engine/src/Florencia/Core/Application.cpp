@@ -1,12 +1,12 @@
-#include "Application.h"
-
+module;
 #include <chrono>
+module Application;
 
 namespace Florencia {
 
 	Application::Application(const WindowProps& props) {
 		m_Window = Window::Create(WindowProps(props));
-		m_Window->SetEventCallback([this](Event& e) ->void { return this->Application::OnEvent(e); });
+		if(m_Window) m_Window->SetEventCallback([this](Event& e) ->void { return this->Application::OnEvent(e); });
 		Renderer::Init();
 	}
 
@@ -14,7 +14,7 @@ namespace Florencia {
 
 	void Application::Run() {
 		while (m_Running) {
-			
+
 			float time = (float)(std::chrono::high_resolution_clock::now().time_since_epoch().count() * 1E-9);
 			Timestep ts = time - m_LastFrameTime;
 			m_LastFrameTime = time;
@@ -25,7 +25,7 @@ namespace Florencia {
 					layer->Render();
 				}
 			}
-			m_Window->OnUpdate();
+			if (m_Window) m_Window->OnUpdate();
 		}
 	}
 

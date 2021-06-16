@@ -1,9 +1,10 @@
-#include "EditorLayer.h"
+import Florencia;
+import EditorLayer;
 #include <Florencia/Core/EntryPoint.h>
 
 namespace Florencia {
 
-	FLO_APPLICATION(FloEditor) {
+	class FloEditor : public Application {
 	public:
 		FloEditor(const WindowProps& props) : Application(props) {
 			AddLayer(new EditorLayer(m_EventHandler));

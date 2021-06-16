@@ -1,4 +1,4 @@
-#include "DirectX11Context.h"
+module DirectX11Context;
 
 namespace Florencia {
 
