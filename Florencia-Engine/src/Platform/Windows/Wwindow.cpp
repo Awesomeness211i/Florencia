@@ -4,7 +4,7 @@ namespace Florencia {
 
 	Wwindow::Wwindow(const WindowProps& props) : m_Data(props) { Init(props); }
 
-	long long Wwindow::SetupWindowProcedure(HWND hWnd, UINT msg, UINT_PTR wParam, LONG_PTR lParam) {
+	LONG_PTR WINAPI Wwindow::SetupWindowProcedure(HWND hWnd, UINT msg, UINT_PTR wParam, LONG_PTR lParam) {
 		Wwindow* pParent;
 		if (msg == WM_NCCREATE) {
 			LPCREATESTRUCT lpcs = reinterpret_cast<LPCREATESTRUCT>(lParam);
@@ -19,7 +19,7 @@ namespace Florencia {
 		return DefWindowProcA(hWnd, msg, wParam, lParam);
 	}
 
-	long long Wwindow::WindowProcedure(HWND hWnd, UINT msg, UINT_PTR wParam, LONG_PTR lParam) {
+	LONG_PTR WINAPI Wwindow::WindowProcedure(HWND hWnd, UINT msg, UINT_PTR wParam, LONG_PTR lParam) {
 		switch (msg) {
 		case WM_QUIT:
 			return 0;

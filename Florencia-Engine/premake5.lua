@@ -20,61 +20,10 @@ project "Florencia-Engine"
 		"src",
 		"%{IncludeDir.glfw}",
 		"%{IncludeDir.glad}",
-		--"vendor/spdlog/include",
-		--"%{IncludeDir.ImGui}",
-		--"%{IncludeDir.glm}",
-		--"%{IncludeDir.stb_image}",
-		--"%{IncludeDir.entt}",
-		--"%{IncludeDir.yaml_cpp}",
-		--"%{IncludeDir.ImGuizmo}",
-		--"%{IncludeDir.VulkanSDK}"
 	}
 	--libs
 	links {
 		"glfw",
 		"glad",
-		--"ImGui",
-		--"yaml-cpp",
 		"opengl32.lib"
 	}
-
-	--filter "files:vendor/ImGuizmo/**.cpp"
-	--flags { "NoPCH" }
-
-	filter "system:windows"
-		systemversion "latest"
-		defines {
-		}
-	
-	filter "configurations:Debug"
-		defines "FLO_DEBUG"
-		runtime "Debug"
-		symbols "on"
-
-		links {
-			--"%{Library.ShaderC_Debug}",
-			--"%{Library.SPIRV_Cross_Debug}",
-			--"%{Library.SPIRV_Cross_GLSL_Debug}"
-		}
-
-	filter "configurations:Release"
-		defines "FLO_RELEASE"
-		runtime "Release"
-		optimize "on"
-
-		links {
-			--"%{Library.ShaderC_Release}",
-			--"%{Library.SPIRV_Cross_Release}",
-			--"%{Library.SPIRV_Cross_GLSL_Release}"
-		}
-
-	filter "configurations:Distribution"
-		defines "FLO_DISTRIBUTION"
-		runtime "Release"
-		optimize "on"
-
-		links {
-			--"%{Library.ShaderC_Release}",
-			--"%{Library.SPIRV_Cross_Release}",
-			--"%{Library.SPIRV_Cross_GLSL_Release}"
-		}
