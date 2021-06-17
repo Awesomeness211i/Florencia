@@ -1,21 +1,35 @@
 export module EditorLayer;
-import Timestep;
-import Event;
-import Layer;
+import Florencia;
 
 export namespace Florencia {
 
 	class EditorLayer : public Layer {
 	public:
-		EditorLayer(EventDispatcher& dispatcher);
+		EditorLayer(EventDispatcher& dispatcher) : m_EventHandler(dispatcher) {
+
+		}
+
 		~EditorLayer() = default;
 
-		void OnAdd() override;
-		void OnRemove() override;
+		void OnAdd() override {
 
-		void Update(Timestep ts) override;
-		void OnEvent(Event& e) override;
-		void Render() override;
+		}
+
+		void OnRemove() override {
+
+		}
+
+		void Update(Timestep ts) override {
+
+		}
+
+		void OnEvent(Event& e) override {
+			//m_EventHandler.Dispatch<KeyPressedEvent>(e, [this](WindowCloseEvent& e) -> bool { return this->EditorLayer::Test(e); });
+		}
+
+		void Render() override {
+
+		}
 
 		const char* GetName() const { return "EditorLayer"; }
 	private:

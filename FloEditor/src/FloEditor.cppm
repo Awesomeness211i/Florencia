@@ -1,8 +1,11 @@
+module;
 import Florencia;
-import EditorLayer;
 #include <Florencia/Core/EntryPoint.h>
 
-namespace Florencia {
+export module FloEditor;
+import EditorLayer;
+
+export namespace Florencia {
 
 	class FloEditor : public Application {
 	public:
