@@ -1,5 +1,0 @@
-module IPhoneConsole;
-
-namespace Florencia {
-
-}

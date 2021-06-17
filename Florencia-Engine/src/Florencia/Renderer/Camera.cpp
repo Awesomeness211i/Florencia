@@ -1,7 +1,0 @@
-module Camera;
-
-namespace Florencia {
-
-
-
-}

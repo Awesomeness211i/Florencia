@@ -1,5 +1,0 @@
-module AndroidConsole;
-
-namespace Florencia {
-
-}

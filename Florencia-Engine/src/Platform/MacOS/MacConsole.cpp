@@ -1,5 +1,0 @@
-module MacConsole;
-
-namespace Florencia {
-
-}

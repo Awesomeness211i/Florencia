@@ -4,8 +4,10 @@ export namespace Florencia {
 
 	class IPhoneConsole {
 	public:
-		bool CreateNewConsole();
-		bool ReleaseConsole();
+		IPhoneConsole() {}
+		~IPhoneConsole() {}
+		bool CreateNewConsole() { return false; }
+		bool ReleaseConsole() { return false; }
 	private:
 
 	};

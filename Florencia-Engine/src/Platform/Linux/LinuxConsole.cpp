@@ -1,5 +1,0 @@
-module LinuxConsole;
-
-namespace Florencia {
-
-}

@@ -15,18 +15,6 @@ import AndroidWindow;
 
 namespace Florencia {
 
-	#if defined(FLO_PLATFORM_WINDOWS) || defined(FLO_PLATFORM_WINDOWS_32)
-	Window::Platform Window::s_Platform = Window::Platform::Windows;
-	#elif defined(FLO_PLATFORM_LINUX)
-	Window::Platform Window::s_Platform = Window::Platform::Linux;
-	#elif defined(FLO_PLATFORM_MACOS)
-	Window::Platform Window::s_Platform = Window::Platform::MacOS;
-	#elif defined(FLO_PLATFORM_IPHONE) || defined(FLO_PLATFORM_IPHONE_SIMULATOR)
-	Window::Platform Window::s_Platform = Window::Platform::IPhone;
-	#elif defined(FLO_PLATFORM_ANDROID)
-	Window::Platform Window::s_Platform = Window::Platform::Android;
-	#endif
-
 	Window* Window::Create(const WindowProps& props) {
 		switch (s_Platform) {
 			case Window::Platform::None: return nullptr;

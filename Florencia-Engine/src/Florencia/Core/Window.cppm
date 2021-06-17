@@ -1,3 +1,5 @@
+module;
+#include <Florencia/Core/PlatformDetection.h>
 export module Window;
 import <functional>;
 import <stdint.h>;
@@ -42,7 +44,17 @@ export namespace Florencia {
 
 		static Window* Create(const WindowProps& props);
 	private:
-		static Platform s_Platform;
+		#if defined(FLO_PLATFORM_WINDOWS) || defined(FLO_PLATFORM_WINDOWS_32)
+		static constexpr Platform s_Platform = Platform::Windows;
+		#elif defined(FLO_PLATFORM_LINUX)
+		static constexpr Platform s_Platform = Platform::Linux;
+		#elif defined(FLO_PLATFORM_MACOS)
+		static constexpr Platform s_Platform = Platform::MacOS;
+		#elif defined(FLO_PLATFORM_IPHONE) || defined(FLO_PLATFORM_IPHONE_SIMULATOR)
+		static constexpr Platform s_Platform = Platform::IPhone;
+		#elif defined(FLO_PLATFORM_ANDROID)
+		static constexpr Platform s_Platform = Platform::Android;
+		#endif
 	protected:
 		EventCallbackFn m_CallbackFunction;
 	};

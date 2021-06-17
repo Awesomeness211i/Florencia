@@ -19,3 +19,5 @@ project "FloEditor"
 	links {
 		"Florencia-Engine"
 	}
+
+	defines {}

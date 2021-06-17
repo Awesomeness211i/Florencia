@@ -4,8 +4,10 @@ export namespace Florencia {
 
 	class LinuxConsole {
 	public:
-		bool CreateNewConsole();
-		bool ReleaseConsole();
+		LinuxConsole() {}
+		~LinuxConsole() {}
+		bool CreateNewConsole() { return false; }
+		bool ReleaseConsole() { return false; }
 	private:
 
 	};

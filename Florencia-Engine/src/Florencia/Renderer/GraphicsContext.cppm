@@ -1,4 +1,5 @@
 export module GraphicsContext;
+import Renderer;
 
 export namespace Florencia {
 

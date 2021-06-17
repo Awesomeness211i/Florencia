@@ -4,8 +4,10 @@ export namespace Florencia {
 
 	class AndroidConsole {
 	public:
-		bool CreateNewConsole();
-		bool ReleaseConsole();
+		AndroidConsole() {}
+		~AndroidConsole() {}
+		bool CreateNewConsole() { return false; }
+		bool ReleaseConsole() { return false; }
 	private:
 
 	};

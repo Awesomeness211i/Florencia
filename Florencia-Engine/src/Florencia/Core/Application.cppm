@@ -3,6 +3,7 @@ import Event.Application;
 import LayerStack;
 import Timestep;
 import Renderer;
+import <chrono>;
 import Window;
 import Layer;
 import Event;
@@ -11,23 +12,63 @@ export namespace Florencia {
 
 	class Application {
 	public:
-		Application(const WindowProps& props);
-		virtual ~Application();
+		Application(const WindowProps& props) {
+			m_Window = Window::Create(WindowProps(props));
+			if (m_Window) m_Window->SetEventCallback([this](Event& e) ->void { return this->Application::OnEvent(e); });
+			Renderer::Init();
+		}
+		virtual ~Application() { delete m_Window; }
 
-		void Run();
+		void Run() {
+			while (m_Running) {
+				//time is in seconds
+				double time = (double)(/*nanoseconds*/std::chrono::high_resolution_clock::now().time_since_epoch().count() * 1E-9);
+				Timestep ts = time - m_LastFrameTime;
+				m_LastFrameTime = time;
 
-		void OnEvent(Event& e);
+				if (!m_Minimized) {
+					for (auto layer : m_LayerStack) {
+						layer->Update(ts);
+						layer->Render();
+					}
+				}
+				if (m_Window) m_Window->OnUpdate();
+			}
+		}
 
-		void AddLayer(Layer* layer);
-		void AddOverlay(Layer* layer);
-		void RemoveLayer(Layer* layer);
-		void RemoveOverlay(Layer* layer);
+		void OnEvent(Event& e) {
+			m_EventHandler.Dispatch<WindowCloseEvent>(e, [this](WindowCloseEvent& e) -> bool { return this->Application::OnWindowClose(e); });
+			m_EventHandler.Dispatch<WindowResizeEvent>(e, [this](WindowResizeEvent& e) -> bool { return this->Application::OnWindowResize(e); });
+
+			for (auto it = m_LayerStack.rbegin(); it != m_LayerStack.rend(); ++it) {
+				if (e.Handled) break;
+				(*it)->OnEvent(e);
+			}
+		}
+
+		void AddLayer(Layer* layer) {
+			m_LayerStack.AddLayer(layer);
+			layer->OnAdd();
+		}
+		void AddOverlay(Layer* layer) {
+			m_LayerStack.AddOverlay(layer);
+			layer->OnAdd();
+		}
+		void RemoveLayer(Layer* layer) { m_LayerStack.RemoveLayer(layer); }
+		void RemoveOverlay(Layer* layer) { m_LayerStack.RemoveOverlay(layer); }
 
 		Window* GetWindow() { return m_Window; }
 
 	private:
-		bool OnWindowClose(WindowCloseEvent& e);
-		bool OnWindowResize(WindowResizeEvent& e);
+		bool OnWindowClose(WindowCloseEvent& e) { m_Running = false; return true; }
+		bool OnWindowResize(WindowResizeEvent& e) {
+			if (e.GetWidth() == 0 || e.GetHeight() == 0) { m_Minimized = true; }
+			else {
+				m_Minimized = false;
+				Renderer::OnWindowResize(e.GetWidth(), e.GetHeight());
+			}
+			return false;
+		}
 
 		Window* m_Window;
 		LayerStack m_LayerStack;

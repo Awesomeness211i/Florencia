@@ -1,27 +1,28 @@
 export module MacWindow;
+import MacConsole;
 import Window;
 
 export namespace Florencia {
 
 	class MacWindow : public Window {
 	public:
-		MacWindow(const WindowProps& props);
-		~MacWindow();
+		MacWindow(const WindowProps& props) {}
+		~MacWindow() {}
 
-		void OnUpdate() override;
+		void OnUpdate() override {}
 
-		uint32_t GetWidth() const override;
-		uint32_t GetHeight() const override;
+		uint32_t GetWidth() const override { return 0; }
+		uint32_t GetHeight() const override { return 0; }
 
 		//Window Attributes
-		bool IsVSync() const override;
-		void SetVSync(bool enabled) override;
-		void SetWidth(uint32_t width) override;
-		void SetHeight(uint32_t height) override;
+		bool IsVSync() const override { return false; }
+		void SetVSync(bool enabled) override {}
+		void SetWidth(uint32_t width) override {}
+		void SetHeight(uint32_t height) override {}
 
-		void* GetWindowHandle() override;
+		void* GetWindowHandle() override { return nullptr; }
 	private:
-
+		MacConsole* m_Console;
 	};
 
 }
