@@ -10,7 +10,7 @@ import AndroidWindow;
 namespace Florencia {
 
 	Window* Window::Create(const WindowProps& props) {
-		#if defined(FLO_PLATFORM_WINDOWS) || defined(FLO_PLATFORM_WINDOWS_32)
+		#if defined(FLO_PLATFORM_WINDOWS_64) || defined(FLO_PLATFORM_WINDOWS_32)
 		return new Wwindow(props);
 		#elif defined(FLO_PLATFORM_MACOS)
 		return new MacWindow(props);

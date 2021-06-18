@@ -2,7 +2,7 @@
 
 #if defined(_WIN32)
 	#if defined(_WIN64)
-		#define FLO_PLATFORM_WINDOWS
+		#define FLO_PLATFORM_WINDOWS_64
 	#else
 		#define FLO_PLATFORM_WINDOWS_32
 	#endif

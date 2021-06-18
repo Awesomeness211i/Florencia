@@ -1,6 +1,7 @@
 module;
 #include <stdint.h>
 #include <glad/glad.h>
+#include <Florencia/Core/PlatformDetection.h>
 export module OpenGL;
 import RendererAPI;
 
@@ -20,10 +21,12 @@ export namespace Florencia {
 		OpenGL() {}
 
 		void Init() override {
-			#ifdef FLO_DEBUG
+			#if defined(FLO_DEBUG) || defined(FLO_RELEASE)
 			glEnable(GL_DEBUG_OUTPUT);
 			glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
-			//glDebugMessageCallback(OpenGLMessageCallback, nullptr);
+			#if defined(FLO_PLATFORM_WINDOWS_64)
+			glDebugMessageCallback(OpenGLMessageCallback, nullptr);
+			#endif
 
 			glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_NOTIFICATION, 0, NULL, GL_FALSE);
 			#endif

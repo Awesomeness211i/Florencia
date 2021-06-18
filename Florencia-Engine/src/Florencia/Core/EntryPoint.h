@@ -3,7 +3,7 @@
 
 extern Florencia::Application* Florencia::CreateApplication();
 
-#if defined(FLO_PLATFORM_WINDOWS) || defined(FLO_PLATFORM_WINDOWS_32)
+#if defined(FLO_PLATFORM_WINDOWS_64) || defined(FLO_PLATFORM_WINDOWS_32)
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow) {

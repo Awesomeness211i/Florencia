@@ -17,17 +17,15 @@ export namespace Florencia {
 			//Create Console
 			#if defined(FLO_DEBUG) || defined(FLO_RELEASE)
 			m_Console = Console::Create();
-			m_Console->CreateNewConsole();
 			#endif
+			if (m_Console) [[likely]] { m_Console->CreateNewConsole(); }
 
 			//Create Window and Graphics Context
 			m_Window = Window::Create(WindowProps(props));
-			if (m_Window) {
+			if (m_Window) [[likely]] {
 				m_Window->SetEventCallback([this](Event& e) -> void { return this->Application::OnEvent(e); });
 				m_Context = GraphicsContext::Create(m_Window);
-				if (m_Context) {
-					m_Context->Init();
-				}
+				if (m_Context) [[likely]] { m_Context->Init(); }
 			}
 
 			Renderer::Init();
@@ -36,24 +34,23 @@ export namespace Florencia {
 		virtual ~Application() {
 			#if defined(FLO_DEBUG) || defined(FLO_RELEASE)
 			m_Console->ReleaseConsole();
-			delete m_Console;
 			#endif
-			delete m_Window;
+			if (m_Context) [[likely]] { delete m_Context; }
+			if (m_Console) [[likely]] { delete m_Console; }
+			if (m_Window) [[likely]] { delete m_Window; }
 		}
 
 		void Run() {
 			while (m_Running) {
 				//time is in seconds
 				m_LastTick = Time::GetCurrentTime();
-				if (!m_Minimized) {
+				if (!m_Minimized) [[unlikely]] {
 					if (m_Window) m_Window->OnUpdate();
 					Time time = Time::GetCurrentTime();
 					Timestep ts(m_LastTick, time);
 					m_LastTick = time;
-					for (auto layer : m_LayerStack) {
-						layer->Update(ts);
-					}
-					if (m_Context) { m_Context->SwapBuffers(); }
+					for (auto layer : m_LayerStack) { [[likely]] layer->Update(ts); }
+					if (m_Context) [[likely]] { m_Context->SwapBuffers(); }
 				}
 			}
 		}
@@ -72,20 +69,30 @@ export namespace Florencia {
 			m_LayerStack.AddLayer(layer);
 			layer->OnAdd();
 		}
+
 		void AddOverlay(Layer* layer) {
 			m_LayerStack.AddOverlay(layer);
 			layer->OnAdd();
 		}
-		void RemoveLayer(Layer* layer) { m_LayerStack.RemoveLayer(layer); }
-		void RemoveOverlay(Layer* layer) { m_LayerStack.RemoveOverlay(layer); }
+
+		void RemoveLayer(Layer* layer) {
+			m_LayerStack.RemoveLayer(layer);
+			layer->OnRemove();
+		}
+		void RemoveOverlay(Layer* layer) {
+			m_LayerStack.RemoveOverlay(layer);
+			layer->OnRemove();
+		}
 
 		Window* GetWindow() { return m_Window; }
 
 	private:
 		bool OnWindowClose(WindowCloseEvent& e) { m_Running = false; return true; }
 		bool OnWindowResize(WindowResizeEvent& e) {
-			if (e.GetWidth() == 0 || e.GetHeight() == 0) { m_Minimized = true; }
-			else {
+			if (e.GetWidth() == 0 || e.GetHeight() == 0) [[unlikely]] {
+				m_Minimized = true;
+			}
+			else [[likely]] {
 				m_Minimized = false;
 				Renderer::OnWindowResize(e.GetWidth(), e.GetHeight());
 			}
@@ -93,15 +100,12 @@ export namespace Florencia {
 		}
 
 		Window* m_Window;
+		Console* m_Console;
 		GraphicsContext* m_Context;
 
 		LayerStack m_LayerStack;
 		Time m_LastTick{Time::GetCurrentTime()};
 		bool m_Running = true, m_Minimized = false;
-
-		#if defined(FLO_DEBUG) || defined(FLO_RELEASE)
-		Console* m_Console;
-		#endif
 	};
 
 	Application* CreateApplication();

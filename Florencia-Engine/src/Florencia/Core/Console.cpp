@@ -11,7 +11,7 @@ import Window;
 namespace Florencia {
 
 	Console* Console::Create() {
-		#if defined(FLO_PLATFORM_WINDOWS) || defined(FLO_PLATFORM_WINDOWS_32)
+		#if defined(FLO_PLATFORM_WINDOWS_64) || defined(FLO_PLATFORM_WINDOWS_32)
 		return new WConsole();
 		#elif defined(FLO_PLATFORM_MACOS)
 		return new MacConsole();
