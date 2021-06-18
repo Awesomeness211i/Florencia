@@ -3,7 +3,6 @@ import Event.Application;
 import LayerStack;
 import Timestep;
 import Renderer;
-import <chrono>;
 import Window;
 import Layer;
 import Event;
@@ -22,17 +21,17 @@ export namespace Florencia {
 		void Run() {
 			while (m_Running) {
 				//time is in seconds
-				double time = (double)(/*nanoseconds*/std::chrono::high_resolution_clock::now().time_since_epoch().count() * 1E-9);
-				Timestep ts = time - m_LastFrameTime;
-				m_LastFrameTime = time;
-
+				m_LastTick = Clock::now();
+				if (m_Window) m_Window->OnUpdate();
 				if (!m_Minimized) {
+					Time time = Clock::now();
+					Timestep ts(m_LastTick, time);
+					m_LastTick = time;
 					for (auto layer : m_LayerStack) {
 						layer->Update(ts);
 						layer->Render();
 					}
 				}
-				if (m_Window) m_Window->OnUpdate();
 			}
 		}
 
@@ -71,8 +70,8 @@ export namespace Florencia {
 		}
 
 		Window* m_Window;
+		Time m_LastTick{Clock::now()};
 		LayerStack m_LayerStack;
-		float m_LastFrameTime = 0.0f;
 		bool m_Running = true, m_Minimized = false;
 
 	protected:

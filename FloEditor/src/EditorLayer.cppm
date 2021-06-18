@@ -1,4 +1,5 @@
 export module EditorLayer;
+import <iostream>;
 import Florencia;
 
 export namespace Florencia {
@@ -20,11 +21,11 @@ export namespace Florencia {
 		}
 
 		void Update(Timestep ts) override {
-
+			
 		}
 
 		void OnEvent(Event& e) override {
-			//m_EventHandler.Dispatch<KeyPressedEvent>(e, [this](WindowCloseEvent& e) -> bool { return this->EditorLayer::Test(e); });
+			std::cout << e << "\n";
 		}
 
 		void Render() override {

@@ -1,8 +1,8 @@
 module;
-#include <Windows.h>
 export module Wwindow;
 import Event.Application;
 import GraphicsContext;
+import <Windows.h>;
 import WConsole;
 import Window;
 
