@@ -1,5 +1,6 @@
 export module DirectX12;
 import RendererAPI;
+import <stdint.h>;
 
 export namespace Florencia {
 
@@ -13,7 +14,7 @@ export namespace Florencia {
 
 		}
 
-		void Clear() override {
+		void SetViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height) override {
 
 		}
 
@@ -21,7 +22,9 @@ export namespace Florencia {
 
 		}
 
-	private:
+		void Clear() override {
+
+		}
 
 	};
 

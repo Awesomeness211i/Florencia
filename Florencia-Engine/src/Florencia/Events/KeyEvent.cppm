@@ -1,5 +1,6 @@
+module;
+#include <sstream>
 export module Event.Key;
-import <sstream>;
 import KeyCodes;
 import Event;
 

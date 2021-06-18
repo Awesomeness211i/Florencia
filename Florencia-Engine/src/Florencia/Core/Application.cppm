@@ -44,10 +44,10 @@ export namespace Florencia {
 		void Run() {
 			while (m_Running) {
 				//time is in seconds
-				m_LastTick = Clock::now();
+				m_LastTick = Time::GetCurrentTime();
 				if (!m_Minimized) {
 					if (m_Window) m_Window->OnUpdate();
-					Time time = Clock::now();
+					Time time = Time::GetCurrentTime();
 					Timestep ts(m_LastTick, time);
 					m_LastTick = time;
 					for (auto layer : m_LayerStack) {
@@ -96,7 +96,7 @@ export namespace Florencia {
 		GraphicsContext* m_Context;
 
 		LayerStack m_LayerStack;
-		Time m_LastTick{Clock::now()};
+		Time m_LastTick{Time::GetCurrentTime()};
 		bool m_Running = true, m_Minimized = false;
 
 		#if defined(FLO_DEBUG) || defined(FLO_RELEASE)

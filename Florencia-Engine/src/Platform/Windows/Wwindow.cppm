@@ -49,8 +49,8 @@ export namespace Florencia {
 			switch (msg) {
 				case WM_QUIT: break;
 				case WM_CHAR: break;
-				case WM_KEYUP: { KeyReleasedEvent e(wParam); m_CallbackFunction(e); } break;
-				case WM_KEYDOWN: { KeyPressedEvent e(wParam, 0); m_CallbackFunction(e); } break;
+				case WM_KEYUP: { KeyReleasedEvent e((int)wParam); m_CallbackFunction(e); } break;
+				case WM_KEYDOWN: { KeyPressedEvent e((int)wParam, 0); m_CallbackFunction(e); } break;
 				case WM_DESTROY: { WindowCloseEvent e; m_CallbackFunction(e); } PostQuitMessage((int)wParam); break;
 			}
 			return DefWindowProcA(hWnd, msg, wParam, lParam);
@@ -86,6 +86,7 @@ export namespace Florencia {
 				window.right - window.left, window.bottom - window.top,
 				nullptr, nullptr, instance, this);
 		}
+
 		void Shutdown() {
 			HINSTANCE instance = GetModuleHandleA(0);
 			UnregisterClassW(L"Window", instance);

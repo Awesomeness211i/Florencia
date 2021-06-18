@@ -6,7 +6,7 @@ workspace "Florencia"
 	configurations { "Debug", "Release", "Distribution" }
 	platforms { "x64", "x32" }
 
-	warnings "Extra"
+	--warnings "Extra"
 
 	--system specific and ide/compiler specific settings
 	filter { "system:windows", "action:vs*"} flags { "MultiProcessorCompile", "NoMinimalRebuild" } linkoptions { "/ignore:4099" }

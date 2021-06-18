@@ -1,5 +1,4 @@
 export module AndroidWindow;
-import AndroidConsole;
 import Window;
 
 export namespace Florencia {
@@ -19,8 +18,6 @@ export namespace Florencia {
 		void SetHeight(uint32_t height) override {}
 
 		void* GetWindowHandle() override { return nullptr; }
-	private:
-		AndroidConsole* m_Console;
 	};
 
 }

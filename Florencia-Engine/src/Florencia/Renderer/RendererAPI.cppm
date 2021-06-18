@@ -1,4 +1,5 @@
 export module RendererAPI;
+import <stdint.h>;
 import FloMath;
 
 export namespace Florencia {
@@ -16,7 +17,7 @@ export namespace Florencia {
 		virtual ~RendererAPI() = default;
 
 		virtual void Init() = 0;
-		//virtual void SetViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height) = 0;
+		virtual void SetViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height) = 0;
 		virtual void SetClearColor(const FloMath::Vec4<float>& color) = 0;
 		virtual void Clear() = 0;
 

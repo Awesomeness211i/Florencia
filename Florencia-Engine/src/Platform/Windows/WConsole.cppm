@@ -1,7 +1,8 @@
+module;
+#include <stdio.h>
+#include <iostream>
+#include <Windows.h>
 export module WConsole;
-import <Windows.h>;
-import <iostream>;
-import <stdint.h>;
 import Console;
 
 export namespace Florencia {
