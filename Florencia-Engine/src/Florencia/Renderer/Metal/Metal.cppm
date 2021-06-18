@@ -5,12 +5,22 @@ export namespace Florencia {
 
 	class Metal : public RendererAPI {
 	public:
-		Metal();
+		Metal() {
 
-		void Init() override;
+		}
 
-		void Clear() override;
-		void SetClearColor(const FloMath::Vec4<float>& color) override;
+		void Init() override {
+
+		}
+
+		void Clear() override {
+
+		}
+
+		void SetClearColor(const FloMath::Vec4<float>& color) override {
+
+		}
+
 	private:
 
 	};

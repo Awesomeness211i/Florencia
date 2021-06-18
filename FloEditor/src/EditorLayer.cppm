@@ -30,10 +30,6 @@ export namespace Florencia {
 			EventHandler.Dispatch<MouseButtonReleasedEvent>(e, [this](MouseButtonReleasedEvent& e) -> bool { return this->EditorLayer::OnMouseReleased(e); });
 		}
 
-		void Render() override {
-
-		}
-
 		bool OnKeyPressed(KeyPressedEvent& e) {
 			return true;
 		}

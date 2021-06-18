@@ -10,7 +10,6 @@ export namespace Florencia {
 		Layer() {}
 		virtual ~Layer() = default;
 
-		virtual void Render() {}
 		virtual void OnAdd() = 0;
 		virtual void OnRemove() = 0;
 		virtual void OnEvent(Event& e) {}

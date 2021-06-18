@@ -3,6 +3,8 @@ import Renderer;
 
 export namespace Florencia {
 
+	class Window;
+
 	class GraphicsContext {
 	public:
 		virtual ~GraphicsContext() = default;
@@ -12,7 +14,7 @@ export namespace Florencia {
 		virtual bool IsVSync() const = 0;
 		virtual void SetVSync(bool enabled) = 0;
 
-		static GraphicsContext* Create(void* window, bool vsync = true);
+		static GraphicsContext* Create(Window* window, bool vsync = true);
 	};
 
 }

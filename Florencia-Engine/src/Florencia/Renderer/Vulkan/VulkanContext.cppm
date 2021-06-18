@@ -5,14 +5,26 @@ export namespace Florencia {
 
 	class VulkanContext : public GraphicsContext {
 	public:
-		VulkanContext(void* windowHandle, bool vsync);
+		VulkanContext(Window* handle, bool vsync) : m_Handle(handle), m_Vsync(vsync) {}
 
-		void Init() override;
-		void SwapBuffers() override;
-		bool IsVSync() const override;
-		void SetVSync(bool enabled) override;
+		void Init() override {
+
+		}
+
+		void SwapBuffers() override {
+
+		}
+
+		bool IsVSync() const override {
+			return false;
+		}
+
+		void SetVSync(bool enabled) override {
+
+		}
+
 	private:
-		void* m_WindowHandle;
+		Window* m_Handle;
 		bool m_Vsync;
 	};
 

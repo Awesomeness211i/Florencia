@@ -1,12 +1,9 @@
 module;
+#include <Windows.h>
 export module Wwindow;
 import Event.Application;
 import Event.Mouse;
 import Event.Key;
-
-import GraphicsContext;
-import <Windows.h>;
-import WConsole;
 import Window;
 
 export namespace Florencia {
@@ -22,15 +19,12 @@ export namespace Florencia {
 				TranslateMessage(&m_Message);
 				DispatchMessageA(&m_Message);
 			}
-			if (m_Context) { m_Context->SwapBuffers(); }
 		}
 
 		uint32_t GetWidth() const override { return m_Data.Width; }
 		uint32_t GetHeight() const override { return m_Data.Height; }
 
 		//Window Attributes
-		bool IsVSync() const override { if (m_Context) { return m_Context->IsVSync(); } return false; }
-		void SetVSync(bool enabled) override { if (m_Context) { m_Context->SetVSync(enabled); } }
 		void SetWidth(uint32_t width) override { m_Data.Width = width; }
 		void SetHeight(uint32_t height) override { m_Data.Height = height; }
 
@@ -53,22 +47,16 @@ export namespace Florencia {
 
 		LONG_PTR WINAPI WindowProcedure(HWND hWnd, UINT msg, UINT_PTR wParam, LONG_PTR lParam) {
 			switch (msg) {
-				case WM_QUIT: return 0;
-				case WM_CHAR: return DefWindowProcA(hWnd, msg, wParam, lParam);
-				case WM_KEYUP: { KeyReleasedEvent e(wParam); m_CallbackFunction(e); } return 0;
-				case WM_KEYDOWN: { KeyPressedEvent e(wParam, 0); m_CallbackFunction(e); } return 0;
-				case WM_DESTROY: { WindowCloseEvent e; m_CallbackFunction(e); } PostQuitMessage((int)wParam); return 0;
-				default: return DefWindowProcA(hWnd, msg, wParam, lParam);
+				case WM_QUIT: break;
+				case WM_CHAR: break;
+				case WM_KEYUP: { KeyReleasedEvent e(wParam); m_CallbackFunction(e); } break;
+				case WM_KEYDOWN: { KeyPressedEvent e(wParam, 0); m_CallbackFunction(e); } break;
+				case WM_DESTROY: { WindowCloseEvent e; m_CallbackFunction(e); } PostQuitMessage((int)wParam); break;
 			}
+			return DefWindowProcA(hWnd, msg, wParam, lParam);
 		}
 	private:
 		void Init(const WindowProps& props) {
-			//Create Console
-			#if defined(FLO_DEBUG) || defined(FLO_RELEASE)
-			m_Console = new WConsole();
-			m_Console->CreateNewConsole();
-			#endif
-
 			HINSTANCE instance = GetModuleHandleA(0);
 			WNDCLASSEXA wc = {0};
 			wc.cbSize = sizeof(wc);
@@ -97,25 +85,13 @@ export namespace Florencia {
 				(desktop.bottom - m_Data.Height) / 2,
 				window.right - window.left, window.bottom - window.top,
 				nullptr, nullptr, instance, this);
-
-			m_Context = GraphicsContext::Create(m_Handle);
-			if (m_Context) { m_Context->Init(); }
 		}
 		void Shutdown() {
-			#if defined(FLO_DEBUG) || defined(FLO_RELEASE)
-			m_Console->ReleaseConsole();
-			delete m_Console;
-			#endif
 			HINSTANCE instance = GetModuleHandleA(0);
 			UnregisterClassW(L"Window", instance);
 		}
 
 		HWND m_Handle;
 		WindowProps m_Data;
-		GraphicsContext* m_Context;
-
-		#if defined(FLO_DEBUG) || defined(FLO_RELEASE)
-		WConsole* m_Console;
-		#endif
 	};
 }

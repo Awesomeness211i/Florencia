@@ -5,8 +5,6 @@ export namespace Florencia {
 
 	using Clock = std::chrono::high_resolution_clock;
 
-	static Clock::time_point GetCurrentTime() { return Clock::now(); }
-
 	class Time {
 	public:
 		Time(Clock::time_point time) : m_Time(time) {}

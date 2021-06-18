@@ -2,10 +2,11 @@ export module WConsole;
 import <Windows.h>;
 import <iostream>;
 import <stdint.h>;
+import Console;
 
 export namespace Florencia {
 
-	class WConsole {
+	class WConsole : public Console {
 	public:
 		WConsole(int16_t minLength = 1024) : m_MinLength(minLength) {}
 		bool CreateNewConsole() {
