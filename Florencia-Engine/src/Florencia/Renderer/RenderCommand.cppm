@@ -1,4 +1,3 @@
-module;
 export module RenderCommand;
 import RendererAPI;
 import FloMath;
@@ -21,5 +20,7 @@ export namespace Florencia {
 	private:
 		static RendererAPI* s_RendererAPI;
 	};
+
+	RendererAPI* RenderCommand::s_RendererAPI = RendererAPI::Create();
 
 }
