@@ -1,6 +1,9 @@
 module;
 export module Wwindow;
 import Event.Application;
+import Event.Mouse;
+import Event.Key;
+
 import GraphicsContext;
 import <Windows.h>;
 import WConsole;
@@ -50,17 +53,12 @@ export namespace Florencia {
 
 		LONG_PTR WINAPI WindowProcedure(HWND hWnd, UINT msg, UINT_PTR wParam, LONG_PTR lParam) {
 			switch (msg) {
-			case WM_QUIT:
-				return 0;
-			case WM_DESTROY:
-				{
-				WindowCloseEvent e;
-				m_CallbackFunction(e);
-				PostQuitMessage((int)wParam);
-				}
-				return 0;
-			default:
-				return DefWindowProcA(hWnd, msg, wParam, lParam);
+				case WM_QUIT: return 0;
+				case WM_CHAR: return DefWindowProcA(hWnd, msg, wParam, lParam);
+				case WM_KEYUP: { KeyReleasedEvent e(wParam); m_CallbackFunction(e); } return 0;
+				case WM_KEYDOWN: { KeyPressedEvent e(wParam, 0); m_CallbackFunction(e); } return 0;
+				case WM_DESTROY: { WindowCloseEvent e; m_CallbackFunction(e); } PostQuitMessage((int)wParam); return 0;
+				default: return DefWindowProcA(hWnd, msg, wParam, lParam);
 			}
 		}
 	private:

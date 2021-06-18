@@ -10,7 +10,7 @@ export namespace Florencia {
 	class FloEditor : public Application {
 	public:
 		FloEditor(const WindowProps& props) : Application(props) {
-			AddLayer(new EditorLayer(m_EventHandler));
+			AddLayer(new EditorLayer());
 		}
 
 	};

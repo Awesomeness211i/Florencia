@@ -36,8 +36,8 @@ export namespace Florencia {
 		}
 
 		void OnEvent(Event& e) {
-			m_EventHandler.Dispatch<WindowCloseEvent>(e, [this](WindowCloseEvent& e) -> bool { return this->Application::OnWindowClose(e); });
-			m_EventHandler.Dispatch<WindowResizeEvent>(e, [this](WindowResizeEvent& e) -> bool { return this->Application::OnWindowResize(e); });
+			EventHandler.Dispatch<WindowCloseEvent>(e, [this](WindowCloseEvent& e) -> bool { return this->Application::OnWindowClose(e); });
+			EventHandler.Dispatch<WindowResizeEvent>(e, [this](WindowResizeEvent& e) -> bool { return this->Application::OnWindowResize(e); });
 
 			for (auto it = m_LayerStack.rbegin(); it != m_LayerStack.rend(); ++it) {
 				if (e.Handled) break;
@@ -73,9 +73,6 @@ export namespace Florencia {
 		Time m_LastTick{Clock::now()};
 		LayerStack m_LayerStack;
 		bool m_Running = true, m_Minimized = false;
-
-	protected:
-		EventDispatcher m_EventHandler;
 	};
 
 	Application* CreateApplication();

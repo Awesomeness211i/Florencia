@@ -3,7 +3,7 @@ import <sstream>;
 import MouseCodes;
 import Event;
 
-namespace Florencia {
+export namespace Florencia {
 
 	class MouseButtonEvent : public Event {
 	public:

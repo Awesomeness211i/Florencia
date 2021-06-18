@@ -17,15 +17,14 @@ export namespace Florencia {
 
 	class Timestep {
 	public:
-		Timestep(const Time start, const Time end) : m_Duration(end.GetTime() - start.GetTime()) {}
-
 		//seconds by default
+		Timestep(const Time start, const Time end) : m_Duration(end.GetTime() - start.GetTime()) {}
 		operator double() { return GetSeconds(); }
 
-		double GetSeconds() const { return m_Duration.count() / 1000000000.0; }//1000000000 nanoseconds in 1 second
-		double GetMilliseconds() const { return m_Duration.count() / 1000000.0; }//1 seconds is 1000 millisecond
-		double GetMicroseconds() const { return m_Duration.count() / 1000.0; }//1 second is 1000000 microseconds
-		double GetNanoseconds() const { return m_Duration.count(); } //1000000000 nanoseconds per second
+		double GetSeconds() const { return m_Duration.count() / 1000000000.0; } //1 second in 1000000000 nanoseconds
+		double GetMilliseconds() const { return m_Duration.count() / 1000000.0; } //1 milliseconds is 1000000 nanoseconds
+		double GetMicroseconds() const { return m_Duration.count() / 1000.0; } //1 microseconds in 1000 nanoseconds
+		double GetNanoseconds() const { return m_Duration.count(); } //1 nanosecond in 1 nanosecond
 	private:
 		std::chrono::nanoseconds m_Duration;
 	};
