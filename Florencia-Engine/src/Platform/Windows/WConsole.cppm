@@ -1,8 +1,8 @@
 module;
 #include <stdio.h>
-#include <iostream>
 #include <Windows.h>
 export module WConsole;
+import std.core;
 import Console;
 
 export namespace Florencia {

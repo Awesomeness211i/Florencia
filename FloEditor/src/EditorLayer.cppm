@@ -1,5 +1,3 @@
-module;
-#include <iostream>
 export module EditorLayer;
 import Florencia;
 
@@ -26,7 +24,7 @@ export namespace Florencia {
 		}
 
 		void Update(Timestep ts) override {
-			std::cout << ts << "\n";
+			
 		}
 
 		void OnEvent(Event& e) override {

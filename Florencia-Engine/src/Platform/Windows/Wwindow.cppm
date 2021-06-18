@@ -48,19 +48,19 @@ export namespace Florencia {
 
 		LONG_PTR WINAPI WindowProcedure(HWND hWnd, UINT msg, UINT_PTR wParam, LONG_PTR lParam) {
 			switch (msg) {
-				[[unlikely]] case WM_QUIT: break;
-				[[unlikely]] case WM_DESTROY: { WindowCloseEvent e; m_CallbackFunction(e); } PostQuitMessage((int)wParam); break;
-				[[likely]] case WM_CHAR: { KeyPressedEvent e((int)wParam, 0); m_CallbackFunction(e); } break;
-				[[likely]] case WM_KEYUP: { KeyReleasedEvent e((int)wParam); m_CallbackFunction(e); } break;
-				[[likely]] case WM_KEYDOWN: { KeyPressedEvent e((int)wParam, 0); m_CallbackFunction(e); } break;
-				[[likely]] case WM_MOUSEMOVE: { POINTS p = MAKEPOINTS(lParam); MouseMovedEvent e((int)p.x, (int)p.y); m_CallbackFunction(e); } break;
-				[[likely]] case WM_MOUSEWHEEL: { auto p = GET_WHEEL_DELTA_WPARAM(wParam); MouseScrolledEvent e((int)p, 0); m_CallbackFunction(e); } break;
-				[[likely]] case WM_LBUTTONDOWN: { MouseButtonPressedEvent e((int)MouseButtons::ButtonLeft); m_CallbackFunction(e); } break;
-				[[likely]] case WM_MBUTTONDOWN: { MouseButtonPressedEvent e((int)MouseButtons::ButtonMiddle); m_CallbackFunction(e); } break;
-				[[likely]] case WM_RBUTTONDOWN: { MouseButtonPressedEvent e((int)MouseButtons::ButtonRight); m_CallbackFunction(e); } break;
-				[[likely]] case WM_LBUTTONUP: { MouseButtonReleasedEvent e((int)MouseButtons::ButtonLeft); m_CallbackFunction(e); } break;
-				[[likely]] case WM_MBUTTONUP: { MouseButtonReleasedEvent e((int)MouseButtons::ButtonMiddle); m_CallbackFunction(e); } break;
-				[[likely]] case WM_RBUTTONUP: { MouseButtonReleasedEvent e((int)MouseButtons::ButtonRight); m_CallbackFunction(e); } break;
+			[[unlikely]] case WM_QUIT: break;
+			[[unlikely]] case WM_CLOSE: { WindowCloseEvent e; m_CallbackFunction(e); } PostQuitMessage((int)wParam); return 0;
+			[[likely]] case WM_CHAR: { KeyPressedEvent e((int)wParam, 0); m_CallbackFunction(e); } break;
+			[[likely]] case WM_KEYUP: { KeyReleasedEvent e((int)wParam); m_CallbackFunction(e); } break;
+			[[likely]] case WM_KEYDOWN: { KeyPressedEvent e((int)wParam, 0); m_CallbackFunction(e); } break;
+			[[likely]] case WM_MOUSEMOVE: { POINTS p = MAKEPOINTS(lParam); MouseMovedEvent e((int)p.x, (int)p.y); m_CallbackFunction(e); } break;
+			[[likely]] case WM_MOUSEWHEEL: { auto p = GET_WHEEL_DELTA_WPARAM(wParam); MouseScrolledEvent e((int)p, 0); m_CallbackFunction(e); } break;
+			[[likely]] case WM_LBUTTONDOWN: { MouseButtonPressedEvent e((int)MouseButtons::ButtonLeft); m_CallbackFunction(e); } break;
+			[[likely]] case WM_MBUTTONDOWN: { MouseButtonPressedEvent e((int)MouseButtons::ButtonMiddle); m_CallbackFunction(e); } break;
+			[[likely]] case WM_RBUTTONDOWN: { MouseButtonPressedEvent e((int)MouseButtons::ButtonRight); m_CallbackFunction(e); } break;
+			[[likely]] case WM_LBUTTONUP: { MouseButtonReleasedEvent e((int)MouseButtons::ButtonLeft); m_CallbackFunction(e); } break;
+			[[likely]] case WM_MBUTTONUP: { MouseButtonReleasedEvent e((int)MouseButtons::ButtonMiddle); m_CallbackFunction(e); } break;
+			[[likely]] case WM_RBUTTONUP: { MouseButtonReleasedEvent e((int)MouseButtons::ButtonRight); m_CallbackFunction(e); } break;
 			}
 			return DefWindowProcA(hWnd, msg, wParam, lParam);
 		}
@@ -73,12 +73,12 @@ export namespace Florencia {
 			m_WindowsClass.cbClsExtra = 0;
 			m_WindowsClass.cbWndExtra = 0;
 			m_WindowsClass.hInstance = m_Instance;
-			m_WindowsClass.hIcon = nullptr;
+			m_WindowsClass.hIcon = static_cast<HICON>(LoadImage(m_Instance, MAKEINTRESOURCE(101), IMAGE_ICON, 256, 256, 0));
 			m_WindowsClass.hCursor = nullptr;
 			m_WindowsClass.hbrBackground = nullptr;
 			m_WindowsClass.lpszMenuName = nullptr;
 			m_WindowsClass.lpszClassName = "Window";
-			m_WindowsClass.hIconSm = nullptr;
+			m_WindowsClass.hIconSm = static_cast<HICON>(LoadImage(m_Instance, MAKEINTRESOURCE(101), IMAGE_ICON, 16, 16, 0));
 			RegisterClassExA(&m_WindowsClass);
 
 			//Create Window

@@ -99,9 +99,9 @@ export namespace Florencia {
 			return false;
 		}
 
-		Window* m_Window;
-		Console* m_Console;
-		GraphicsContext* m_Context;
+		Window* m_Window = nullptr;
+		Console* m_Console = nullptr;
+		GraphicsContext* m_Context = nullptr;
 
 		LayerStack m_LayerStack;
 		Time m_LastTick{Time::GetCurrentTime()};
