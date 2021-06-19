@@ -44,7 +44,7 @@ export namespace Florencia {
 			while (m_Running) {
 				//time is in seconds
 				m_LastTick = Time::GetCurrentTime();
-				if (!m_Minimized) [[unlikely]] {
+				if (!m_Minimized) [[likely]] {
 					if (m_Window) m_Window->OnUpdate();
 					Time time = Time::GetCurrentTime();
 					Timestep ts(m_LastTick, time);
