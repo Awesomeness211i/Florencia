@@ -1,5 +1,6 @@
 module;
 #include <sstream>
+#include <stdint.h>
 export module Event.Key;
 import KeyCodes;
 import Event;
@@ -8,17 +9,17 @@ export namespace Florencia {
 
 	class KeyEvent : public Event {
 	public:
-		KeyCode GetKeyCode() const { return m_KeyCode; }
+		int GetKeyCode() const { return m_KeyCode; }
 		int GetCategoryFlags() const override { return (int)EventCategory::EventCategoryInput | (int)EventCategory::EventCategoryKeyboard; }
 
 	protected:
-		KeyEvent(const KeyCode keycode) : m_KeyCode(keycode) {}
-		KeyCode m_KeyCode;
+		KeyEvent(const uint16_t keycode) { m_KeyCode = keycode; }
+		uint16_t m_KeyCode;
 	};
 
 	class KeyPressedEvent : public KeyEvent {
 	public:
-		KeyPressedEvent(const KeyCode keycode, const uint16_t repeatCount) : KeyEvent(keycode), m_RepeatCount(repeatCount) {}
+		KeyPressedEvent(const uint16_t keycode, const uint16_t repeatCount) : KeyEvent(keycode), m_RepeatCount(repeatCount) {}
 
 		uint16_t GetRepeatCount() const { return m_RepeatCount; }
 
@@ -37,7 +38,7 @@ export namespace Florencia {
 
 	class KeyReleasedEvent : public KeyEvent {
 	public:
-		KeyReleasedEvent(const KeyCode keycode) : KeyEvent(keycode) {}
+		KeyReleasedEvent(const uint16_t keycode) : KeyEvent(keycode) {}
 
 		std::string ToString() const override {
 			std::stringstream ss;
@@ -52,7 +53,7 @@ export namespace Florencia {
 
 	class KeyTypedEvent : public KeyEvent {
 	public:
-		KeyTypedEvent(const KeyCode keycode) : KeyEvent(keycode) {}
+		KeyTypedEvent(const uint16_t keycode) : KeyEvent(keycode) {}
 
 		std::string ToString() const override {
 			std::stringstream ss;

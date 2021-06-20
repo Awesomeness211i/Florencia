@@ -4,9 +4,7 @@ export module MouseCodes;
 
 export namespace Florencia {
 
-	using MouseCode = uint16_t;
-
-	enum class MouseButtons : MouseCode {
+	enum class MouseButton : uint16_t {
 		// From glfw3.h
 		Button0 = 0,
 		Button1 = 1,
@@ -17,10 +15,10 @@ export namespace Florencia {
 		Button6 = 6,
 		Button7 = 7,
 
-		ButtonLast = Button7,
-		ButtonLeft = Button0,
-		ButtonRight = Button1,
-		ButtonMiddle = Button2
+		Last = Button7,
+		Left = Button0,
+		Right = Button1,
+		Middle = Button2
 	};
 
 }

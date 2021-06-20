@@ -1,3 +1,5 @@
+module;
+#include <stdint.h>
 export module Event.Mouse;
 import <sstream>;
 import MouseCodes;
@@ -7,16 +9,16 @@ export namespace Florencia {
 
 	class MouseButtonEvent : public Event {
 	public:
-		MouseCode GetMouseButton() const { return m_Button; }
+		uint16_t GetMouseButton() const { return (uint16_t)m_Button; }
 		int GetCategoryFlags() const override { return (int)EventCategory::EventCategoryMouse | (int)EventCategory::EventCategoryInput | (int)EventCategory::EventCategoryMouseButton; }
 	protected:
-		MouseButtonEvent(const MouseCode button) : m_Button(button) {}
-		MouseCode m_Button;
+		MouseButtonEvent(const MouseButton button) : m_Button(button) {}
+		MouseButton m_Button;
 	};
 
 	class MouseButtonPressedEvent : public MouseButtonEvent {
 	public:
-		MouseButtonPressedEvent(const MouseCode button) : MouseButtonEvent(button) {}
+		MouseButtonPressedEvent(const MouseButton button) : MouseButtonEvent(button) {}
 
 		const char* GetName() const override { return "MouseButtonPressed"; }
 		static EventType GetStaticType() { return EventType::MouseButtonPressed; }
@@ -24,14 +26,14 @@ export namespace Florencia {
 
 		std::string ToString() const override {
 			std::stringstream ss;
-			ss << "MouseButtonPressedEvent: " << m_Button;
+			ss << "MouseButtonPressedEvent: " << (uint16_t)m_Button;
 			return ss.str();
 		}
 	};
 
 	class MouseButtonReleasedEvent : public MouseButtonEvent {
 	public:
-		MouseButtonReleasedEvent(const MouseCode button) : MouseButtonEvent(button) {}
+		MouseButtonReleasedEvent(const MouseButton button) : MouseButtonEvent(button) {}
 
 		const char* GetName() const override { return "MouseButtonReleased"; }
 		static EventType GetStaticType() { return EventType::MouseButtonReleased; }
@@ -39,7 +41,7 @@ export namespace Florencia {
 
 		std::string ToString() const override {
 			std::stringstream ss;
-			ss << "MouseButtonReleasedEvent: " << m_Button;
+			ss << "MouseButtonReleasedEvent: " << (uint16_t)m_Button;
 			return ss.str();
 		}
 	};

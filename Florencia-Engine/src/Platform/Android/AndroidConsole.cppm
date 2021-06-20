@@ -1,13 +1,14 @@
 export module AndroidConsole;
+import Console;
 
 export namespace Florencia {
 
-	class AndroidConsole {
+	class AndroidConsole : public Console {
 	public:
 		AndroidConsole() {}
 		~AndroidConsole() {}
-		bool CreateNewConsole() { return false; }
-		bool ReleaseConsole() { return false; }
+		bool CreateNewConsole() override { return false; }
+		bool ReleaseConsole() override { return false; }
 	private:
 
 	};

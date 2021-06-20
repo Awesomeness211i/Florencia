@@ -4,9 +4,7 @@ export module KeyCodes;
 
 export namespace Florencia {
 
-	using KeyCode = uint16_t;
-
-	enum class Key : KeyCode {
+	enum class Key : uint16_t {
 		Space,
 		Apostrophe, /* ' */
 		Comma, /* , */

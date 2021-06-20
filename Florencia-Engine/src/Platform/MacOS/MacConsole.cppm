@@ -1,13 +1,14 @@
 export module MacConsole;
+import Console;
 
 export namespace Florencia {
 
-	class MacConsole {
+	class MacConsole : public Console {
 	public:
 		MacConsole() {}
 		~MacConsole() {}
-		bool CreateNewConsole() { return false; }
-		bool ReleaseConsole() { return false; }
+		bool CreateNewConsole() override { return false; }
+		bool ReleaseConsole() override { return false; }
 	private:
 
 	};

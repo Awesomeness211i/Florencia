@@ -8,21 +8,19 @@ export namespace Florencia {
 
 	//Virtual KeyCodes
 	enum class WindowsKeyCodes : KeyCode {
-		Apostrophe = 39, /* ' */
-		Comma = 44, /* , */
-		Minus = 45, /* - */
-		Period = 46, /* . */
-		Slash = 47, /* / */
-		Semicolon = 59, /* ; */
-		Equal = 61, /* = */
-		LeftBracket = 91,  /* [ */
-		Backslash = 92,  /* \ */
-		RightBracket = 93,  /* ] */
-		GraveAccent = 96,  /* ` */
-		World1 = 161, /* non-US #1 */
-		World2 = 162, /* non-US #2 */
-
-		/* Function keys */
+		//Apostrophe = 39, /* ' */
+		Comma = 0xBC, /* , */
+		Minus = 0xBD, /* - */
+		Period = 0xBE, /* . */
+		//Slash = 47, /* / */
+		//Semicolon = 59, /* ; */
+		//Equal = 61, /* = */
+		//LeftBracket = 91,  /* [ */
+		//Backslash = 92,  /* \ */
+		//RightBracket = 93,  /* ] */
+		//GraveAccent = 96,  /* ` */
+		//World1 = 161, /* non-US #1 */
+		//World2 = 162, /* non-US #2 */
 		Backspace = 0x08,
 		Tab = 0x09,
 		Enter = 0x0D,
@@ -81,8 +79,6 @@ export namespace Florencia {
 		X = 0x58,
 		Y = 0x59,
 		Z = 0x5A,
-
-		/* Keypad */
 		KP0 = 0x60,
 		KP1 = 0x61,
 		KP2 = 0x62,
@@ -95,11 +91,11 @@ export namespace Florencia {
 		KP9 = 0x69,
 		KPMultiply = 0x6A,
 		KPAdd = 0x6B,
-		//KPSeparator = 0x6C,
 		KPSubtract = 0x6D,
 		KPDecimal = 0x6E,
 		KPDivide = 0x6F,
-
+		//KPEnter = 335,
+		//KPEqual = 336,
 		F1 = 0x70,
 		F2 = 0x71,
 		F3 = 0x72,
@@ -131,16 +127,11 @@ export namespace Florencia {
 		RightShift = 0xA1,
 		LeftControl = 0xA2,
 		RightControl = 0xA3,
-
-		KPEnter = 335,
-		KPEqual = 336,
-
-
-		Menu = 348,
-		LeftAlt = 342,
-		RightAlt = 346,
-		LeftSuper = 343,
-		RightSuper = 347,
+		//Menu = 348,
+		//LeftAlt = 342,
+		//RightAlt = 346,
+		//LeftSuper = 343,
+		//RightSuper = 347,
 	};
 
 }
