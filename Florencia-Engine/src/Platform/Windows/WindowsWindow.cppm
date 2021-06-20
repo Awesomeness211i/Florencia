@@ -1,7 +1,9 @@
 module;
+#define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 export module WindowsWindow;
 import Event.Application;
+import KeyCodeConverter;
 import Event.Mouse;
 import MouseCodes;
 import Event.Key;
@@ -50,17 +52,17 @@ export namespace Florencia {
 			switch (msg) {
 			[[unlikely]] case WM_QUIT: break;
 			[[unlikely]] case WM_CLOSE: { WindowCloseEvent e; m_CallbackFunction(e); } PostQuitMessage((int)wParam); return 0;
-			[[likely]] case WM_CHAR: { KeyPressedEvent e((int)wParam, 0); m_CallbackFunction(e); } break;
-			[[likely]] case WM_KEYUP: { KeyReleasedEvent e((int)wParam); m_CallbackFunction(e); } break;
-			[[likely]] case WM_KEYDOWN: { KeyPressedEvent e((int)wParam, 0); m_CallbackFunction(e); } break;
+			[[likely]] case WM_CHAR: { KeyPressedEvent e(ConvertToUniversalKeyCode(wParam), 0); m_CallbackFunction(e); } break;
+			[[likely]] case WM_KEYUP: { KeyReleasedEvent e(ConvertToUniversalKeyCode(wParam)); m_CallbackFunction(e); } break;
+			[[likely]] case WM_KEYDOWN: { KeyPressedEvent e(ConvertToUniversalKeyCode(wParam), 0); m_CallbackFunction(e); } break;
 			[[likely]] case WM_MOUSEMOVE: { POINTS p = MAKEPOINTS(lParam); MouseMovedEvent e((int)p.x, (int)p.y); m_CallbackFunction(e); } break;
 			[[likely]] case WM_MOUSEWHEEL: { auto p = GET_WHEEL_DELTA_WPARAM(wParam); MouseScrolledEvent e((int)p, 0); m_CallbackFunction(e); } break;
-			[[likely]] case WM_LBUTTONDOWN: { MouseButtonPressedEvent e((int)MouseButtons::ButtonLeft); m_CallbackFunction(e); } break;
-			[[likely]] case WM_MBUTTONDOWN: { MouseButtonPressedEvent e((int)MouseButtons::ButtonMiddle); m_CallbackFunction(e); } break;
-			[[likely]] case WM_RBUTTONDOWN: { MouseButtonPressedEvent e((int)MouseButtons::ButtonRight); m_CallbackFunction(e); } break;
-			[[likely]] case WM_LBUTTONUP: { MouseButtonReleasedEvent e((int)MouseButtons::ButtonLeft); m_CallbackFunction(e); } break;
-			[[likely]] case WM_MBUTTONUP: { MouseButtonReleasedEvent e((int)MouseButtons::ButtonMiddle); m_CallbackFunction(e); } break;
-			[[likely]] case WM_RBUTTONUP: { MouseButtonReleasedEvent e((int)MouseButtons::ButtonRight); m_CallbackFunction(e); } break;
+			[[likely]] case WM_LBUTTONDOWN: { MouseButtonPressedEvent e(0); m_CallbackFunction(e); } break;
+			[[likely]] case WM_MBUTTONDOWN: { MouseButtonPressedEvent e(0); m_CallbackFunction(e); } break;
+			[[likely]] case WM_RBUTTONDOWN: { MouseButtonPressedEvent e(0); m_CallbackFunction(e); } break;
+			[[likely]] case WM_LBUTTONUP: { MouseButtonReleasedEvent e(0); m_CallbackFunction(e); } break;
+			[[likely]] case WM_MBUTTONUP: { MouseButtonReleasedEvent e(0); m_CallbackFunction(e); } break;
+			[[likely]] case WM_RBUTTONUP: { MouseButtonReleasedEvent e(0); m_CallbackFunction(e); } break;
 			}
 			return DefWindowProcA(hWnd, msg, wParam, lParam);
 		}

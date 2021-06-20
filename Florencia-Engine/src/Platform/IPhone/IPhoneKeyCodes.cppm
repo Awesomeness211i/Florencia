@@ -1,12 +1,13 @@
 module;
 #include <stdint.h>
-export module KeyCodes;
+export module IPhoneKeyCodes;
 
-export namespace Florencia {
+namespace Florencia {
 
 	using KeyCode = uint16_t;
 
-	enum class Key : KeyCode {
+	//Virtual KeyCodes
+	enum class IPhoneKeyCodes : KeyCode {
 		Space,
 		Apostrophe, /* ' */
 		Comma, /* , */
@@ -110,7 +111,6 @@ export namespace Florencia {
 		RightAlt,
 		RightSuper,
 		Menu,
-
 		/* Keypad */
 		KP0,
 		KP1,
