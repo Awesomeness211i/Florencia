@@ -1,6 +1,6 @@
 module;
 #include <Windows.h>
-export module Wwindow;
+export module WindowsWindow;
 import Event.Application;
 import Event.Mouse;
 import MouseCodes;
@@ -10,10 +10,10 @@ import Window;
 
 export namespace Florencia {
 
-	class Wwindow : public Window {
+	class WindowsWindow : public Window {
 	public:
-		Wwindow(const WindowProps& props) : m_Data(props) { Init(props); }
-		~Wwindow() { Shutdown(); }
+		WindowsWindow(const WindowProps& props) : m_Data(props) { Init(props); }
+		~WindowsWindow() { Shutdown(); }
 
 		void OnUpdate() override {
 			MSG m_Message = {0};
@@ -33,14 +33,14 @@ export namespace Florencia {
 		void* GetWindowHandle() override { return m_Handle; }
 
 		static LONG_PTR WINAPI SetupWindowProcedure(HWND hWnd, UINT msg, UINT_PTR wParam, LONG_PTR lParam) {
-			Wwindow* pParent;
+			WindowsWindow* pParent;
 			if (msg != WM_NCCREATE) [[likely]] {
-				pParent = reinterpret_cast<Wwindow*>(GetWindowLongPtrW(hWnd, GWLP_USERDATA));
+				pParent = reinterpret_cast<WindowsWindow*>(GetWindowLongPtrW(hWnd, GWLP_USERDATA));
 				if (!pParent) return DefWindowProc(hWnd, msg, wParam, lParam);
 			}
 			else [[unlikely]] {
 				LPCREATESTRUCT lpcs = reinterpret_cast<LPCREATESTRUCT>(lParam);
-				pParent = static_cast<Wwindow*>(lpcs->lpCreateParams);
+				pParent = static_cast<WindowsWindow*>(lpcs->lpCreateParams);
 				SetWindowLongPtrW(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(pParent));
 			}
 			return pParent->WindowProcedure(hWnd, msg, wParam, lParam);
@@ -82,7 +82,7 @@ export namespace Florencia {
 			RegisterClassExA(&m_WindowsClass);
 
 			//Create Window
-			RECT desktop = { 0 }, window = { 0, 0, (LONG)m_Data.Width, (LONG)m_Data.Height };
+			RECT desktop = {0}, window = { 0, 0, (LONG)m_Data.Width, (LONG)m_Data.Height };
 			HWND size = GetDesktopWindow();
 			GetWindowRect(size, &desktop);
 			AdjustWindowRect(&window, WS_OVERLAPPEDWINDOW, false);

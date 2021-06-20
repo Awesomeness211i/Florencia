@@ -1,18 +1,17 @@
 module;
 #include <Florencia/Core/PlatformDetection.h>
 module Console;
-import WConsole;
-import LinuxConsole;
 import MacConsole;
+import LinuxConsole;
 import IPhoneConsole;
 import AndroidConsole;
-import Window;
+import WindowsConsole;
 
 namespace Florencia {
 
 	Console* Console::Create() {
 		#if defined(FLO_PLATFORM_WINDOWS_64) || defined(FLO_PLATFORM_WINDOWS_32)
-		return new WConsole();
+		return new WindowsConsole();
 		#elif defined(FLO_PLATFORM_MACOS)
 		return new MacConsole();
 		#elif defined(FLO_PLATFORM_LINUX)

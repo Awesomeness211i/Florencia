@@ -1,15 +1,15 @@
 module;
 #include <stdio.h>
 #include <Windows.h>
-export module WConsole;
+export module WindowsConsole;
 import std.core;
 import Console;
 
 export namespace Florencia {
 
-	class WConsole : public Console {
+	class WindowsConsole : public Console {
 	public:
-		WConsole(int16_t minLength = 1024) : m_MinLength(minLength) {}
+		WindowsConsole(int16_t minLength = 1024) : m_MinLength(minLength) {}
 		bool CreateNewConsole() {
 			bool result = false;
 			// Release any current console and redirect IO to NUL
