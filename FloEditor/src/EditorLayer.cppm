@@ -1,6 +1,7 @@
+module;
+#include <iostream>
 export module EditorLayer;
 import Florencia;
-import std.core;
 
 export namespace Florencia {
 
@@ -29,9 +30,9 @@ export namespace Florencia {
 		}
 
 		void OnEvent(Event& e) override {
-			EventHandler.Dispatch<KeyTypedEvent>(e, [this](KeyTypedEvent& e) -> bool { return this->EditorLayer::OnKeyTyped(e); });
 			EventHandler.Dispatch<KeyPressedEvent>(e, [this](KeyPressedEvent& e) -> bool { return this->EditorLayer::OnKeyPressed(e); });
 			EventHandler.Dispatch<KeyReleasedEvent>(e, [this](KeyReleasedEvent& e) -> bool { return this->EditorLayer::OnKeyReleased(e); });
+			EventHandler.Dispatch<CharacterTypedEvent>(e, [this](CharacterTypedEvent& e) -> bool { return this->EditorLayer::OnCharacterTyped(e); });
 
 			EventHandler.Dispatch<MouseMovedEvent>(e, [this](MouseMovedEvent& e) -> bool { return this->EditorLayer::OnMouseMoved(e); });
 			EventHandler.Dispatch<MouseScrolledEvent>(e, [this](MouseScrolledEvent& e) -> bool { return this->EditorLayer::OnMouseScrolled(e); });
@@ -39,7 +40,7 @@ export namespace Florencia {
 			EventHandler.Dispatch<MouseButtonReleasedEvent>(e, [this](MouseButtonReleasedEvent& e) -> bool { return this->EditorLayer::OnMouseReleased(e); });
 		}
 
-		bool OnKeyTyped(KeyTypedEvent& e) {
+		bool OnCharacterTyped(CharacterTypedEvent& e) {
 			std::cout << e << "\n";
 			return true;
 		}
@@ -50,6 +51,7 @@ export namespace Florencia {
 		}
 
 		bool OnKeyReleased(KeyReleasedEvent& e) {
+			std::cout << e << "\n";
 			return true;
 		}
 

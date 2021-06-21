@@ -9,23 +9,23 @@ export namespace Florencia {
 
 	class KeyEvent : public Event {
 	public:
-		int GetKeyCode() const { return m_KeyCode; }
+		Key GetKeyCode() const { return m_KeyCode; }
 		int GetCategoryFlags() const override { return (int)EventCategory::EventCategoryInput | (int)EventCategory::EventCategoryKeyboard; }
 
 	protected:
-		KeyEvent(const uint16_t keycode) { m_KeyCode = keycode; }
-		uint16_t m_KeyCode;
+		KeyEvent(const Key keycode) { m_KeyCode = keycode; }
+		Key m_KeyCode;
 	};
 
 	class KeyPressedEvent : public KeyEvent {
 	public:
-		KeyPressedEvent(const uint16_t keycode, const uint16_t repeatCount) : KeyEvent(keycode), m_RepeatCount(repeatCount) {}
+		KeyPressedEvent(const Key keycode, const uint16_t repeatCount) : KeyEvent(keycode), m_RepeatCount(repeatCount) {}
 
 		uint16_t GetRepeatCount() const { return m_RepeatCount; }
 
 		std::string ToString() const override {
 			std::stringstream ss;
-			ss << "KeyPressedEvent: " << m_KeyCode << " (" << m_RepeatCount << " repeats)";
+			ss << "KeyPressedEvent: " << (int)m_KeyCode << " (" << m_RepeatCount << " repeats)";
 			return ss.str();
 		}
 
@@ -38,11 +38,11 @@ export namespace Florencia {
 
 	class KeyReleasedEvent : public KeyEvent {
 	public:
-		KeyReleasedEvent(const uint16_t keycode) : KeyEvent(keycode) {}
+		KeyReleasedEvent(const Key keycode) : KeyEvent(keycode) {}
 
 		std::string ToString() const override {
 			std::stringstream ss;
-			ss << "KeyReleasedEvent: " << m_KeyCode;
+			ss << "KeyReleasedEvent: " << (int)m_KeyCode;
 			return ss.str();
 		}
 
@@ -51,19 +51,24 @@ export namespace Florencia {
 		EventType GetEventType() const override { return GetStaticType(); }
 	};
 
-	class KeyTypedEvent : public KeyEvent {
+	class CharacterTypedEvent : public Event {
 	public:
-		KeyTypedEvent(const uint16_t keycode) : KeyEvent(keycode) {}
+		CharacterTypedEvent(const Character charactercode) : m_CharacterCode(charactercode) {}
+
+		Character GetCharacterCode() const { return m_CharacterCode; }
+		int GetCategoryFlags() const override { return (int)EventCategory::EventCategoryInput | (int)EventCategory::EventCategoryKeyboard; }
 
 		std::string ToString() const override {
 			std::stringstream ss;
-			ss << "KeyTypedEvent: " << m_KeyCode;
+			ss << "CharacterTypedEvent: " << (char)m_CharacterCode;
 			return ss.str();
 		}
 
-		const char* GetName() const override { return "KeyTyped"; }
-		static EventType GetStaticType() { return EventType::KeyTyped; }
+		const char* GetName() const override { return "CharacterTyped"; }
+		static EventType GetStaticType() { return EventType::CharacterTyped; }
 		EventType GetEventType() const override { return GetStaticType(); }
+	private:
+		Character m_CharacterCode;
 	};
 
 }

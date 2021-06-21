@@ -50,21 +50,22 @@ export namespace Florencia {
 
 		LONG_PTR WINAPI WindowProcedure(HWND hWnd, UINT msg, UINT_PTR wParam, LONG_PTR lParam) {
 			switch (msg) {
-				case WM_QUIT: break;
-				case WM_CLOSE: { WindowCloseEvent e; m_CallbackFunction(e); } PostQuitMessage((int)wParam); return 0;
+				case WM_CLOSE: { WindowCloseEvent e; m_CallbackFunction(e); } return 0;
 
-				case WM_CHAR: { KeyTypedEvent e(wParam); m_CallbackFunction(e); } return 0;
-				case WM_KEYDOWN: { KeyPressedEvent e(wParam, 0); m_CallbackFunction(e); } return 0;
-				case WM_KEYUP: { KeyReleasedEvent e(wParam); m_CallbackFunction(e); } return 0;
+				case WM_KEYDOWN: { KeyPressedEvent e(ConvertToUniversalKeyCode(wParam), 0); m_CallbackFunction(e); } return 0;
+				case WM_KEYUP: { KeyReleasedEvent e(ConvertToUniversalKeyCode(wParam)); m_CallbackFunction(e); } return 0;
+				case WM_CHAR: { CharacterTypedEvent e((Character)wParam); m_CallbackFunction(e); } return 0;
+
+				case WM_LBUTTONDOWN: { MouseButtonPressedEvent e(MouseButton::Left); m_CallbackFunction(e); } return 0;
+				case WM_RBUTTONDOWN: { MouseButtonPressedEvent e(MouseButton::Right); m_CallbackFunction(e); } return 0;
+				case WM_MBUTTONDOWN: { MouseButtonPressedEvent e(MouseButton::Middle); m_CallbackFunction(e); } return 0;
+
+				case WM_LBUTTONUP: { MouseButtonReleasedEvent e(MouseButton::Left); m_CallbackFunction(e); } return 0;
+				case WM_RBUTTONUP: { MouseButtonReleasedEvent e(MouseButton::Right); m_CallbackFunction(e); } return 0;
+				case WM_MBUTTONUP: { MouseButtonReleasedEvent e(MouseButton::Middle); m_CallbackFunction(e); } return 0;
 
 				case WM_MOUSEMOVE: { POINTS p = MAKEPOINTS(lParam); MouseMovedEvent e((int)p.x, (int)p.y); m_CallbackFunction(e); } return 0;
 				case WM_MOUSEWHEEL: { short p = GET_WHEEL_DELTA_WPARAM(wParam); MouseScrolledEvent e((int)p, 0); m_CallbackFunction(e); } return 0;
-				case WM_LBUTTONDOWN: { MouseButtonPressedEvent e(MouseButton::Left); m_CallbackFunction(e); } return 0;
-				case WM_MBUTTONDOWN: { MouseButtonPressedEvent e(MouseButton::Middle); m_CallbackFunction(e); } return 0;
-				case WM_RBUTTONDOWN: { MouseButtonPressedEvent e(MouseButton::Right); m_CallbackFunction(e); } return 0;
-				case WM_LBUTTONUP: { MouseButtonReleasedEvent e(MouseButton::Left); m_CallbackFunction(e); } return 0;
-				case WM_MBUTTONUP: { MouseButtonReleasedEvent e(MouseButton::Middle); m_CallbackFunction(e); } return 0;
-				case WM_RBUTTONUP: { MouseButtonReleasedEvent e(MouseButton::Right); m_CallbackFunction(e); } return 0;
 			}
 			return DefWindowProcA(hWnd, msg, wParam, lParam);
 		}

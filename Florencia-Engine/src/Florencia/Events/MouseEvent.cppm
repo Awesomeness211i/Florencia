@@ -9,7 +9,7 @@ export namespace Florencia {
 
 	class MouseButtonEvent : public Event {
 	public:
-		uint16_t GetMouseButton() const { return (uint16_t)m_Button; }
+		MouseButton GetMouseButton() const { return m_Button; }
 		int GetCategoryFlags() const override { return (int)EventCategory::EventCategoryMouse | (int)EventCategory::EventCategoryInput | (int)EventCategory::EventCategoryMouseButton; }
 	protected:
 		MouseButtonEvent(const MouseButton button) : m_Button(button) {}
