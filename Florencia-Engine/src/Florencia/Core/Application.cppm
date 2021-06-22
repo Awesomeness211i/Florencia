@@ -1,5 +1,5 @@
 export module Application;
-import Event.Application;
+import ApplicationEvent;
 import GraphicsContext;
 import LayerStack;
 import Timestep;

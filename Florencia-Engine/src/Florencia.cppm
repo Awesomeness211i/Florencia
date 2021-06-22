@@ -12,9 +12,9 @@ export import MouseCodes;
 
 //Events
 export import Event;
-export import Event.Key;
-export import Event.Mouse;
-export import Event.Application;
+export import KeyEvent;
+export import MouseEvent;
+export import ApplicationEvent;
 
 //Math
 export import FloMath;

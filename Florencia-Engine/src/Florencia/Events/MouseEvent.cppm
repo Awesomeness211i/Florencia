@@ -1,6 +1,6 @@
 module;
 #include <stdint.h>
-export module Event.Mouse;
+export module MouseEvent;
 import <sstream>;
 import MouseCodes;
 import Event;

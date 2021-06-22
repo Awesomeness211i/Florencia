@@ -1,4 +1,4 @@
-export module Event.Application;
+export module ApplicationEvent;
 import <sstream>;
 import Event;
 

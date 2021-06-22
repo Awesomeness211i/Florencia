@@ -2,11 +2,11 @@ module;
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 export module WindowsWindow;
-import Event.Application;
+import ApplicationEvent;
 import KeyCodeConverter;
-import Event.Mouse;
+import MouseEvent;
 import MouseCodes;
-import Event.Key;
+import KeyEvent;
 import KeyCodes;
 import Window;
 
