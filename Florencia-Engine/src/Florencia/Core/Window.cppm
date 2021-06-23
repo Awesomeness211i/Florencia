@@ -1,6 +1,7 @@
+module;
+#include <stdint.h>
+#include <functional>
 export module Window;
-import <functional>;
-import <stdint.h>;
 import Event;
 
 export namespace Florencia {

@@ -1,7 +1,8 @@
+module;
+#include <vector>
+#include <stdint.h>
 export module LayerStack;
-import <stdint.h>;
-import <vector>;
-import Layer;
+export import Layer;
 
 export namespace Florencia {
 

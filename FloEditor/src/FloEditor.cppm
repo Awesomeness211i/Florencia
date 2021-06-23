@@ -4,6 +4,7 @@ import Florencia;
 
 export module FloEditor;
 import EditorLayer;
+import Window;
 
 export namespace Florencia {
 
@@ -16,7 +17,7 @@ export namespace Florencia {
 	};
 
 	Application* CreateApplication() {
-		WindowProps m_Data("FloEditor", 1080, 720);
-		return new FloEditor(m_Data);
+		WindowProps data("FloEditor", 1080, 720);
+		return new FloEditor(data);
 	}
 }

@@ -1,5 +1,6 @@
+module;
+#include <sstream>
 export module ApplicationEvent;
-import <sstream>;
 import Event;
 
 export namespace Florencia {

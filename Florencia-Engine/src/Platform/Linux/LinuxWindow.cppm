@@ -5,10 +5,17 @@ export namespace Florencia {
 
 	class LinuxWindow : public Window {
 	public:
-		LinuxWindow(const WindowProps& props) {}
-		~LinuxWindow() {}
+		LinuxWindow(const WindowProps& props) {
 
-		void OnUpdate() override {}
+		}
+
+		~LinuxWindow() {
+
+		}
+
+		void OnUpdate() override {
+
+		}
 
 		uint32_t GetWidth() const override { return 0; }
 		uint32_t GetHeight() const override { return 0; }
@@ -18,6 +25,8 @@ export namespace Florencia {
 		void SetHeight(uint32_t height) override {}
 
 		void* GetWindowHandle() override { return nullptr; }
+	private:
+
 	};
 
 }

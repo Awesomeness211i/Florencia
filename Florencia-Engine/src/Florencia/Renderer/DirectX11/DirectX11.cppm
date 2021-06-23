@@ -1,6 +1,7 @@
+module;
+#include <stdint.h>
 export module DirectX11;
 import RendererAPI;
-import <stdint.h>;
 
 export namespace Florencia {
 

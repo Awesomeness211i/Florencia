@@ -1,6 +1,7 @@
+module;
+#include <stdint.h>
 export module Vulkan;
 import RendererAPI;
-import <stdint.h>;
 
 export namespace Florencia {
 

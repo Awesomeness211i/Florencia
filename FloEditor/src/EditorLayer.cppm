@@ -1,5 +1,6 @@
 module;
 #include <iostream>
+#include <unordered_map>
 export module EditorLayer;
 import Florencia;
 
@@ -7,10 +8,7 @@ export namespace Florencia {
 
 	class EditorLayer : public Layer {
 	public:
-		EditorLayer() {
-
-		}
-
+		EditorLayer() = default;
 		~EditorLayer() = default;
 
 		void OnAdd() override {
@@ -21,12 +19,31 @@ export namespace Florencia {
 
 		}
 
+		void Update(Timestep ts) override {
+
+		}
+
 		void Render() override {
 
 		}
 
-		void Update(Timestep ts) override {
-			
+		bool OpenConsole() {
+			m_Console = Console::Create();
+			if (m_Console) [[likely]] {
+				m_Console->CreateNewConsole();
+				ConsoleOpen = true;
+			}
+			return true;
+		}
+
+		bool CloseConsole() {
+			if (m_Console) [[likely]] {
+				m_Console->ReleaseConsole();
+				delete m_Console;
+				m_Console = nullptr;
+				ConsoleOpen = false;
+			}
+			return true;
 		}
 
 		void OnEvent(Event& e) override {
@@ -41,17 +58,18 @@ export namespace Florencia {
 		}
 
 		bool OnCharacterTyped(CharacterTypedEvent& e) {
-			std::cout << e << "\n";
 			return true;
 		}
 
 		bool OnKeyPressed(KeyPressedEvent& e) {
-			std::cout << e << "\n";
+			m_KeyPressed[e.GetKeyCode()] = true;
+			m_KeyReleased[e.GetKeyCode()] = false;
 			return true;
 		}
 
 		bool OnKeyReleased(KeyReleasedEvent& e) {
-			std::cout << e << "\n";
+			m_KeyPressed[e.GetKeyCode()] = false;
+			m_KeyReleased[e.GetKeyCode()] = true;
 			return true;
 		}
 
@@ -64,6 +82,7 @@ export namespace Florencia {
 		}
 
 		bool OnMouseMoved(MouseMovedEvent& e) {
+			std::cout << e << "\n";
 			return true;
 		}
 
@@ -72,6 +91,12 @@ export namespace Florencia {
 		}
 
 		const char* GetName() const { return "EditorLayer"; }
+
+	private:
+		Console* m_Console;
+		bool ConsoleOpen = false;
+		std::unordered_map<Key, bool> m_KeyPressed;
+		std::unordered_map<Key, bool> m_KeyReleased;
 	};
 
 }

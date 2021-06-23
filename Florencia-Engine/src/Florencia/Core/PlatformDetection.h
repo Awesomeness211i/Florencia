@@ -1,5 +1,4 @@
 #pragma once
-
 #if defined(_WIN32)
 	#if defined(_WIN64)
 		#define FLO_PLATFORM_WINDOWS_64

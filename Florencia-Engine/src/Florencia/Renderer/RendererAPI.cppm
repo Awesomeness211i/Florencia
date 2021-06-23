@@ -1,5 +1,6 @@
+module;
+#include <stdint.h>
 export module RendererAPI;
-import <stdint.h>;
 import FloMath;
 
 export namespace Florencia {

@@ -2,9 +2,9 @@ export module Florencia;
 
 //Important
 export import Application;
+export import LayerStack;
 export import Timestep;
-export import Window;
-export import Layer;
+export import Console;
 
 //Codes for mouse and key buttons
 export import KeyCodes;
