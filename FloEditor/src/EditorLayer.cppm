@@ -19,6 +19,34 @@ export namespace Florencia {
 
 		}
 
+		bool OnCharacterTyped(CharacterTypedEvent& e) {
+			return true;
+		}
+
+		bool OnKeyPressed(KeyPressedEvent& e) {
+			return true;
+		}
+
+		bool OnKeyReleased(KeyReleasedEvent& e) {
+			return true;
+		}
+
+		bool OnMousePressed(MouseButtonPressedEvent& e) {
+			return true;
+		}
+
+		bool OnMouseReleased(MouseButtonReleasedEvent& e) {
+			return true;
+		}
+
+		bool OnMouseMoved(MouseMovedEvent& e) {
+			return true;
+		}
+
+		bool OnMouseScrolled(MouseScrolledEvent& e) {
+			return true;
+		}
+
 		void Update(Timestep ts) override {
 
 		}
@@ -57,46 +85,11 @@ export namespace Florencia {
 			EventHandler.Dispatch<MouseButtonReleasedEvent>(e, [this](MouseButtonReleasedEvent& e) -> bool { return this->EditorLayer::OnMouseReleased(e); });
 		}
 
-		bool OnCharacterTyped(CharacterTypedEvent& e) {
-			return true;
-		}
-
-		bool OnKeyPressed(KeyPressedEvent& e) {
-			m_KeyPressed[e.GetKeyCode()] = true;
-			m_KeyReleased[e.GetKeyCode()] = false;
-			return true;
-		}
-
-		bool OnKeyReleased(KeyReleasedEvent& e) {
-			m_KeyPressed[e.GetKeyCode()] = false;
-			m_KeyReleased[e.GetKeyCode()] = true;
-			return true;
-		}
-
-		bool OnMousePressed(MouseButtonPressedEvent& e) {
-			return true;
-		}
-
-		bool OnMouseReleased(MouseButtonReleasedEvent& e) {
-			return true;
-		}
-
-		bool OnMouseMoved(MouseMovedEvent& e) {
-			std::cout << e << "\n";
-			return true;
-		}
-
-		bool OnMouseScrolled(MouseScrolledEvent& e) {
-			return true;
-		}
-
 		const char* GetName() const { return "EditorLayer"; }
 
 	private:
 		Console* m_Console;
 		bool ConsoleOpen = false;
-		std::unordered_map<Key, bool> m_KeyPressed;
-		std::unordered_map<Key, bool> m_KeyReleased;
 	};
 
 }

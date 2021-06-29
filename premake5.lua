@@ -4,7 +4,7 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 workspace "Florencia"
 	startproject "FloEditor"
 	configurations { "Debug", "Release", "Distribution" }
-	platforms { "x64", "x32" }
+	platforms { "x64" }
 
 	--warnings "Extra"
 
@@ -26,7 +26,6 @@ workspace "Florencia"
 
 	--specific settings for platforms
 	filter { "platforms:x64" } architecture "x64"
-	filter { "platforms:x32" } architecture "x86"
 
 	--close filters
 	filter {}

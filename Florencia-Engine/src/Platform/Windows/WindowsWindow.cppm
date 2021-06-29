@@ -1,5 +1,7 @@
 module;
 #define WIN32_LEAN_AND_MEAN
+
+#include <stdint.h>
 #include <Windows.h>
 export module WindowsWindow;
 import ApplicationEvent;
@@ -64,8 +66,8 @@ export namespace Florencia {
 				case WM_RBUTTONUP: { MouseButtonReleasedEvent e(MouseButton::Right); m_CallbackFunction(e); } return 0;
 				case WM_MBUTTONUP: { MouseButtonReleasedEvent e(MouseButton::Middle); m_CallbackFunction(e); } return 0;
 
-				case WM_MOUSEMOVE: { POINTS p = MAKEPOINTS(lParam); MouseMovedEvent e((int)p.x, (int)p.y); m_CallbackFunction(e); } return 0;
-				case WM_MOUSEWHEEL: { short p = GET_WHEEL_DELTA_WPARAM(wParam); MouseScrolledEvent e((int)p, 0); m_CallbackFunction(e); } return 0;
+				case WM_MOUSEMOVE: { POINTS p = MAKEPOINTS(lParam); MouseMovedEvent e(p.x, p.y); m_CallbackFunction(e); } return 0;
+				case WM_MOUSEWHEEL: { short p = GET_WHEEL_DELTA_WPARAM(wParam); MouseScrolledEvent e(p, 0); m_CallbackFunction(e); } return 0;
 			}
 			return DefWindowProcA(hWnd, msg, wParam, lParam);
 		}

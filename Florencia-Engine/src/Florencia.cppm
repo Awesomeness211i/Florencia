@@ -5,6 +5,7 @@ export import Application;
 export import LayerStack;
 export import Timestep;
 export import Console;
+export import Layer;
 
 //Codes for mouse and key buttons
 export import KeyCodes;

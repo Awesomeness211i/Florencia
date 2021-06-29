@@ -1,6 +1,7 @@
+module;
+#include <math.h>
 export module Exponential;
 import Declarations;
-import <math.h>;
 
 namespace FloMath {
 

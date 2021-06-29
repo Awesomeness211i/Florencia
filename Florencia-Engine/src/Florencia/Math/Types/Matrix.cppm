@@ -1,5 +1,6 @@
+module;
+#include <stdexcept>
 export module Matrix;
-import <stdexcept>;
 import Vector;
 
 export namespace FloMath {

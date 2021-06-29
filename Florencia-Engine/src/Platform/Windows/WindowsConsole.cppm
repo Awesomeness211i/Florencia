@@ -1,8 +1,9 @@
 module;
 #include <stdio.h>
+#include <iostream>
+#include <stdint.h>
 #include <Windows.h>
 export module WindowsConsole;
-import std.core;
 import Console;
 
 export namespace Florencia {

@@ -1,5 +1,6 @@
+module;
+#include <stdexcept>
 export module Vector;
-import <stdexcept>;
 
 export namespace FloMath {
 

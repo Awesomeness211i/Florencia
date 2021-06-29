@@ -2,7 +2,7 @@ module;
 #include <vector>
 #include <stdint.h>
 export module LayerStack;
-export import Layer;
+import Layer;
 
 export namespace Florencia {
 

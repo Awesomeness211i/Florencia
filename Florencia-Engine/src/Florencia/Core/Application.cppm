@@ -1,3 +1,5 @@
+module;
+#include <string>
 export module Application;
 import ApplicationEvent;
 import GraphicsContext;
@@ -5,6 +7,7 @@ import LayerStack;
 import Timestep;
 import Renderer;
 import Window;
+import Layer;
 import Event;
 
 export namespace Florencia {

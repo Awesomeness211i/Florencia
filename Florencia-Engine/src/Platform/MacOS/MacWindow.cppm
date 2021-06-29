@@ -1,3 +1,5 @@
+module;
+#include <stdint.h>
 export module MacWindow;
 import Window;
 
