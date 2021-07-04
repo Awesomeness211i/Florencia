@@ -15,7 +15,6 @@ export import MouseCodes;
 export import Event;
 export import KeyEvent;
 export import MouseEvent;
-export import ApplicationEvent;
 
 //Math
 export import FloMath;

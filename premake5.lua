@@ -8,9 +8,13 @@ workspace "Florencia"
 
 	--warnings "Extra"
 
+	--general settings for systems
+	filter { "system:*" } systemversion "latest"
+
 	--system specific and ide/compiler specific settings
-	filter { "system:windows", "action:vs*"} flags { "MultiProcessorCompile", "NoMinimalRebuild" } linkoptions { "/ignore:4099" }
-	filter { "system:macosx", "action:gmake"} toolset "clang"
+	filter { "system:Windows", "action:vs*"} system "windows" flags { "MultiProcessorCompile", "NoMinimalRebuild" } linkoptions {}
+	filter { "system:Mac", "action:gmake"} system "macosx" toolset "clang"
+	filter { "system:Unix", "action:gmake"} system "linux"
 	
 	--general settings for configurations
 	filter { "configurations:*" } defines {} links {} --general defines and links
@@ -20,12 +24,6 @@ workspace "Florencia"
 	filter { "configurations:Debug" } defines { "FLO_DEBUG" } runtime "Debug" symbols "on" links {}
 	filter { "configurations:Release" } defines { "FLO_RELEASE" } links {}
 	filter { "configurations:Distribution" } defines { "FLO_DISTRIBUTION" } links {}
-
-	--general settings for platforms
-	filter { "platforms:*" } systemversion "latest"
-
-	--specific settings for platforms
-	filter { "platforms:x64" } architecture "x64"
 
 	--close filters
 	filter {}
