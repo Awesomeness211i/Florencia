@@ -1,5 +1,6 @@
-﻿export module Declarations;
-import <type_traits>;
+﻿module;
+#include <type_traits>
+export module Declarations;
 import Vector;
 import Matrix;
 
