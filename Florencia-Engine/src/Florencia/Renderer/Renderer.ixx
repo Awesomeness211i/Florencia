@@ -5,9 +5,9 @@ import RenderCommand;
 import RendererAPI;
 import FloMath;
 
-export namespace Florencia {
+namespace Florencia {
 
-	class Renderer {
+	export class Renderer {
 	public:
 		static void Init() { RenderCommand::Init(); }
 		static void Shutdown() { /*Renderer2D::Shutdown();*/ }

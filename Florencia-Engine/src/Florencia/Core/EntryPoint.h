@@ -1,20 +1,20 @@
 #pragma once
 #include <Florencia/Core/PlatformDetection.h>
 
-extern Florencia::Application* Florencia::CreateApplication();
+extern Florencia::Application* Florencia::CreateApplication(ApplicationCommandLineArgs args);
 
-#if defined(FLO_PLATFORM_WINDOWS_64) || defined(FLO_PLATFORM_WINDOWS_32)
+#if defined(FLO_PLATFORM_WINDOWS_64)
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow) {
-	auto app = Florencia::CreateApplication();
+	auto app = Florencia::CreateApplication({ nCmdShow, (char**)lpCmdLine });
 	app->Run();
 	delete app;
 	return 0;
 }
 #elif defined(FLO_PLATFORM_LINUX)
 int main(int argc, char** argv) {
-	auto app = Florencia::CreateApplication();
+	auto app = Florencia::CreateApplication({ argc, argv });
 	app->Run();
 	delete app;
 }

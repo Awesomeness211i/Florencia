@@ -1,21 +1,34 @@
 module;
 #include <string>
+#include <stdexcept>
 export module Application;
 import ApplicationEvent;
-import GraphicsContext;
+import EventCallback;
 import LayerStack;
 import Timestep;
-import Renderer;
 import Window;
 import Layer;
 import Event;
 
-export namespace Florencia {
+namespace Florencia {
 
-	class Application {
+	export struct ApplicationCommandLineArgs {
+		int Count = 0;
+		char** Args = nullptr;
+
+		const char* operator[](int index) const {
+			return Args[index];
+		}
+
+		const char* at(int index) const {
+			if (index < Count) { return Args[index]; }
+			throw std::runtime_error("Index not within bounds");
+		}
+	};
+
+	export class Application {
 	public:
-		Application(const WindowProps& props);
-
+		Application(const std::string& name, ApplicationCommandLineArgs args = ApplicationCommandLineArgs());
 		virtual ~Application();
 
 		void Run();
@@ -23,28 +36,24 @@ export namespace Florencia {
 		void OnEvent(Event& e);
 
 		void AddLayer(Layer* layer);
-
 		void AddOverlay(Layer* layer);
 
 		void RemoveLayer(Layer* layer);
-
 		void RemoveOverlay(Layer* layer);
 
 		Window* GetWindow() { return m_Window; }
-
 	private:
 		//Functions
 		bool OnWindowClose(WindowCloseEvent& e);
-
 		bool OnWindowResize(WindowResizeEvent& e);
 
 		//Variables
 		Time m_LastTick;
 		LayerStack m_LayerStack;
-		Window* m_Window = nullptr;
-		GraphicsContext* m_Context = nullptr;
 		bool m_Running = true, m_Minimized = false;
+
+		Window* m_Window;
 	};
 
-	Application* CreateApplication();
+	export Application* CreateApplication(ApplicationCommandLineArgs args);
 }

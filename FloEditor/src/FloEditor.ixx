@@ -9,14 +9,13 @@ export namespace Florencia {
 
 	class FloEditor : public Application {
 	public:
-		FloEditor(const WindowProps& props) : Application(props) {
+		FloEditor(const std::string& name, ApplicationCommandLineArgs args) : Application(name, args) {
 			AddLayer(new EditorLayer());
 		}
 
 	};
 
-	Application* CreateApplication() {
-		WindowProps data("FloEditor", 1080, 720);
-		return new FloEditor(data);
+	Application* CreateApplication(ApplicationCommandLineArgs args) {
+		return new FloEditor("FloEditor", args);
 	}
 }

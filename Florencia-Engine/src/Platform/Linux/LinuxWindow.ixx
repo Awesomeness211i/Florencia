@@ -15,7 +15,7 @@ export namespace Florencia {
 
 		}
 
-		void OnUpdate() override {
+		void Update() override {
 
 		}
 

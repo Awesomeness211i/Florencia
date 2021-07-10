@@ -9,7 +9,7 @@ import Metal;
 
 namespace Florencia {
 
-	RendererAPI::API RendererAPI::s_API = RendererAPI::API::None;
+	RendererAPI::API RendererAPI::s_API = RendererAPI::API::DirectX11;
 
 	RendererAPI* RendererAPI::Create() {
 		switch (s_API) {

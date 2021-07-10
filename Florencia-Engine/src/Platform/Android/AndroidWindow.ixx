@@ -10,7 +10,7 @@ export namespace Florencia {
 		AndroidWindow(const WindowProps& props) {}
 		~AndroidWindow() {}
 
-		void OnUpdate() override {}
+		void Update() override {}
 
 		uint32_t GetWidth() const override { return 0; }
 		uint32_t GetHeight() const override { return 0; }

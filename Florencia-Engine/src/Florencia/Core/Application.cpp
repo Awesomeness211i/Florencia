@@ -1,20 +1,17 @@
 module Application;
+import Renderer;
 
 namespace Florencia {
 
-	Application::Application(const WindowProps& props) {
-		m_Window = Window::Create(props);
-		if (m_Window) [[likely]] {
-			m_Window->SetEventCallback([this](Event& e) -> void { return this->Application::OnEvent(e); });
-			m_Context = GraphicsContext::Create(m_Window);
-			if (m_Context) [[likely]] { m_Context->Init(); }
-		}
+	void Callback(Application* app, Event& e) { return app->OnEvent(e); }
 
+	Application::Application(const std::string& name, ApplicationCommandLineArgs args) {
+		m_Window = Window::Create(WindowProps(name, 1080, 720));
+		if (m_Window) [[likely]] { m_Window->SetEventCallback(EventCallback<Application>(this, Callback)); }
 		Renderer::Init();
 	}
 
 	Application::~Application() {
-		if (m_Context) [[likely]] { delete m_Context; }
 		if (m_Window) [[likely]] { delete m_Window; }
 	}
 
@@ -23,7 +20,6 @@ namespace Florencia {
 			//time is in seconds
 			m_LastTick = Time();
 			if (!m_Minimized) [[likely]] {
-				if (m_Window) [[likely]] { m_Window->OnUpdate(); }
 				Time nextTime = Time();
 				Timestep ts(m_LastTick, nextTime);
 				m_LastTick = nextTime;
@@ -31,7 +27,10 @@ namespace Florencia {
 					layer->Update(ts);
 					layer->Render();
 				}
-				if (m_Context) [[likely]] { m_Context->SwapBuffers(); }
+				if (m_Window) [[likely]] {
+					m_Window->Update();
+					m_Window->Render();
+				}
 			}
 		}
 	}

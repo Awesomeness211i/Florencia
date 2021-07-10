@@ -3,9 +3,13 @@ module;
 #include <functional>
 export module Window;
 export import <string>;
+import GraphicsContext;
+import EventCallback;
 import Event;
 
 export namespace Florencia {
+
+	class Application;
 
 	struct WindowProps {
 		WindowProps(const std::string& title, uint32_t width = 0, uint32_t height = 0) :Title(title), Width(width), Height(height) {}
@@ -15,17 +19,19 @@ export namespace Florencia {
 
 	class Window {
 	public:
-		using EventCallbackFn = std::function<void(Event&)>;
+		Window() {
+			m_Context = GraphicsContext::Create(this);
+			if (m_Context) [[likely]] { m_Context->Init(); }
+		}
+		virtual ~Window() { if (m_Context) [[likely]] { delete m_Context; } }
 
-		Window() = default;
-		virtual ~Window() = default;
-
-		virtual void OnUpdate() = 0;
+		virtual void Update() = 0;
+		void Render() { if (m_Context) [[likely]] { m_Context->SwapBuffers(); }  }
 
 		virtual uint32_t GetWidth() const = 0;
 		virtual uint32_t GetHeight() const = 0;
 
-		void SetEventCallback(const EventCallbackFn& function) { m_CallbackFunction = function; }
+		void SetEventCallback(const EventCallback<Application> function) { m_CallbackFunction = function; }
 
 		//Window Attributes
 		virtual void SetWidth(uint32_t width) = 0;
@@ -35,6 +41,7 @@ export namespace Florencia {
 
 		static Window* Create(const WindowProps& props);
 	protected:
-		EventCallbackFn m_CallbackFunction;
+		GraphicsContext* m_Context;
+		EventCallback<Application> m_CallbackFunction;
 	};
 }
