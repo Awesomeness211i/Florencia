@@ -7,7 +7,6 @@ extern Florencia::Application* Florencia::CreateApplication(Florencia::Applicati
 #include <Windows.h>
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nShowCmd) {
 	int argc = 1; wchar_t** argv = CommandLineToArgvW(GetCommandLine(), &argc);
-	MessageBoxW(NULL, argv[0], L"Command Line Arguments", MB_OKCANCEL);
 	auto app = Florencia::CreateApplication({ argc, argv });
 	app->Run();
 	delete app;
@@ -15,31 +14,31 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 }
 #elif defined(FLO_PLATFORM_LINUX)
 int main(int argc, char** argv) {
-	auto app = Florencia::CreateApplication({ argc, argv });
+	auto app = Florencia::CreateApplication(/*{ argc, argv }*/);
 	app->Run();
 	delete app;
 }
 #elif defined(FLO_PLATFORM_MACOS)
 int main(int argc, char** argv) {
-	auto app = Florencia::CreateApplication({ argc, argv });
+	auto app = Florencia::CreateApplication(/*{ argc, argv }*/);
 	app->Run();
 	delete app;
 }
 #elif defined(FLO_PLATFORM_IPHONE)
 int main(int argc, char** argv) {
-	auto app = Florencia::CreateApplication({ argc, argv });
+	auto app = Florencia::CreateApplication(/*{ argc, argv }*/);
 	app->Run();
 	delete app;
 }
 #elif defined(FLO_PLATFORM_IPHONE_SIMULATOR)
 int main(int argc, char** argv) {
-	auto app = Florencia::CreateApplication({ argc, argv });
+	auto app = Florencia::CreateApplication(/*{ argc, argv }*/);
 	app->Run();
 	delete app;
 }
 #elif defined(FLO_PLATFORM_ANDROID)
 int main(int argc, char** argv) {
-	auto app = Florencia::CreateApplication({ argc, argv });
+	auto app = Florencia::CreateApplication(/*{ argc, argv }*/);
 	app->Run();
 	delete app;
 }

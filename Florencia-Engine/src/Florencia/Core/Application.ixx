@@ -55,5 +55,5 @@ namespace Florencia {
 		Window* m_Window;
 	};
 
-	export Application* CreateApplication(ApplicationCommandLineArgs args);
+	export Application* CreateApplication(ApplicationCommandLineArgs args = ApplicationCommandLineArgs());
 }
