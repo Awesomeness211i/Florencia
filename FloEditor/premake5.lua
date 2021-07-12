@@ -4,8 +4,8 @@ project "FloEditor"
 	cppdialect "C++20"
 	staticruntime "off"
 
-	targetdir ("%{wks.location}/bin/" .. outputdir .. "/%{prj.name}")
-	objdir ("%{wks.location}/bin-int/" .. outputdir .. "/%{prj.name}")
+	targetdir ("%{wks.location}\\bin\\" .. outputdir .. "\\%{prj.name}")
+	objdir ("%{wks.location}\\bin-int\\" .. outputdir .. "\\%{prj.name}")
 
 	files {
 		"src/**.h",
@@ -13,7 +13,7 @@ project "FloEditor"
 	}
 
 	includedirs {
-		"%{wks.location}/Florencia-Engine/src",
+		"%{wks.location}\\Florencia-Engine\\src",
 	}
 
 	links {

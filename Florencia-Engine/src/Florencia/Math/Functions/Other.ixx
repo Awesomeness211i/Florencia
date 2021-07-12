@@ -1,8 +1,8 @@
 export module Other;
 
-export namespace FloMath {
+namespace FloMath {
 
-	template<typename T>
+	export template<typename T>
 	T abs(T x) {
 		if (x < 0) {
 			return -x;
@@ -10,7 +10,7 @@ export namespace FloMath {
 		return x;
 	}
 
-	template<typename T>
+	export template<typename T>
 	int floor(T x) {
 		if (x < 0) {
 			return (int)x - 1;

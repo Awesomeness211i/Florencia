@@ -1,7 +1,8 @@
-module;
+﻿module;
 #include <compare>
 module EditorLayer;
 import SineOscillator;
+import FloMath;
 
 namespace Florencia {
 

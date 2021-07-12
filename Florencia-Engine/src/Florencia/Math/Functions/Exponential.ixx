@@ -6,7 +6,7 @@ import Declarations;
 namespace FloMath {
 
 	//index determines accuracy of computation
-	template<typename T, unsigned index = 5>
+	export template<typename T, unsigned index = 5>
 	T ln(T x) {
 		double sum = 0.0;
 		double top = (x - 1.0) / (x + 1.0);
@@ -21,7 +21,7 @@ namespace FloMath {
 		return nan;
 	}
 
-	template<int base = 10, typename T>
+	export template<int base = 10, typename T>
 	T log(T x) {
 		if (base != 1) {
 			return (ln(x) / ln(base));

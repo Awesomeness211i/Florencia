@@ -29,9 +29,9 @@ workspace "Florencia"
 	filter {}
 
 group "Dependencies"
-	include "vendor/premake"
-	include "Florencia-Engine/vendor/glfw"
-	include "Florencia-Engine/vendor/glad"
+	include "vendor\\premake"
+	include "Florencia-Engine\\vendor\\glfw"
+	include "Florencia-Engine\\vendor\\glad"
 group ""
 
 include "Florencia-Engine"

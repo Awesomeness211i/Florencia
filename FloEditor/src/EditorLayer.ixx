@@ -1,9 +1,9 @@
 export module EditorLayer;
 import Florencia;
 
-export namespace Florencia {
+namespace Florencia {
 
-	class EditorLayer : public Layer {
+	export class EditorLayer : public Layer {
 	public:
 		EditorLayer() = default;
 		~EditorLayer() = default;
