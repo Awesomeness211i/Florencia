@@ -14,13 +14,13 @@ namespace Florencia {
 
 	export struct ApplicationCommandLineArgs {
 		int Count = 0;
-		char** Args = nullptr;
+		wchar_t** Args = nullptr;
 
-		const char* operator[](int index) const {
+		const wchar_t* operator[](int index) const {
 			return Args[index];
 		}
 
-		const char* at(int index) const {
+		const wchar_t* at(int index) const {
 			if (index < Count) { return Args[index]; }
 			throw std::runtime_error("Index not within bounds");
 		}
