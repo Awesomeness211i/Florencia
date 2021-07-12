@@ -31,11 +31,11 @@ namespace Florencia {
 		uint32_t m_SamplingRate, m_BitDepth, m_Channels, m_Duration;
 	};
 
-	export class SineOscillatorAudioFileCreater {
+	export class SineOscillatorAudioFileCreator {
 	public:
-		SineOscillatorAudioFileCreater(SineOscillator& oscillator) :m_Oscillator(oscillator) {
+		SineOscillatorAudioFileCreator(SineOscillator& oscillator, const std::string& filepath) :m_Oscillator(oscillator) {
 			auto maxAmplitude = std::pow(2, oscillator.GetBitDepth() - 1) - 1;
-			m_AudioFile.open("wavefile.wav", std::ios::binary);
+			m_AudioFile.open(filepath, std::ios::binary);
 			//Header Chunk
 			m_AudioFile << "RIFF";
 			m_AudioFile << "----";

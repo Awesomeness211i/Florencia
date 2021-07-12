@@ -1,9 +1,13 @@
+module;
+#include <compare>
 module EditorLayer;
+import SineOscillator;
 
 namespace Florencia {
 
 	void EditorLayer::OnAdd() {
-		
+		SineOscillator oscillator(440.0f, 0.5f, 60);
+		SineOscillatorAudioFileCreator filecreator(oscillator, "src/assets/wavefile.wav");
 	}
 
 	void EditorLayer::OnRemove() {

@@ -10,7 +10,7 @@ export namespace FloMath {
 	constexpr double π = 3.141592653589793; //ALT-227 for symbol
 	constexpr double pi = 3.14159265358979323846;
 	constexpr double e = 2.71828182845904523536;
-	constexpr double inf = 1E154 * 1E154; //ALT-236 for ∞
+	constexpr double inf = 1E308 * 1E308; //ALT-236 for ∞
 	constexpr double NaN = inf * 0.0; //Not A Number
 
 	template<typename T>
