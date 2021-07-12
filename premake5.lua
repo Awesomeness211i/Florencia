@@ -12,9 +12,9 @@ workspace "Florencia"
 	filter { "system:*" } systemversion "latest"
 
 	--system specific and ide/compiler specific settings
-	filter { "system:Windows", "action:vs*"} system "windows" flags { "MultiProcessorCompile", "NoMinimalRebuild" } linkoptions {}
-	filter { "system:Mac", "action:gmake"} system "macosx" toolset "clang"
-	filter { "system:Unix", "action:gmake"} system "linux"
+	filter { "system:Windows", "action:vs*" } system "windows" flags { "MultiProcessorCompile", "NoMinimalRebuild" } linkoptions {}
+	filter { "system:Mac", "action:gmake" } system "macosx" toolset "clang"
+	filter { "system:Unix" } system "linux"
 	
 	--general settings for configurations
 	filter { "configurations:*" } defines {} links {} --general defines and links
