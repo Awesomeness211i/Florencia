@@ -5,7 +5,7 @@ export module FloEditor;
 import EditorLayer;
 import Window;
 
-export namespace Florencia {
+namespace Florencia {
 
 	class FloEditor : public Application {
 	public:

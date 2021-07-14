@@ -1,26 +1,22 @@
 module;
 #include <Florencia/Core/PlatformDetection.h>
 export module KeyCodeConverter;
-
 import KeyCodes;
-import MacOSKeyCodes;
-import LinuxKeyCodes;
-import IPhoneKeyCodes;
-import AndroidKeyCodes;
 import WindowsKeyCodes;
+import LinuxKeyCodes;
 
 export namespace Florencia {
 
 	#if defined(FLO_PLATFORM_WINDOWS_64) || defined(FLO_PLATFORM_WINDOWS_32)
 	using enum WindowsKeyCodes;
-	#elif defined(FLO_PLATFORM_MACOS)
-	using enum MacOSKeyCodes;
 	#elif defined(FLO_PLATFORM_LINUX)
 	using enum LinuxKeyCodes;
-	#elif defined(FLO_PLATFORM_IPHONE) || defined(FLO_PLATFORM_IPHONE_SIMULATOR)
-	using enum IPhoneKeyCodes;
-	#elif defined(FLO_PLATFORM_ANDROID)
-	using enum AndroidKeyCodes;
+	//#elif defined(FLO_PLATFORM_MACOS)
+	//using enum MacOSKeyCodes;
+	//#elif defined(FLO_PLATFORM_IPHONE) || defined(FLO_PLATFORM_IPHONE_SIMULATOR)
+	//using enum IPhoneKeyCodes;
+	//#elif defined(FLO_PLATFORM_ANDROID)
+	//using enum AndroidKeyCodes;
 	#endif
 
 	Key ConvertToUniversalKeyCode(int key) {
@@ -40,7 +36,6 @@ export namespace Florencia {
 			case (int)KP3: return Key::KP3; case (int)KP4: return Key::KP4; case (int)KP5: return Key::KP5;
 			case (int)KP6: return Key::KP6; case (int)KP7: return Key::KP7; case (int)KP8: return Key::KP8;
 			case (int)KP9: return Key::KP9;
-
 			case (int)Up: return Key::Up;
 			case (int)Tab: return Key::Tab;
 			case (int)End: return Key::End;

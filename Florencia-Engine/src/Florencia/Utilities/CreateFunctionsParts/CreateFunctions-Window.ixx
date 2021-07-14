@@ -1,16 +1,14 @@
 module;
 #include <Florencia/Core/PlatformDetection.h>
-module Window;
-import MacWindow;
-import LinuxWindow;
-import IPhoneWindow;
+export module CreateFunctions.Window;
 import WindowsWindow;
-import AndroidWindow;
+import LinuxWindow;
+import Window;
 
-namespace Florencia {
+export namespace Florencia {
 
-	Window* Window::Create(const WindowProps& props) {
-		#if defined(FLO_PLATFORM_WINDOWS_64) || defined(FLO_PLATFORM_WINDOWS_32)
+	export Window* CreateWindow(const WindowProps& props) {
+		#if defined(FLO_PLATFORM_WINDOWS_64)
 		return new WindowsWindow(props);
 		#elif defined(FLO_PLATFORM_MACOS)
 		return new MacWindow(props);
