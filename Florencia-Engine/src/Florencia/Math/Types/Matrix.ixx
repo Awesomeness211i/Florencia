@@ -1,7 +1,6 @@
-module;
-#include <stdexcept>
-#include <type_traits>
 export module Matrix;
+import <type_traits>;
+import <stdexcept>;
 import Vector;
 
 namespace FloMath {

@@ -1,7 +1,5 @@
-export module EditorLayer;
-import SineOscillator;
+﻿export module EditorLayer;
 import Florencia;
-import <compare>;
 
 namespace Florencia {
 
@@ -14,7 +12,7 @@ namespace Florencia {
 
 		void OnRemove() override;
 
-		void Update(Timestep ts) override;
+		void Update(TimeStep ts) override;
 
 		void Render() override;
 
@@ -40,20 +38,20 @@ namespace Florencia {
 }
 
 module: private;
+import <iostream>;
 
 namespace Florencia {
 
 	void EditorLayer::OnAdd() {
-		SineOscillator oscillator(440.0f, 1.0f, 1);
-		SineOscillatorAudioFileCreator filecreator(oscillator, "assets/wavefile.wav");
+		
 	}
 
 	void EditorLayer::OnRemove() {
 
 	}
 
-	void EditorLayer::Update(Timestep ts) {
-
+	void EditorLayer::Update(TimeStep ts) {
+		
 	}
 
 	void EditorLayer::Render() {
@@ -61,14 +59,14 @@ namespace Florencia {
 	}
 
 	void EditorLayer::OnEvent(Event& e) {
-		EventHandler.Dispatch<KeyPressedEvent>(e, [this](KeyPressedEvent& e) -> bool { return this->EditorLayer::OnKeyPressed(e); });
-		EventHandler.Dispatch<KeyReleasedEvent>(e, [this](KeyReleasedEvent& e) -> bool { return this->EditorLayer::OnKeyReleased(e); });
-		EventHandler.Dispatch<CharacterTypedEvent>(e, [this](CharacterTypedEvent& e) -> bool { return this->EditorLayer::OnCharacterTyped(e); });
+		EventHandler.Dispatch<KeyPressedEvent>(e, [this](KeyPressedEvent& e) -> bool { return EditorLayer::OnKeyPressed(e); });
+		EventHandler.Dispatch<KeyReleasedEvent>(e, [this](KeyReleasedEvent& e) -> bool { return EditorLayer::OnKeyReleased(e); });
+		EventHandler.Dispatch<CharacterTypedEvent>(e, [this](CharacterTypedEvent& e) -> bool { return EditorLayer::OnCharacterTyped(e); });
 
-		EventHandler.Dispatch<MouseMovedEvent>(e, [this](MouseMovedEvent& e) -> bool { return this->EditorLayer::OnMouseMoved(e); });
-		EventHandler.Dispatch<MouseScrolledEvent>(e, [this](MouseScrolledEvent& e) -> bool { return this->EditorLayer::OnMouseScrolled(e); });
-		EventHandler.Dispatch<MouseButtonPressedEvent>(e, [this](MouseButtonPressedEvent& e) -> bool { return this->EditorLayer::OnMousePressed(e); });
-		EventHandler.Dispatch<MouseButtonReleasedEvent>(e, [this](MouseButtonReleasedEvent& e) -> bool { return this->EditorLayer::OnMouseReleased(e); });
+		EventHandler.Dispatch<MouseMovedEvent>(e, [this](MouseMovedEvent& e) -> bool { return EditorLayer::OnMouseMoved(e); });
+		EventHandler.Dispatch<MouseScrolledEvent>(e, [this](MouseScrolledEvent& e) -> bool { return EditorLayer::OnMouseScrolled(e); });
+		EventHandler.Dispatch<MouseButtonPressedEvent>(e, [this](MouseButtonPressedEvent& e) -> bool { return EditorLayer::OnMousePressed(e); });
+		EventHandler.Dispatch<MouseButtonReleasedEvent>(e, [this](MouseButtonReleasedEvent& e) -> bool { return EditorLayer::OnMouseReleased(e); });
 	}
 
 	bool EditorLayer::OnCharacterTyped(CharacterTypedEvent& e) {

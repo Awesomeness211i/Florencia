@@ -1,6 +1,5 @@
-module;
-#include <iostream>
 export module Event;
+import <iostream>;
 
 export namespace Florencia {
 
@@ -37,16 +36,16 @@ export namespace Florencia {
 	public:
 		EventDispatcher() {}
 
-		//Function will be deduced by the compiler and assumes a return of bool type
-		template<typename Event_t, typename Function>
-		bool Dispatch(Event& e, const Function& func) {
+		//func will be deduced by the compiler and assumes a return of bool type
+		template<typename Event_t>
+		bool Dispatch(Event& e, auto func) {
 			//Assumes that all events have a static function called GetStaticType()
 			if (e.GetEventType() == Event_t::GetStaticType()) {
-				e.Handled = e.Handled | func(static_cast<Event_t&>(e));
-				return true;
+				return e.Handled = e.Handled || func(static_cast<Event_t&>(e));
 			}
 			return false;
 		}
+
 	} EventHandler;
 
 	inline std::ostream& operator<<(std::ostream& os, const Event& e) { return os << e.ToString(); }

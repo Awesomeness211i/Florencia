@@ -1,9 +1,9 @@
-module;
-#include <Florencia/Core/PlatformDetection.h>
 export module KeyCodeConverter;
-import KeyCodes;
+import <Florencia/Core/PlatformDetection.h>;
+
 import WindowsKeyCodes;
 import LinuxKeyCodes;
+import KeyCodes;
 
 export namespace Florencia {
 
@@ -11,12 +11,12 @@ export namespace Florencia {
 	using enum WindowsKeyCodes;
 	#elif defined(FLO_PLATFORM_LINUX)
 	using enum LinuxKeyCodes;
-	//#elif defined(FLO_PLATFORM_MACOS)
-	//using enum MacOSKeyCodes;
-	//#elif defined(FLO_PLATFORM_IPHONE) || defined(FLO_PLATFORM_IPHONE_SIMULATOR)
-	//using enum IPhoneKeyCodes;
-	//#elif defined(FLO_PLATFORM_ANDROID)
-	//using enum AndroidKeyCodes;
+	#elif defined(FLO_PLATFORM_MACOS)
+	using enum MacOSKeyCodes;
+	#elif defined(FLO_PLATFORM_IPHONE) || defined(FLO_PLATFORM_IPHONE_SIMULATOR)
+	using enum IPhoneKeyCodes;
+	#elif defined(FLO_PLATFORM_ANDROID)
+	using enum AndroidKeyCodes;
 	#endif
 
 	Key ConvertToUniversalKeyCode(int key) {

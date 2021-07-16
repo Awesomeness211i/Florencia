@@ -8,7 +8,7 @@ import Console;
 
 export namespace Florencia {
 
-	class WindowsConsole : public Console {
+	class WindowsConsole final : public Console {
 	public:
 		WindowsConsole(int16_t minLength = 1024) : m_MinLength(minLength) {}
 		bool CreateNewConsole() {

@@ -1,13 +1,12 @@
-module;
-#include <Florencia/Core/PlatformDetection.h>
-export module CreateFunctions_Console;
-import Console;
+export module CreateFunctions.Console;
+import <Florencia/Core/PlatformDetection.h>;
+export import Console;
 import WindowsConsole;
 import LinuxConsole;
 
 namespace Florencia {
 
-	Console* CreateConsole() {
+	export Console* CreateConsole() {
 		#if defined(FLO_PLATFORM_WINDOWS_64)
 		return new WindowsConsole();
 		#elif defined(FLO_PLATFORM_MACOS)

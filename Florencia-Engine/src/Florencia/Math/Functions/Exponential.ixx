@@ -1,7 +1,6 @@
-module;
-#include <math.h>
 export module Exponential;
 import Declarations;
+import <math.h>;
 
 namespace FloMath {
 
@@ -18,7 +17,7 @@ namespace FloMath {
 			}
 			return (T)(2 * sum);
 		}
-		return nan;
+		return inf;
 	}
 
 	export template<int base = 10, typename T>
@@ -26,6 +25,6 @@ namespace FloMath {
 		if (base != 1) {
 			return (ln(x) / ln(base));
 		}
-		return nan;
+		return inf;
 	}
 }

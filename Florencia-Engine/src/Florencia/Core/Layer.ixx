@@ -1,5 +1,5 @@
 export module Layer;
-import Timestep;
+import TimeStep;
 import Event;
 
 export namespace Florencia {
@@ -14,7 +14,7 @@ export namespace Florencia {
 		virtual void OnEvent(Event& e) = 0;
 
 		virtual void Render() = 0;
-		virtual void Update(Timestep ts) = 0;
+		virtual void Update(TimeStep ts) = 0;
 
 		//For debug purposes only
 		virtual const char* GetName() const = 0;

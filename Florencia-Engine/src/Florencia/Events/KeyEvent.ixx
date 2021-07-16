@@ -1,7 +1,6 @@
-module;
-#include <sstream>
-#include <stdint.h>
 export module KeyEvent;
+import <stdint.h>;
+import <sstream>;
 import KeyCodes;
 import Event;
 

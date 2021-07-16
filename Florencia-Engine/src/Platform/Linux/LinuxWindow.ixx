@@ -1,11 +1,11 @@
-module;
-#include <stdint.h>
 export module LinuxWindow;
+import <stdint.h>;
 import Window;
 
 export namespace Florencia {
 
-	class LinuxWindow : public Window {
+	template<typename T>
+	class LinuxWindow : public Window<T> {
 	public:
 		LinuxWindow(const WindowProps& props) {
 
@@ -19,6 +19,8 @@ export namespace Florencia {
 
 		}
 
+		void SetEventCallback(const EventCallback<T> function) override { m_CallbackFunction = function; }
+
 		uint32_t GetWidth() const override { return 0; }
 		uint32_t GetHeight() const override { return 0; }
 
@@ -28,7 +30,7 @@ export namespace Florencia {
 
 		void* GetWindowHandle() override { return nullptr; }
 	private:
-
+		EventCallback<T> m_CallbackFunction;
 	};
 
 }

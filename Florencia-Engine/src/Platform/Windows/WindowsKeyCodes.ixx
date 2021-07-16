@@ -1,6 +1,5 @@
-module;
-#include <stdint.h>
 export module WindowsKeyCodes;
+import <stdint.h>;
 
 export namespace Florencia {
 

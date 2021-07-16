@@ -1,23 +1,22 @@
-module;
-#include <Florencia/Core/PlatformDetection.h>
 export module CreateFunctions.Window;
+import <Florencia/Core/PlatformDetection.h>;
+export import Window;
 import WindowsWindow;
 import LinuxWindow;
-import Window;
 
 export namespace Florencia {
 
-	export Window* CreateWindow(const WindowProps& props) {
+	export template<typename T> Window<T>* CreateWindow(const WindowProps& props) {
 		#if defined(FLO_PLATFORM_WINDOWS_64)
-		return new WindowsWindow(props);
+		return new WindowsWindow<T>(props);
 		#elif defined(FLO_PLATFORM_MACOS)
-		return new MacWindow(props);
+		return new MacWindow<T>(props);
 		#elif defined(FLO_PLATFORM_LINUX)
-		return new LinuxWindow(props);
+		return new LinuxWindow<T>(props);
 		#elif defined(FLO_PLATFORM_IPHONE) || defined(FLO_PLATFORM_IPHONE_SIMULATOR)
-		return new IPhoneWindow(props);
+		return new IPhoneWindow<T>(props);
 		#elif defined(FLO_PLATFORM_ANDROID)
-		return new AndroidWindow(props);
+		return new AndroidWindow<T>(props);
 		#endif
 		return nullptr;
 	}

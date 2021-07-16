@@ -3,7 +3,7 @@ import Console;
 
 export namespace Florencia {
 
-	class LinuxConsole : public Console {
+	class LinuxConsole final : public Console {
 	public:
 		LinuxConsole() {}
 		~LinuxConsole() {}

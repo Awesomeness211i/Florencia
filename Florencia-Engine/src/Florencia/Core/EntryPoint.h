@@ -1,7 +1,6 @@
 #pragma once
-#include <Florencia/Core/PlatformDetection.h>
-
-extern Florencia::Application* Florencia::CreateApplication(Florencia::ApplicationCommandLineArgs args);
+import <Florencia/Core/PlatformDetection.h>;
+import Application;
 
 #if defined(FLO_PLATFORM_WINDOWS_64)
 #include <Windows.h>

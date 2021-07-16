@@ -1,15 +1,14 @@
-module;
-#include <string>
-#include <stdexcept>
 export module Application;
-import CreateFunctions.Window;
 import ApplicationEvent;
 import EventCallback;
 import LayerStack;
-import Timestep;
+import TimeStep;
+import Console;
 import Window;
 import Layer;
 import Event;
+
+import <string>;
 
 namespace Florencia {
 
@@ -36,24 +35,28 @@ namespace Florencia {
 		void RemoveLayer(Layer* layer);
 		void RemoveOverlay(Layer* layer);
 
-		Window* GetWindow() { return m_Window; }
+		Window<Application>* GetWindow() { return m_Window; }
 	private:
 		//Functions
 		bool OnWindowClose(WindowCloseEvent& e);
 		bool OnWindowResize(WindowResizeEvent& e);
 
 		//Variables
-		Time m_LastTick;
+		TimePoint m_LastTick;
 		LayerStack m_LayerStack;
 		bool m_Running = true, m_Minimized = false;
 
-		Window* m_Window;
+		Window<Application>* m_Window;
+		Console* m_Console;
 	};
 
 	export Application* CreateApplication(ApplicationCommandLineArgs args = ApplicationCommandLineArgs());
 }
 
 module: private;
+import <stdexcept>;
+import CreateFunctions.Console;
+import CreateFunctions.Window;
 
 namespace Florencia {
 
@@ -69,23 +72,26 @@ namespace Florencia {
 	void Callback(Application* app, Event& e) { return app->OnEvent(e); }
 
 	Application::Application(const std::string& name, ApplicationCommandLineArgs args) {
-		m_Window = CreateWindow(WindowProps(name, 1080, 720));
+		m_Console = CreateConsole();
+		if (m_Console) [[likely]] { m_Console->CreateNewConsole(); }
+		m_Window = CreateWindow<Application>(WindowProps(name, 1080, 720));
 		if (m_Window) [[likely]] { m_Window->SetEventCallback(EventCallback<Application>(this, Callback)); }
 	}
 
 	Application::~Application() {
 		if (m_Window) [[likely]] { delete m_Window; }
+		if (m_Console) [[likely]] { m_Console->ReleaseConsole(); delete m_Console; }
 	}
 
 	void Application::Run() {
 		while (m_Running) {
 			//time is in seconds
-			m_LastTick = Time();
+			m_LastTick = TimePoint();
 			if (!m_Minimized) [[likely]] {
-				Time nextTime = Time();
-				Timestep ts(m_LastTick, nextTime);
+				TimePoint nextTime = TimePoint();
+				TimeStep ts(m_LastTick, nextTime);
 				m_LastTick = nextTime;
-				for (auto layer : m_LayerStack) {
+				for (Layer* layer : m_LayerStack) {
 					layer->Update(ts);
 					layer->Render();
 				}
@@ -98,10 +104,10 @@ namespace Florencia {
 	}
 
 	void Application::OnEvent(Event& e) {
-		EventHandler.Dispatch<WindowCloseEvent>(e, [this](WindowCloseEvent& e) -> bool { return this->Application::OnWindowClose(e); });
-		EventHandler.Dispatch<WindowResizeEvent>(e, [this](WindowResizeEvent& e) -> bool { return this->Application::OnWindowResize(e); });
+		EventHandler.Dispatch<WindowCloseEvent>(e, [this](WindowCloseEvent& e) -> bool { return OnWindowClose(e); });
+		EventHandler.Dispatch<WindowResizeEvent>(e, [this](WindowResizeEvent& e) -> bool { return OnWindowResize(e); });
 
-		for (auto it = m_LayerStack.rbegin(); it != m_LayerStack.rend(); ++it) {
+		for (std::vector<Layer*>::reverse_iterator it = m_LayerStack.rbegin(); it != m_LayerStack.rend(); ++it) {
 			if (e.Handled) break;
 			(*it)->OnEvent(e);
 		}

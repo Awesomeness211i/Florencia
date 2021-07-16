@@ -9,8 +9,6 @@ export namespace Florencia {
 
 		virtual bool CreateNewConsole() = 0;
 		virtual bool ReleaseConsole() = 0;
-
-		static Console* Create();
 	};
 
 }

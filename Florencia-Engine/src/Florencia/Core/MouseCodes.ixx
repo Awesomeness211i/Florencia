@@ -1,6 +1,5 @@
-module;
-#include <stdint.h>
 export module MouseCodes;
+import <stdint.h>;
 
 export namespace Florencia {
 

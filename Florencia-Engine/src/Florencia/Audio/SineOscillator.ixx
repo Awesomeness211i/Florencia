@@ -1,8 +1,6 @@
-module;
-#include <fstream>
-#include <stdint.h>
 export module SineOscillator;
-import Triginometric;
+import <stdint.h>;
+import <fstream>;
 import FloMath;
 
 namespace Florencia {
