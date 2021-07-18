@@ -7,7 +7,7 @@ import KeyCodes;
 
 export namespace Florencia {
 
-	#if defined(FLO_PLATFORM_WINDOWS_64) || defined(FLO_PLATFORM_WINDOWS_32)
+	#if defined(FLO_PLATFORM_WINDOWS_64)
 	using enum WindowsKeyCodes;
 	#elif defined(FLO_PLATFORM_LINUX)
 	using enum LinuxKeyCodes;
