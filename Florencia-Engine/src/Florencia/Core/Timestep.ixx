@@ -6,9 +6,9 @@ namespace Florencia {
 	export class TimePoint {
 	public:
 		TimePoint() { m_TimePoint = std::chrono::high_resolution_clock::now().time_since_epoch(); }
-		double Get() const { return m_TimePoint.count(); }
+		double Get() const { return m_TimePoint.count() / 1000000000.0; }
 	private:
-		std::chrono::duration<double, std::chrono::seconds::period> m_TimePoint;
+		std::chrono::nanoseconds m_TimePoint;
 	};
 
 	export class TimeStep {

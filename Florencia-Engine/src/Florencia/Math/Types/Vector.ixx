@@ -4,8 +4,7 @@ import <stdexcept>;
 
 namespace FloMath {
 
-	template<typename T>
-	concept IntegralType = std::is_integral_v<T> || std::is_floating_point_v<T>;
+	template<typename T> concept IntegralType = std::is_integral_v<T> || std::is_floating_point_v<T>;
 
 	export template<IntegralType T, size_t Rows>
 	class Vector {
@@ -13,13 +12,13 @@ namespace FloMath {
 		template<typename ...Args>
 		Vector(Args ...args) : data{args...} {}
 
-		T operator[](unsigned index) { return data[index]; }
-		T operator[](unsigned index) const { return data[index]; }
-		T at(unsigned index) { if (index < Rows) { return data[index]; } throw std::runtime_error("Memory Access Violation"); }
-		T at(unsigned index) const { if (index < Rows) { return data[index]; } throw std::runtime_error("Memory Access Violation"); }
+		T& operator[](unsigned index) { return data[index]; }
+		T& operator[](unsigned index) const { return data[index]; }
+		T& at(unsigned index) { if (index < Rows) { return data[index]; } throw std::runtime_error("Memory Access Violation"); }
+		T& at(unsigned index) const { if (index < Rows) { return data[index]; } throw std::runtime_error("Memory Access Violation"); }
 
 	private:
-		T data[Rows] = { 0 };
+		T data[Rows];
 	};
 
 	/////////////////////////////////////Vector Addition//////////////////////////////////////

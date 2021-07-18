@@ -5,7 +5,7 @@ import Window;
 export namespace Florencia {
 
 	template<typename T>
-	class LinuxWindow : public Window<T> {
+	class LinuxWindow final : public Window<T> {
 	public:
 		LinuxWindow(const WindowProps& props) {
 

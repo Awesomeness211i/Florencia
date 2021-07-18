@@ -1,9 +1,8 @@
-module;
-#define WIN32_LEAN_AND_MEAN
-#include <stdint.h>
-#include <iostream>
-#include <Windows.h>
 export module WindowsConsole;
+#define WIN32_LEAN_AND_MEAN
+import <Windows.h>;
+import <iostream>;
+import <stdint.h>;
 import Console;
 
 export namespace Florencia {

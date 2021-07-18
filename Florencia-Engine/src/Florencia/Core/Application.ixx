@@ -88,6 +88,7 @@ namespace Florencia {
 			//time is in seconds
 			m_LastTick = TimePoint();
 			if (!m_Minimized) [[likely]] {
+				if (m_Window) [[likely]] { m_Window->Update(); }
 				TimePoint nextTime = TimePoint();
 				TimeStep ts(m_LastTick, nextTime);
 				m_LastTick = nextTime;
@@ -95,10 +96,7 @@ namespace Florencia {
 					layer->Update(ts);
 					layer->Render();
 				}
-				if (m_Window) [[likely]] {
-					m_Window->Update();
-					m_Window->Render();
-				}
+				if (m_Window) [[likely]] { m_Window->Render(); }
 			}
 		}
 	}
