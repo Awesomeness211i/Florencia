@@ -69,9 +69,7 @@ namespace Florencia {
 	void Callback(Application* app, Event& e) { return app->OnEvent(e); }
 
 	Application::Application(std::string_view name, ApplicationCommandLineArgs args) {
-		#ifdef FLO_DEBUG
 		m_Console = CreateConsole();
-		#endif
 		m_Window = CreateWindow<Application>(WindowProps(name, 1080, 720));
 		if (m_Window) [[likely]] { m_Window->SetEventCallback(EventCallback<Application>(this, Callback)); }
 	}
