@@ -7,7 +7,7 @@ export namespace Florencia {
 	public:
 		LinuxConsole() {}
 		~LinuxConsole() {}
-		bool CreateNewConsole() override { return false; }
+		bool AllocateConsole() override { return false; }
 		bool ReleaseConsole() override { return false; }
 	private:
 

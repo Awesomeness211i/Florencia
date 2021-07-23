@@ -9,7 +9,9 @@ project "Florencia-Engine"
 
 	files {
 		"src\\**.h",
-		"src\\**.cpp"
+		"src\\**.cpp",
+		"src\\**.ixx",
+		"src\\**.cppm"
 	}
 
 	includedirs {

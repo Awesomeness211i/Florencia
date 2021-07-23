@@ -9,11 +9,11 @@ namespace FloMath {
 	//In radians
 	export template<typename T>
 	inline T cos(T x) noexcept {
-		constexpr T tp = 1. / (2. * pi);
+		constexpr T tp = 1.0 / (2.0 * FloMath::pi);
 		x *= tp;
-		x -= T(.25) + floor(x + T(.25));
-		x *= T(16.) * (abs(x) - T(.5));
-		x += T(.225) * x * (abs(x) - T(1.));
+		x -= T(0.25) + FloMath::floor(x + T(0.25));
+		x *= T(16.0) * (FloMath::abs(x) - T(0.5));
+		x += T(0.225) * x * (FloMath::abs(x) - T(1.0));
 		return x;
 	}
 

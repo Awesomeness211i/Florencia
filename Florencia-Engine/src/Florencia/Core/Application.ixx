@@ -1,12 +1,9 @@
 export module Application;
+import CreateFunctions.Console;
+import CreateFunctions.Window;
 import ApplicationEvent;
-import EventCallback;
 import LayerStack;
 import TimeStep;
-import Console;
-import Window;
-import Layer;
-import Event;
 
 import <string>;
 
@@ -14,15 +11,15 @@ namespace Florencia {
 
 	export struct ApplicationCommandLineArgs {
 		int Count = 0;
-		wchar_t** Args = nullptr;
+		char** Args = nullptr;
 
-		const wchar_t* operator[](int index) const;
-		const wchar_t* at(int index) const;
+		const char* operator[](int index) const;
+		const char* at(int index) const;
 	};
 
 	export class Application {
 	public:
-		Application(const std::string& name, ApplicationCommandLineArgs args = ApplicationCommandLineArgs());
+		Application(std::string_view name, ApplicationCommandLineArgs args = ApplicationCommandLineArgs());
 		virtual ~Application();
 
 		void Run();
@@ -46,34 +43,35 @@ namespace Florencia {
 		LayerStack m_LayerStack;
 		bool m_Running = true, m_Minimized = false;
 
-		Window<Application>* m_Window;
-		Console* m_Console;
+		Console* m_Console = nullptr;
+		Window<Application>* m_Window = nullptr;
 	};
 
 	export Application* CreateApplication(ApplicationCommandLineArgs args = ApplicationCommandLineArgs());
 }
 
 module: private;
+import EventCallback;
+
 import <stdexcept>;
-import CreateFunctions.Console;
-import CreateFunctions.Window;
 
 namespace Florencia {
 
-	const wchar_t* ApplicationCommandLineArgs::operator[](int index) const {
+	const char* ApplicationCommandLineArgs::operator[](int index) const {
 		return Args[index];
 	}
 
-	const wchar_t* ApplicationCommandLineArgs::at(int index) const {
+	const char* ApplicationCommandLineArgs::at(int index) const {
 		if (index < Count) { return Args[index]; }
 		throw std::runtime_error("Index not within bounds");
 	}
 
 	void Callback(Application* app, Event& e) { return app->OnEvent(e); }
 
-	Application::Application(const std::string& name, ApplicationCommandLineArgs args) {
+	Application::Application(std::string_view name, ApplicationCommandLineArgs args) {
+		#ifdef FLO_DEBUG
 		m_Console = CreateConsole();
-		if (m_Console) [[likely]] { m_Console->CreateNewConsole(); }
+		#endif
 		m_Window = CreateWindow<Application>(WindowProps(name, 1080, 720));
 		if (m_Window) [[likely]] { m_Window->SetEventCallback(EventCallback<Application>(this, Callback)); }
 	}
@@ -91,12 +89,13 @@ namespace Florencia {
 				if (m_Window) [[likely]] { m_Window->Update(); }
 				TimePoint nextTime = TimePoint();
 				TimeStep ts(m_LastTick, nextTime);
-				m_LastTick = nextTime;
 				for (Layer* layer : m_LayerStack) {
 					layer->Update(ts);
 					layer->Render();
 				}
 				if (m_Window) [[likely]] { m_Window->Render(); }
+
+				m_LastTick = nextTime;
 			}
 		}
 	}

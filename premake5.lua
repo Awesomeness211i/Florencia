@@ -4,7 +4,7 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 workspace "Florencia"
 	startproject "FloEditor"
 	configurations { "Debug", "Release", "Distribution" }
-	platforms { "x64" }
+	platforms { "Win64" }
 
 	--warnings "Extra"
 
@@ -13,7 +13,7 @@ workspace "Florencia"
 
 	--system specific and ide/compiler specific settings
 	filter { "system:Windows", "action:vs*" } system "windows" flags { "MultiProcessorCompile", "NoMinimalRebuild" } linkoptions {}
-	filter { "system:Mac", "action:gmake" } system "macosx" toolset "clang"
+	filter { "system:Mac", "action:gmake*" } system "macosx" toolset "clang"
 	filter { "system:Unix" } system "linux"
 	
 	--general settings for configurations

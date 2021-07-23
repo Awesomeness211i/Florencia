@@ -9,7 +9,7 @@ namespace FloMath {
 	T ln(T x) {
 		double sum = 0.0;
 		double top = (x - 1.0) / (x + 1.0);
-		int bottom = 0;
+		double bottom = 0;
 		if (x > 0) {
 			for (int i = 1; i <= index; i++) {
 				bottom = 2*i-1;
@@ -22,9 +22,7 @@ namespace FloMath {
 
 	export template<int base = 10, typename T>
 	T log(T x) {
-		if (base != 1) {
-			return (ln(x) / ln(base));
-		}
+		if (base != 1) { return (FloMath::ln(x) / FloMath::ln(base)); }
 		return inf;
 	}
 }

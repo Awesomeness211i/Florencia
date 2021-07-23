@@ -1,8 +1,8 @@
 export module CreateFunctions.Window;
 import <Florencia/Core/PlatformDetection.h>;
+export import Window;
 import WindowsWindow;
 import LinuxWindow;
-import Window;
 
 export namespace Florencia {
 

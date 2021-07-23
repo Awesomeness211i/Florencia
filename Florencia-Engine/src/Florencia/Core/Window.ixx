@@ -1,18 +1,19 @@
 export module Window;
 export import EventCallback;
-import <stdint.h>;
-import <string>;
 import Event;
 
-export namespace Florencia {
+import <stdint.h>;
+import <string>;
 
-	struct WindowProps {
-		WindowProps(const std::string& title, uint32_t width = 0, uint32_t height = 0) :Title(title), Width(width), Height(height) {}
-		std::string Title;
+namespace Florencia {
+
+	export struct WindowProps {
+		WindowProps(std::string_view title, uint32_t width = 0, uint32_t height = 0) :Title(title), Width(width), Height(height) {}
+		std::string_view Title;
 		uint32_t Width, Height;
 	};
 
-	template <typename T>
+	export template <typename T>
 	class Window {
 	public:
 		Window() = default;
@@ -23,6 +24,8 @@ export namespace Florencia {
 
 		virtual uint32_t GetWidth() const = 0;
 		virtual uint32_t GetHeight() const = 0;
+
+		virtual WindowProps GetProperties() const = 0;
 
 		virtual void SetEventCallback(const EventCallback<T> function) = 0;
 

@@ -18,6 +18,8 @@ export namespace Florencia {
 		uint32_t GetWidth() const override;
 		uint32_t GetHeight() const override;
 
+		WindowProps GetProperties() const override;
+
 		void SetEventCallback(const EventCallback<T> function) override { m_CallbackFunction = function; }
 
 		//Window Attributes
@@ -57,7 +59,7 @@ namespace Florencia {
 
 	template <typename T> void WindowsWindow<T>::Init(const WindowProps& props) {
 		m_Instance = GetModuleHandleA(0);
-		WNDCLASSEX m_WindowsClass = { 0 };
+		WNDCLASSEXA m_WindowsClass = { 0 };
 		m_WindowsClass.cbSize = sizeof(m_WindowsClass);
 		m_WindowsClass.style = CS_OWNDC;
 		m_WindowsClass.lpfnWndProc = SetupWindowProcedure;
@@ -68,17 +70,17 @@ namespace Florencia {
 		m_WindowsClass.hCursor = nullptr;
 		m_WindowsClass.hbrBackground = nullptr;
 		m_WindowsClass.lpszMenuName = nullptr;
-		m_WindowsClass.lpszClassName = L"Window";
+		m_WindowsClass.lpszClassName = "Window";
 		m_WindowsClass.hIconSm = static_cast<HICON>(LoadImage(m_Instance, MAKEINTRESOURCE(101), IMAGE_ICON, 16, 16, 0));
-		RegisterClassEx(&m_WindowsClass);
+		RegisterClassExA(&m_WindowsClass);
 
 		//Create Window
 		RECT desktop = { 0 }, window = { 0, 0, (LONG)m_Data.Width, (LONG)m_Data.Height };
 		HWND size = GetDesktopWindow();
 		GetWindowRect(size, &desktop);
 		AdjustWindowRect(&window, WS_OVERLAPPEDWINDOW, false);
-		m_Handle = CreateWindowEx(
-			NULL, L"Window", (wchar_t*)m_Data.Title.c_str(),
+		m_Handle = CreateWindowExA(
+			NULL, "Window", &m_Data.Title[0],
 			WS_MAXIMIZEBOX | WS_MINIMIZEBOX | WS_CAPTION | WS_SYSMENU | WS_VISIBLE,
 			(desktop.right - m_Data.Width) / 2,
 			(desktop.bottom - m_Data.Height) / 2,
@@ -88,12 +90,12 @@ namespace Florencia {
 
 	template <typename T> void WindowsWindow<T>::Shutdown() {
 		DestroyWindow(m_Handle);
-		UnregisterClass(L"Window", m_Instance);
+		UnregisterClassA("Window", m_Instance);
 	}
 
 	template <typename T> void WindowsWindow<T>::Update() {
 		MSG m_Message = { 0 };
-		if (PeekMessageW(&m_Message, 0, 0, 0, PM_REMOVE)) [[likely]] {
+		if (PeekMessageA(&m_Message, 0, 0, 0, PM_REMOVE)) [[likely]] {
 			TranslateMessage(&m_Message);
 			DispatchMessageA(&m_Message);
 		}
@@ -106,6 +108,8 @@ namespace Florencia {
 	template <typename T> uint32_t WindowsWindow<T>::GetWidth() const { return m_Data.Width; }
 	template <typename T> uint32_t WindowsWindow<T>::GetHeight() const { return m_Data.Height; }
 
+	template<typename T> WindowProps WindowsWindow<T>::GetProperties() const { return m_Data; }
+
 	//Window Attributes
 	template <typename T> void WindowsWindow<T>::SetWidth(uint32_t width) { m_Data.Width = width; }
 	template <typename T> void WindowsWindow<T>::SetHeight(uint32_t height) { m_Data.Height = height; }
@@ -116,7 +120,7 @@ namespace Florencia {
 		WindowsWindow<T>* pParent;
 		if (msg != WM_NCCREATE) [[likely]] {
 			pParent = reinterpret_cast<WindowsWindow<T>*>(GetWindowLongPtrW(hWnd, GWLP_USERDATA));
-			if (!pParent) return DefWindowProc(hWnd, msg, wParam, lParam);
+			if (!pParent) return DefWindowProcA(hWnd, msg, wParam, lParam);
 		}
 		else [[unlikely]] {
 			LPCREATESTRUCT lpcs = reinterpret_cast<LPCREATESTRUCT>(lParam);
@@ -147,7 +151,7 @@ namespace Florencia {
 			case WM_MOUSEMOVE: { POINTS p = MAKEPOINTS(lParam); MouseMovedEvent e(p.x, p.y); m_CallbackFunction(e); } return 0;
 			case WM_MOUSEWHEEL: { short p = GET_WHEEL_DELTA_WPARAM(wParam); MouseScrolledEvent e(p, 0); m_CallbackFunction(e); } return 0;
 		}
-		return DefWindowProc(hWnd, msg, wParam, lParam);
+		return DefWindowProcA(hWnd, msg, wParam, lParam);
 	}
 
 }

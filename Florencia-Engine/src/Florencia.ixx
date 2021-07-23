@@ -4,7 +4,6 @@ export module Florencia;
 export import Application;
 export import LayerStack;
 export import TimeStep;
-export import Console;
 export import Layer;
 
 //Codes for mouse and key buttons

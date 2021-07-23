@@ -1,8 +1,8 @@
 export module CreateFunctions.Console;
 import <Florencia/Core/PlatformDetection.h>;
+export import Console;
 import WindowsConsole;
 import LinuxConsole;
-import Console;
 
 namespace Florencia {
 

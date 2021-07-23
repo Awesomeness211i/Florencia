@@ -7,7 +7,7 @@ export namespace Florencia {
 		Console() = default;
 		virtual ~Console() = default;
 
-		virtual bool CreateNewConsole() = 0;
+		virtual bool AllocateConsole() = 0;
 		virtual bool ReleaseConsole() = 0;
 	};
 

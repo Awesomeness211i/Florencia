@@ -1,8 +1,9 @@
 export module KeyEvent;
+export import Event;
+import KeyCodes;
+
 import <stdint.h>;
 import <sstream>;
-import KeyCodes;
-import Event;
 
 export namespace Florencia {
 

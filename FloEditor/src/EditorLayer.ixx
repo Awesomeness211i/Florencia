@@ -38,12 +38,14 @@ namespace Florencia {
 }
 
 module: private;
+//import SineOscillator;
 import <iostream>;
 
 namespace Florencia {
 
 	void EditorLayer::OnAdd() {
-		
+		//SineOscillator oscillator(440.0f, 0.5f, 10U);
+		//SineOscillatorAudioFileCreator file(oscillator, "assets\\WaveFile.wav");
 	}
 
 	void EditorLayer::OnRemove() {

@@ -1,8 +1,9 @@
 export module MouseEvent;
+export import Event;
 import MouseCodes;
+
 import <stdint.h>;
 import <sstream>;
-import Event;
 
 export namespace Florencia {
 
