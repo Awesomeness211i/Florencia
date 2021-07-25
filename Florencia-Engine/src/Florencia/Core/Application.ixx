@@ -2,6 +2,7 @@ export module Application;
 import CreateFunctions.Console;
 import CreateFunctions.Window;
 import ApplicationEvent;
+import CommandQueue;
 import LayerStack;
 import TimeStep;
 
@@ -41,10 +42,11 @@ namespace Florencia {
 		//Variables
 		TimePoint m_LastTick;
 		LayerStack m_LayerStack;
-		bool m_Running = true, m_Minimized = false;
+		CommandQueue m_CommandQueue{};
+		bool m_Running{ true }, m_Minimized{ false };
 
-		Console* m_Console = nullptr;
-		Window<Application>* m_Window = nullptr;
+		Console* m_Console{ nullptr };
+		Window<Application>* m_Window{ nullptr };
 	};
 
 	export Application* CreateApplication(ApplicationCommandLineArgs args = ApplicationCommandLineArgs());
@@ -52,7 +54,6 @@ namespace Florencia {
 
 module: private;
 import EventCallback;
-
 import <stdexcept>;
 
 namespace Florencia {
@@ -80,6 +81,7 @@ namespace Florencia {
 	}
 
 	void Application::Run() {
+		m_CommandQueue.Start();
 		while (m_Running) {
 			//time is in seconds
 			m_LastTick = TimePoint();
