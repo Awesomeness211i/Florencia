@@ -123,8 +123,10 @@ namespace FloMath {
 	Matrix<T, Rows, Columns2> operator*(const Matrix<T, Rows, Columns1>& mat1, const Matrix<T, Columns1, Columns2>& mat2) {
 		Matrix<T, Rows, Columns2> retval;
 		for(int i = 0; i < Columns1; ++i) {
-			for(int j = 0; j < Columns2; j++) {
-				retval[j] += mat1[i] * mat2[j][i];
+			for(int j = 0; j < Columns2; ++j) {
+				for(int k = 0; k < Rows; ++k) {
+					retval[j][k] += mat1[i][k] * mat2[j][i];
+				}
 			}
 		}
 		return retval;
