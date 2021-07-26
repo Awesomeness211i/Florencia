@@ -1,7 +1,6 @@
-module;
-#include <deque>
 export module CommandQueue;
 import <thread>;
+import <deque>;
 
 namespace Florencia {
 
@@ -11,6 +10,15 @@ namespace Florencia {
 		Update, //Does Nothing Yet
 		Render, //Does Nothing Yet
 		OnEvent, //Does Nothing Yet
+	};
+
+	export class IQueuableCommand {
+	public:
+
+		virtual void ExecuteCommand() = 0;
+
+	private:
+
 	};
 
 	//Shuts Down At End Of Application

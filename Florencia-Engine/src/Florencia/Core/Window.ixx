@@ -2,8 +2,8 @@ export module Window;
 export import EventCallback;
 import Event;
 
+import <string_view>;
 import <stdint.h>;
-import <string>;
 
 namespace Florencia {
 
