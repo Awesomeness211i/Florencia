@@ -1,5 +1,6 @@
 export module MouseEvent;
-export import Event;
+import Event;
+
 import MouseCodes;
 
 import <stdint.h>;

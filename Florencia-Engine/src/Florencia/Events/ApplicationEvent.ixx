@@ -1,5 +1,5 @@
 export module ApplicationEvent;
-export import Event;
+import Event;
 import <sstream>;
 
 export namespace Florencia {

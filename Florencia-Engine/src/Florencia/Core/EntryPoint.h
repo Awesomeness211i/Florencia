@@ -1,5 +1,5 @@
 #pragma once
-import <Florencia/Core/PlatformDetection.h>;
+#include <Florencia/Core/PlatformDetection.h>
 import Application;
 
 #if defined(FLO_PLATFORM_WINDOWS_64)

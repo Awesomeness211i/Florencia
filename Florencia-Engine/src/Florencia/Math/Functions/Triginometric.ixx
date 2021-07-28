@@ -2,8 +2,6 @@ export module Triginometric;
 import Declarations;
 import Other;
 
-//TODO: Make the trigonometric functions arcsin() arccos() arctan()
-
 namespace FloMath {
 
 	//In radians

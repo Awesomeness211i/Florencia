@@ -1,10 +1,12 @@
 export module Application;
-import CreateFunctions.Console;
-import CreateFunctions.Window;
 import ApplicationEvent;
 import CommandQueue;
 import LayerStack;
 import TimeStep;
+import Console;
+import Window;
+import Layer;
+import Event;
 
 import <string_view>;
 
@@ -26,13 +28,13 @@ namespace Florencia {
 		void Run();
 
 		void OnEvent(Event& e);
-
+		
 		void AddLayer(Layer* layer);
 		void AddOverlay(Layer* layer);
-
+		
 		void RemoveLayer(Layer* layer);
 		void RemoveOverlay(Layer* layer);
-
+		
 		Window<Application>* GetWindow() { return m_Window; }
 	private:
 		//Functions
@@ -42,7 +44,7 @@ namespace Florencia {
 		//Variables
 		TimePoint m_LastTick;
 		LayerStack m_LayerStack;
-		CommandQueue m_CommandQueue{};
+		//CommandQueue m_CommandQueue;
 		bool m_Running{ true }, m_Minimized{ false };
 
 		Console* m_Console{ nullptr };
@@ -53,26 +55,24 @@ namespace Florencia {
 }
 
 module: private;
+import CreateFunctions.Console;
+import CreateFunctions.Window;
 import EventCallback;
 import <stdexcept>;
 
 namespace Florencia {
 
-	const char* ApplicationCommandLineArgs::operator[](int index) const {
-		return Args[index];
-	}
+	const char* ApplicationCommandLineArgs::operator[](int index) const { return Args[index]; }
 
 	const char* ApplicationCommandLineArgs::at(int index) const {
 		if (index < Count) { return Args[index]; }
 		throw std::runtime_error("Index not within bounds");
 	}
 
-	void Callback(Application* app, Event& e) { return app->OnEvent(e); }
-
 	Application::Application(std::string_view name, ApplicationCommandLineArgs args) {
 		m_Console = CreateConsole();
 		m_Window = CreateWindow<Application>(WindowProps(name, 1080, 720));
-		if (m_Window) [[likely]] { m_Window->SetEventCallback(EventCallback<Application>(this, Callback)); }
+		if(m_Window) [[likely]] { m_Window->SetEventCallback(EventCallback<Application>(this, [](Application* app, Event& e) { return app->OnEvent(e); })); }
 	}
 
 	Application::~Application() {
@@ -81,23 +81,25 @@ namespace Florencia {
 	}
 
 	void Application::Run() {
-		m_CommandQueue.Start();
+		//m_CommandQueue.Start();
 		while (m_Running) {
 			//time is in seconds
 			m_LastTick = TimePoint();
-			if (!m_Minimized) [[likely]] {
-				if (m_Window) [[likely]] { m_Window->Update(); }
+			if(!m_Minimized) [[likely]] {
+				if(m_Window) [[likely]] { m_Window->Update(); }
+				//m_CommandQueue.QueueCommand(CommandType::Update, [=]() -> void { if(m_Window) [[likely]] { m_Window->Update(); } });
+				//m_CommandQueue.QueueCommand(CommandType::Render, [=]() -> void { if(m_Window) [[likely]] { m_Window->Render(); } });
 				TimePoint nextTime = TimePoint();
 				TimeStep ts(m_LastTick, nextTime);
 				for (Layer* layer : m_LayerStack) {
 					layer->Update(ts);
 					layer->Render();
 				}
-				if (m_Window) [[likely]] { m_Window->Render(); }
-
+				if(m_Window) [[likely]] { m_Window->Render(); }
 				m_LastTick = nextTime;
 			}
 		}
+		//m_CommandQueue.End();
 	}
 
 	void Application::OnEvent(Event& e) {

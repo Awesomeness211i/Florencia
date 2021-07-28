@@ -1,5 +1,5 @@
 export module KeyEvent;
-export import Event;
+import Event;
 
 export import KeyCodes;
 
