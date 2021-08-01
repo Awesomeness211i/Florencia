@@ -1,4 +1,6 @@
-﻿export module EditorLayer;
+﻿module;
+#include <iostream>
+export module EditorLayer;
 import Florencia;
 
 namespace Florencia {
@@ -89,6 +91,7 @@ namespace Florencia {
 	}
 
 	bool EditorLayer::OnMouseMoved(MouseMovedEvent& e) {
+		std::cout << e << "\n";
 		return true;
 	}
 

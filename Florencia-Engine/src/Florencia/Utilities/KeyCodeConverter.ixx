@@ -1,5 +1,6 @@
+module;
+#include <Florencia/Core/PlatformDetection.h>
 export module KeyCodeConverter;
-import <Florencia/Core/PlatformDetection.h>;
 
 import WindowsKeyCodes;
 import LinuxKeyCodes;

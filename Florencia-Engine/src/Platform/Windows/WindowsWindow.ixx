@@ -13,8 +13,7 @@ import <stdint.h>;
 
 export namespace Florencia {
 
-	template<typename T>
-	class WindowsWindow final : public Window<T> {
+	class WindowsWindow final : public Window {
 	public:
 		WindowsWindow(const WindowProps& props) : m_Data(props) { Init(props); }
 		~WindowsWindow() { Shutdown(); }
@@ -27,19 +26,19 @@ export namespace Florencia {
 
 		WindowProps GetProperties() const override;
 
-		void SetEventCallback(const EventCallback<T> function) override { m_CallbackFunction = function; }
+		void SetEventCallback(const EventCallback function) override { m_CallbackFunction = function; }
 
 		//Window Attributes
 		void SetWidth(uint32_t width) override;
 		void SetHeight(uint32_t height) override;
 
-		void* GetWindowHandle() override;
+		void* GetWindowHandle() const override;
 
+		static long long SetupWindowProcedure(HWND hWnd, unsigned int msg, unsigned long long wParam, long long lParam);
 	private:
 		void Init(const WindowProps& props);
 		void Shutdown();
 
-		static long long SetupWindowProcedure(HWND hWnd, unsigned int msg, unsigned long long wParam, long long lParam);
 		long long WindowProcedure(HWND hWnd, unsigned int msg, unsigned long long wParam, long long lParam) {
 			switch(msg) {
 				case WM_CLOSE: {
@@ -110,7 +109,7 @@ export namespace Florencia {
 		WindowProps m_Data;
 		HINSTANCE m_Instance;
 		WNDCLASSEXA m_WindowsClass = { 0 };
-		EventCallback<T> m_CallbackFunction;
+		EventCallback m_CallbackFunction;
 	};
 
 }
@@ -119,7 +118,7 @@ module: private;
 
 namespace Florencia {
 
-	template <typename T> void WindowsWindow<T>::Init(const WindowProps& props) {
+	void WindowsWindow::Init(const WindowProps& props) {
 		m_Instance = GetModuleHandleA(0);
 		m_WindowsClass.cbSize = sizeof(m_WindowsClass);
 		m_WindowsClass.style = CS_OWNDC;
@@ -149,12 +148,12 @@ namespace Florencia {
 			nullptr, nullptr, m_Instance, this);
 	}
 
-	template <typename T> void WindowsWindow<T>::Shutdown() {
+	void WindowsWindow::Shutdown() {
 		DestroyWindow(m_Handle);
 		UnregisterClassA("Window", m_Instance);
 	}
 
-	template <typename T> void WindowsWindow<T>::Update() {
+	void WindowsWindow::Update() {
 		MSG m_Message = { 0 };
 		if (PeekMessageA(&m_Message, 0, 0, 0, PM_REMOVE)) [[likely]] {
 			TranslateMessage(&m_Message);
@@ -162,30 +161,30 @@ namespace Florencia {
 		}
 	}
 
-	template <typename T> void WindowsWindow<T>::Render() {
+	void WindowsWindow::Render() {
 
 	}
 
-	template <typename T> uint32_t WindowsWindow<T>::GetWidth() const { return m_Data.Width; }
-	template <typename T> uint32_t WindowsWindow<T>::GetHeight() const { return m_Data.Height; }
+	uint32_t WindowsWindow::GetWidth() const { return m_Data.Width; }
+	uint32_t WindowsWindow::GetHeight() const { return m_Data.Height; }
 
-	template<typename T> WindowProps WindowsWindow<T>::GetProperties() const { return m_Data; }
+	WindowProps WindowsWindow::GetProperties() const { return m_Data; }
 
 	//Window Attributes
-	template <typename T> void WindowsWindow<T>::SetWidth(uint32_t width) { m_Data.Width = width; }
-	template <typename T> void WindowsWindow<T>::SetHeight(uint32_t height) { m_Data.Height = height; }
+	void WindowsWindow::SetWidth(uint32_t width) { m_Data.Width = width; }
+	void WindowsWindow::SetHeight(uint32_t height) { m_Data.Height = height; }
 
-	template <typename T> void* WindowsWindow<T>::GetWindowHandle() { return m_Handle; }
+	void* WindowsWindow::GetWindowHandle() const { return m_Handle; }
 
-	template <typename T> LONG_PTR WindowsWindow<T>::SetupWindowProcedure(HWND hWnd, unsigned int msg, unsigned long long wParam, long long lParam) {
-		WindowsWindow<T>* pParent;
+	LONG_PTR WindowsWindow::SetupWindowProcedure(HWND hWnd, unsigned int msg, unsigned long long wParam, long long lParam) {
+		WindowsWindow* pParent;
 		if (msg != WM_NCCREATE) [[likely]] {
-			pParent = reinterpret_cast<WindowsWindow<T>*>(GetWindowLongPtrW(hWnd, GWLP_USERDATA));
+			pParent = reinterpret_cast<WindowsWindow*>(GetWindowLongPtrW(hWnd, GWLP_USERDATA));
 			if (!pParent) return DefWindowProcA(hWnd, msg, wParam, lParam);
 		}
 		else [[unlikely]] {
 			LPCREATESTRUCT lpcs = reinterpret_cast<LPCREATESTRUCT>(lParam);
-			pParent = static_cast<WindowsWindow<T>*>(lpcs->lpCreateParams);
+			pParent = static_cast<WindowsWindow*>(lpcs->lpCreateParams);
 			SetWindowLongPtrW(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(pParent));
 		}
 		return pParent->WindowProcedure(hWnd, msg, wParam, lParam);

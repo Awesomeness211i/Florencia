@@ -1,8 +1,9 @@
 export module Application;
 import ApplicationEvent;
-import CommandQueue;
+import RenderContext;
 import LayerStack;
 import TimeStep;
+import Renderer;
 import Console;
 import Window;
 import Layer;
@@ -35,7 +36,7 @@ namespace Florencia {
 		void RemoveLayer(Layer* layer);
 		void RemoveOverlay(Layer* layer);
 		
-		Window<Application>* GetWindow() { return m_Window; }
+		Window* GetWindow() { return m_Window; }
 	private:
 		//Functions
 		bool OnWindowClose(WindowCloseEvent& e);
@@ -44,11 +45,11 @@ namespace Florencia {
 		//Variables
 		TimePoint m_LastTick;
 		LayerStack m_LayerStack;
-		//CommandQueue m_CommandQueue;
-		bool m_Running{ true }, m_Minimized{ false };
-
+		Window* m_Window{ nullptr };
 		Console* m_Console{ nullptr };
-		Window<Application>* m_Window{ nullptr };
+		Renderer* m_Renderer{ nullptr };
+		RenderContext* m_RenderContext{ nullptr };
+		bool m_Running{ true }, m_Minimized{ false };
 	};
 
 	export Application* CreateApplication(ApplicationCommandLineArgs args = ApplicationCommandLineArgs());
@@ -57,7 +58,6 @@ namespace Florencia {
 module: private;
 import CreateFunctions.Console;
 import CreateFunctions.Window;
-import EventCallback;
 import <stdexcept>;
 
 namespace Florencia {
@@ -71,12 +71,20 @@ namespace Florencia {
 
 	Application::Application(std::string_view name, ApplicationCommandLineArgs args) {
 		m_Console = CreateConsole();
-		m_Window = CreateWindow<Application>(WindowProps(name, 1080, 720));
-		if(m_Window) [[likely]] { m_Window->SetEventCallback(EventCallback<Application>(this, [](Application* app, Event& e) { return app->OnEvent(e); })); }
+		m_Window = CreateWindow(WindowProps(name, 1080, 720));
+		if(m_Window) [[likely]] {
+			m_Window->SetEventCallback([this](Event& e) -> void { return Application::OnEvent(e); });
+			m_RenderContext = new RenderContext(*m_Window);
+			m_Renderer = new Renderer(*m_RenderContext);
+		}
 	}
 
 	Application::~Application() {
-		if (m_Window) [[likely]] { delete m_Window; }
+		if(m_Window) [[likely]] {
+			delete m_Renderer;
+			delete m_RenderContext;
+			delete m_Window;
+		}
 		if (m_Console) [[likely]] { m_Console->ReleaseConsole(); delete m_Console; }
 	}
 

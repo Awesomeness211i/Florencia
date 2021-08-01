@@ -6,10 +6,18 @@ namespace Florencia {
 
 	export class Renderer {
 	public:
-
+		Renderer(RenderContext& context);
 
 	private:
-		std::vector<RenderContext*> m_Contexts;
+		RenderContext& m_Contexts;
 	};
+
+}
+
+module: private;
+
+namespace Florencia {
+
+	Renderer::Renderer(RenderContext& context) : m_Contexts(context) {}
 
 }

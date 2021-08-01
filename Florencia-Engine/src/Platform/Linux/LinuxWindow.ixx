@@ -4,8 +4,7 @@ import Window;
 
 export namespace Florencia {
 
-	template<typename T>
-	class LinuxWindow final : public Window<T> {
+	class LinuxWindow final : public Window {
 	public:
 		LinuxWindow(const WindowProps& props) {
 
@@ -19,7 +18,7 @@ export namespace Florencia {
 
 		}
 
-		void SetEventCallback(const EventCallback<T> function) override { m_CallbackFunction = function; }
+		void SetEventCallback(const EventCallback function) override { m_CallbackFunction = function; }
 
 		uint32_t GetWidth() const override { return 0; }
 		uint32_t GetHeight() const override { return 0; }
@@ -28,9 +27,9 @@ export namespace Florencia {
 		void SetWidth(uint32_t width) override {}
 		void SetHeight(uint32_t height) override {}
 
-		void* GetWindowHandle() override { return nullptr; }
+		void* GetWindowHandle() const override { return nullptr; }
 	private:
-		EventCallback<T> m_CallbackFunction;
+		EventCallback m_CallbackFunction;
 	};
 
 }
