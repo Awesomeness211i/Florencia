@@ -10,12 +10,13 @@ import Layer;
 import Event;
 
 import <string_view>;
+import <filesystem>;
 
 namespace Florencia {
 
 	export struct ApplicationCommandLineArgs {
 		int Count = 0;
-		char** Args = nullptr;
+		std::filesystem::path* Args = nullptr;
 
 		const char* operator[](int index) const;
 		const char* at(int index) const;
@@ -50,6 +51,7 @@ namespace Florencia {
 		Renderer* m_Renderer{ nullptr };
 		RenderContext* m_RenderContext{ nullptr };
 		bool m_Running{ true }, m_Minimized{ false };
+		ApplicationCommandLineArgs m_CommandLineArgs{};
 	};
 
 	export Application* CreateApplication(ApplicationCommandLineArgs args = ApplicationCommandLineArgs());
@@ -62,14 +64,15 @@ import <stdexcept>;
 
 namespace Florencia {
 
-	const char* ApplicationCommandLineArgs::operator[](int index) const { return Args[index]; }
+	const char* ApplicationCommandLineArgs::operator[](int index) const { return (*Args).string().c_str(); }
 
 	const char* ApplicationCommandLineArgs::at(int index) const {
-		if (index < Count) { return Args[index]; }
+		if (index < Count) { return (*Args).string().c_str(); }
 		throw std::runtime_error("Index not within bounds");
 	}
 
 	Application::Application(std::string_view name, ApplicationCommandLineArgs args) {
+		m_CommandLineArgs = args;
 		m_Console = CreateConsole();
 		m_Window = CreateWindow(WindowProps(name, 1080, 720));
 		if(m_Window) [[likely]] {

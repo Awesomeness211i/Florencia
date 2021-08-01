@@ -1,12 +1,13 @@
 #pragma once
+#include <filesystem>
 #include <Florencia/Core/PlatformDetection.h>
 import Application;
 
 #if defined(FLO_PLATFORM_WINDOWS_64)
 #include <Windows.h>
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nShowCmd) {
-	int argc; char* argv = GetCommandLineA(); CommandLineToArgvW(GetCommandLine(), &argc);
-	auto app = Florencia::CreateApplication({ argc, &argv });
+	int argc; std::filesystem::path argv[] = { GetCommandLineW() }; CommandLineToArgvW(GetCommandLineW(), &argc);
+	auto app = Florencia::CreateApplication({ argc, argv });
 	app->Run();
 	delete app;
 	return 0;

@@ -1,10 +1,10 @@
 module;
-#define GLFW_STATIC
 #include <Florencia/Core/PlatformDetection.h>
 #ifdef FLO_PLATFORM_WINDOWS_64
 	#define _GLFW_WIN32
 #endif
-#include <../../../vendor/glfw/src/internal.h>
+#include <GLFW/glfw3.h>
+#include "../vendor/glfw/src/internal.h"
 export module AttachToWindowHandle;
 import WindowsWindow;
 import Window;
@@ -12,7 +12,7 @@ import Window;
 export namespace Florencia {
 
 	//Converts to GLFWwindow* but returns as void*
-	void* AttachToWindowHandle(const Window& handle, GLFWwindow* share) {
+	GLFWwindow* AttachToWindowHandle(const Window& handle, GLFWwindow* share) {
 		#ifdef FLO_PLATFORM_WINDOWS_64
 		_GLFWfbconfig fbconfig;
 		_GLFWctxconfig ctxconfig;
@@ -86,7 +86,7 @@ export namespace Florencia {
 		return (GLFWwindow*)window;
 		#endif
 
-		return handle.GetWindowHandle();
+		return (GLFWwindow*)handle.GetWindowHandle();
 	}
 
 }

@@ -34,7 +34,7 @@ namespace Florencia {
 
 			return;
 		}
-		//m_Window = (GLFWwindow*)AttachToWindowHandle(window, nullptr);
+		//m_Window = AttachToWindowHandle(window, nullptr);
 		if(!m_Window) { glfwTerminate(); return; }
 
 		glfwMakeContextCurrent(m_Window);

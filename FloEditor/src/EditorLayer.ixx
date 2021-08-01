@@ -91,7 +91,6 @@ namespace Florencia {
 	}
 
 	bool EditorLayer::OnMouseMoved(MouseMovedEvent& e) {
-		std::cout << e << "\n";
 		return true;
 	}
 
