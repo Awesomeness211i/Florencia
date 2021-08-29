@@ -20,10 +20,10 @@ to sort the commands into a map, which could then call the ExecuteCommand() func
 
 /*
 
+TODO: Start physics engine
+TODO: Start networking stuff
 TODO: Start rendering using opengl
 TODO: Start rendering using vulkan
-TODO: Start networking stuff
-TODO: Start physics engine
 TODO: Start on OS agnostic realtime audio
 TODO: Make the trigonometric functions arcsin() arccos() arctan()
 

@@ -9,7 +9,7 @@ export namespace FloMath {
 	class Vector {
 	public:
 		template<typename ...Args>
-		Vector(Args ...args) : data{args...} {}
+		Vector(Args ...args) : data{(T)args...} {}
 
 		T& operator[](unsigned index);
 		const T& operator[](unsigned index) const;
@@ -19,10 +19,13 @@ export namespace FloMath {
 		//Vector Addition
 		void operator+=(const Vector<T, Rows>& other);
 		Vector<T, Rows> operator+(const Vector<T, Rows>& other) const;
+		Vector<T, Rows> operator-(const Vector<T, Rows>& other) const;
+		Vector<T, Rows> operator+(T value) const;
 
 		//Scalar multiplication
 		void operator*=(T t);
 		Vector<T, Rows> operator*(T t) const;
+		Vector<T, Rows> operator/(T t) const;
 
 		//Vector Dot Product
 		T operator*(const Vector<T, Rows>& other) const;
@@ -71,6 +74,20 @@ namespace FloMath {
 		return retval;
 	}
 
+	template<IntegralType T, size_t Rows>
+	Vector<T, Rows> Vector<T, Rows>::operator-(const Vector<T, Rows>& other) const {
+		return (*this) + (other * -1);
+	}
+
+	template<IntegralType T, size_t Rows>
+	Vector<T, Rows> Vector<T, Rows>::operator+(T value) const {
+		Vector<T, Rows> retval(*this);
+		for (int i = 0; i < Rows; i++) {
+			retval[i] += value;
+		}
+		return retval;
+	}
+
 	template<IntegralType T, size_t Rows> void Vector<T, Rows>::operator*=(T t) {
 		for(int i = 0; i < Rows; ++i) {
 			data[i] *= t;
@@ -81,6 +98,12 @@ namespace FloMath {
 		Vector<T, Rows> retval(*this);
 		retval *= t;
 		return retval;
+	}
+
+	template<IntegralType T, size_t Rows>
+	Vector<T, Rows> Vector<T, Rows>::operator/(T t) const {
+		if (t != 0) { return (*this) * (1 / t); }
+		throw std::runtime_error("Can't divide by 0");
 	}
 
 	template<IntegralType T, size_t Rows> T Vector<T, Rows>::operator*(const Vector<T, Rows>& other) const {

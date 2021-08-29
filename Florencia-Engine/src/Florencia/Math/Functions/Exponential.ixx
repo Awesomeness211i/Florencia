@@ -17,12 +17,12 @@ namespace FloMath {
 			}
 			return (T)(2 * sum);
 		}
-		return inf;
+		return NaN();
 	}
 
 	export template<int base = 10, typename T>
 	T log(T x) {
 		if (base != 1) { return (FloMath::ln(x) / FloMath::ln(base)); }
-		return inf;
+		return Inf();
 	}
 }

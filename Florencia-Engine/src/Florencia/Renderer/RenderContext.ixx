@@ -1,8 +1,8 @@
+module;
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 export module RenderContext;
 import Window;
-
-import <glad/glad.h>;
-import <GLFW/glfw3.h>;
 
 namespace Florencia {
 
@@ -31,10 +31,9 @@ namespace Florencia {
 
 	void RenderContext::Init(Window& window) {
 		if(!glfwInit()) {
-
 			return;
 		}
-		//m_Window = AttachToWindowHandle(window, nullptr);
+		m_Window = AttachToWindowHandle(window, nullptr);
 		if(!m_Window) { glfwTerminate(); return; }
 
 		glfwMakeContextCurrent(m_Window);

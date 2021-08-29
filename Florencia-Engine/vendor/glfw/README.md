@@ -116,6 +116,9 @@ information on what to include when reporting a bug.
 
 ## Changelog
 
+ - Added `glfwInitAllocator` for setting a custom memory allocator (#544,#1628,#1947)
+ - Added `GLFWallocator` struct and `GLFWallocatefun`, `GLFWreallocatefun` and
+   `GLFWdeallocatefun` types (#544,#1628,#1947)
  - Added `GLFW_RESIZE_NWSE_CURSOR`, `GLFW_RESIZE_NESW_CURSOR`,
    `GLFW_RESIZE_ALL_CURSOR` and `GLFW_NOT_ALLOWED_CURSOR` cursor shapes (#427)
  - Added `GLFW_RESIZE_EW_CURSOR` alias for `GLFW_HRESIZE_CURSOR` (#427)
@@ -129,6 +132,10 @@ information on what to include when reporting a bug.
    values to select ANGLE backend (#1380)
  - Added `GLFW_X11_XCB_VULKAN_SURFACE` init hint for selecting X11 Vulkan
    surface extension (#1793)
+ - Added `GLFW_LIBRARY_TYPE` CMake variable for overriding the library type
+   (#279,#1307,#1497,#1574,#1928)
+ - Added `GLFW_PKG_CONFIG_REQUIRES_PRIVATE` and `GLFW_PKG_CONFIG_LIBS_PRIVATE` CMake
+   variables exposing pkg-config dependencies (#1307)
  - Made joystick subsystem initialize at first use (#1284,#1646)
  - Made `GLFW_DOUBLEBUFFER` a read-only window attribute
  - Updated the minimum required CMake version to 3.1
@@ -172,6 +179,7 @@ information on what to include when reporting a bug.
  - [Win32] Bugfix: `USE_MSVC_RUNTIME_LIBRARY_DLL` had no effect on CMake 3.15 or
    later (#1783,#1796)
  - [Win32] Bugfix: Compilation with LLVM for Windows failed (#1807,#1824,#1874)
+ - [Win32] Bugfix: The foreground lock timeout was overridden, ignoring the user
  - [Cocoa] Added support for `VK_EXT_metal_surface` (#1619)
  - [Cocoa] Added locating the Vulkan loader at runtime in an application bundle
  - [Cocoa] Moved main menu creation to GLFW initialization time (#1649)
@@ -225,6 +233,8 @@ information on what to include when reporting a bug.
    reported (#1112,#1415,#1472,#1616)
  - [X11] Bugfix: Some window attributes were not applied on leaving fullscreen
    (#1863)
+ - [X11] Bugfix: Changing `GLFW_FLOATING` could leak memory
+ - [Wayland] Added dynamic loading of all Wayland libraries
  - [Wayland] Removed support for `wl_shell` (#1443)
  - [Wayland] Bugfix: The `GLFW_HAND_CURSOR` shape used the wrong image (#1432)
  - [Wayland] Bugfix: `CLOCK_MONOTONIC` was not correctly enabled
@@ -235,6 +245,7 @@ information on what to include when reporting a bug.
  - [Wayland] Bugfix: Client-Side Decorations were destroyed in the wrong worder
    (#1798)
  - [Wayland] Bugfix: Monitors physical size could report zero (#1784,#1792)
+ - [POSIX] Removed use of deprecated function `gettimeofday`
  - [POSIX] Bugfix: `CLOCK_MONOTONIC` was not correctly tested for or enabled
  - [NSGL] Removed enforcement of forward-compatible flag for core contexts
  - [NSGL] Bugfix: `GLFW_COCOA_RETINA_FRAMEBUFFER` had no effect on newer
@@ -317,6 +328,7 @@ skills.
  - Fredrik Ehnbom
  - Robin Eklind
  - Siavash Eliasi
+ - Ahmad Fatoum
  - Felipe Ferreira
  - Michael Fogleman
  - Gerald Franz
@@ -392,6 +404,7 @@ skills.
  - Martins Mozeiko
  - Julian Møller
  - ndogxj
+ - n3rdopolis
  - Kristian Nielsen
  - Kamil Nowakowski
  - onox
@@ -435,6 +448,7 @@ skills.
  - Yoshiki Shibukawa
  - Dmitri Shuralyov
  - Daniel Skorupski
+ - Anthony Smith
  - Bradley Smith
  - Cliff Smolinsky
  - Patrick Snape

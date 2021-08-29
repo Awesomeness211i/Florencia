@@ -89,7 +89,8 @@ export namespace Florencia {
 
 				case WM_MOUSEMOVE: {
 					POINTS p = MAKEPOINTS(lParam);
-					MouseMovedEvent e(p.x, p.y); m_CallbackFunction(e);
+					MouseMovedEvent e(p.x, p.y);
+					m_CallbackFunction(e);
 				} return 0;
 				case WM_MOUSEWHEEL: {
 					short Y = GET_WHEEL_DELTA_WPARAM(wParam);

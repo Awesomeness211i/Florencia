@@ -25,7 +25,7 @@ namespace Florencia {
 		//Duration in seconds
 		SineOscillator(float frequency, float amplitude, uint32_t duration, uint32_t channels = 2, uint32_t bitdepth = 16, uint32_t samplingRate = 44100)
 			: m_Frequency(frequency), m_Amplitude(amplitude), m_Duration(duration), m_BitDepth(bitdepth), m_SamplingRate(samplingRate), m_Channels(channels) {
-			m_Offset = 2 * FloMath::pi;
+			m_Offset = 2 * FloMath::Pi();
 		}
 
 		[[nodiscard]] double process() const {

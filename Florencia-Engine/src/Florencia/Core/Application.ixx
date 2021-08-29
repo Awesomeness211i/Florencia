@@ -92,14 +92,11 @@ namespace Florencia {
 	}
 
 	void Application::Run() {
-		//m_CommandQueue.Start();
 		while (m_Running) {
 			//time is in seconds
 			m_LastTick = TimePoint();
 			if(!m_Minimized) [[likely]] {
 				if(m_Window) [[likely]] { m_Window->Update(); }
-				//m_CommandQueue.QueueCommand(CommandType::Update, [=]() -> void { if(m_Window) [[likely]] { m_Window->Update(); } });
-				//m_CommandQueue.QueueCommand(CommandType::Render, [=]() -> void { if(m_Window) [[likely]] { m_Window->Render(); } });
 				TimePoint nextTime = TimePoint();
 				TimeStep ts(m_LastTick, nextTime);
 				for (Layer* layer : m_LayerStack) {
@@ -110,7 +107,6 @@ namespace Florencia {
 				m_LastTick = nextTime;
 			}
 		}
-		//m_CommandQueue.End();
 	}
 
 	void Application::OnEvent(Event& e) {
