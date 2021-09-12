@@ -1,5 +1,6 @@
+module;
+#include <Florencia/Core/PlatformDetection.h>
 export module CreateFunctions.Console;
-import <Florencia/Core/PlatformDetection.h>;
 import Console;
 
 import WindowsConsole;

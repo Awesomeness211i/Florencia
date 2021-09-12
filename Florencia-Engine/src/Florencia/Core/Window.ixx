@@ -1,9 +1,9 @@
+module;
+#include <stdint.h>
+#include <functional>
+#include <string_view>
 export module Window;
 import Event;
-
-import <string_view>;
-import <functional>;
-import <stdint.h>;
 
 namespace Florencia {
 

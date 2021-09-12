@@ -1,5 +1,6 @@
+module;
+#include <stdint.h>
 export module KeyCodes;
-import <stdint.h>;
 
 export namespace Florencia {
 

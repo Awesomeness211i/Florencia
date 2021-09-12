@@ -5,7 +5,6 @@ export module FloEditor;
 import EditorLayer;
 import Florencia;
 
-
 namespace Florencia {
 
 	class FloEditor final : public Application {

@@ -1,8 +1,7 @@
+module;
+#include <stdexcept>
 export module Matrix;
-import <concepts>;
 import Vector;
-
-template<typename T> concept IntegralType = std::integral<T> || std::floating_point<T>;
 
 export namespace FloMath {
 
@@ -32,28 +31,26 @@ export namespace FloMath {
 	};
 
 	//Scalar Multiplication
-	template<typename T, size_t Rows, size_t Columns> void operator*=(T t, Matrix<T, Rows, Columns>& mat);
-	template<typename T, size_t Rows, size_t Columns> Matrix<T, Rows, Columns> operator*(T t, const Matrix<T, Rows, Columns>& mat);
+	template<IntegralType T, size_t Rows, size_t Columns> void operator*=(T t, Matrix<T, Rows, Columns>& mat);
+	template<IntegralType T, size_t Rows, size_t Columns> Matrix<T, Rows, Columns> operator*(T t, const Matrix<T, Rows, Columns>& mat);
 
 	//Matrix Multiplication
-	template<typename T, size_t Rows, size_t Columns1, size_t Columns2>
+	template<IntegralType T, size_t Rows, size_t Columns1, size_t Columns2>
 	Matrix<T, Rows, Columns2> operator*(const Matrix<T, Rows, Columns1>& mat1, const Matrix<T, Columns1, Columns2>& mat2);
 
-	template<typename T> using Mat2 = Matrix<T, 2>;
-	template<typename T> using Mat2x3 = Matrix<T, 2, 3>;
-	template<typename T> using Mat2x4 = Matrix<T, 2, 4>;
-	template<typename T> using Mat3x2 = Matrix<T, 3, 2>;
-	template<typename T> using Mat3 = Matrix<T, 3>;
-	template<typename T> using Mat3x4 = Matrix<T, 3, 4>;
-	template<typename T> using Mat4x2 = Matrix<T, 4, 2>;
-	template<typename T> using Mat4x3 = Matrix<T, 4, 3>;
-	template<typename T> using Mat4 = Matrix<T, 4>;
+	template<IntegralType T> using Mat2 = Matrix<T, 2>;
+	template<IntegralType T> using Mat2x3 = Matrix<T, 2, 3>;
+	template<IntegralType T> using Mat2x4 = Matrix<T, 2, 4>;
+	template<IntegralType T> using Mat3x2 = Matrix<T, 3, 2>;
+	template<IntegralType T> using Mat3 = Matrix<T, 3>;
+	template<IntegralType T> using Mat3x4 = Matrix<T, 3, 4>;
+	template<IntegralType T> using Mat4x2 = Matrix<T, 4, 2>;
+	template<IntegralType T> using Mat4x3 = Matrix<T, 4, 3>;
+	template<IntegralType T> using Mat4 = Matrix<T, 4>;
 
 }
 
 module: private;
-import <stdexcept>;
-
 
 namespace FloMath {
 

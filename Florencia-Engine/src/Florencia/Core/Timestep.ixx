@@ -1,5 +1,6 @@
+module;
+#include <chrono>
 export module TimeStep;
-import <chrono>;
 
 namespace Florencia {
 

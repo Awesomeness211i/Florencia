@@ -1,6 +1,9 @@
+module;
+#include <stdexcept>
+#include <filesystem>
+#include <string_view>
 export module Application;
 import ApplicationEvent;
-import RenderContext;
 import LayerStack;
 import TimeStep;
 import Renderer;
@@ -8,9 +11,6 @@ import Console;
 import Window;
 import Layer;
 import Event;
-
-import <string_view>;
-import <filesystem>;
 
 namespace Florencia {
 
@@ -49,7 +49,6 @@ namespace Florencia {
 		Window* m_Window{ nullptr };
 		Console* m_Console{ nullptr };
 		Renderer* m_Renderer{ nullptr };
-		RenderContext* m_RenderContext{ nullptr };
 		bool m_Running{ true }, m_Minimized{ false };
 		ApplicationCommandLineArgs m_CommandLineArgs{};
 	};
@@ -60,7 +59,6 @@ namespace Florencia {
 module: private;
 import CreateFunctions.Console;
 import CreateFunctions.Window;
-import <stdexcept>;
 
 namespace Florencia {
 
@@ -73,19 +71,17 @@ namespace Florencia {
 
 	Application::Application(std::string_view name, ApplicationCommandLineArgs args) {
 		m_CommandLineArgs = args;
-		m_Console = CreateConsole();
-		m_Window = CreateWindow(WindowProps(name, 1080, 720));
+		//m_Console = CreateConsole();
+		//m_Window = CreateWindow(WindowProps(name, 1080, 720));
 		if(m_Window) [[likely]] {
 			m_Window->SetEventCallback([this](Event& e) -> void { return Application::OnEvent(e); });
-			m_RenderContext = new RenderContext(*m_Window);
-			m_Renderer = new Renderer(*m_RenderContext);
+			//m_Renderer = new Renderer(*m_RenderContext);
 		}
 	}
 
 	Application::~Application() {
 		if(m_Window) [[likely]] {
 			delete m_Renderer;
-			delete m_RenderContext;
 			delete m_Window;
 		}
 		if (m_Console) [[likely]] { m_Console->ReleaseConsole(); delete m_Console; }

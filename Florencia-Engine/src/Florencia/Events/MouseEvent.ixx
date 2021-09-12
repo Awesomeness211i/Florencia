@@ -1,10 +1,9 @@
+module;
+#include <sstream>
+#include <stdint.h>
 export module MouseEvent;
-import Event;
-
 import MouseCodes;
-
-import <stdint.h>;
-import <sstream>;
+import Event;
 
 export namespace Florencia {
 

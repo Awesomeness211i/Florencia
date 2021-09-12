@@ -1,6 +1,5 @@
 ﻿export module EditorLayer;
 import Florencia;
-import FloMath;
 
 namespace Florencia {
 
@@ -51,9 +50,7 @@ namespace Florencia {
 	}
 
 	void EditorLayer::Update(TimeStep ts) {
-		auto f = [](double x) { return x * x; };
-		double i = FloMath::Integral(0, 1, f);
-		double d = FloMath::Derivative(f, 0);
+		
 	}
 
 	void EditorLayer::Render() {

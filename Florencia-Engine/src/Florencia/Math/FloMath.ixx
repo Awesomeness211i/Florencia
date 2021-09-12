@@ -6,4 +6,4 @@ export import Exponential;
 export import Piecewise;
 export import Calculus;
 export import Vector;
-//export import Matrix;
+export import Matrix;

@@ -1,8 +1,9 @@
+module;
+#include <deque>
+#include <thread>
+#include <vector>
+#include <functional>
 export module CommandQueue;
-import <functional>;
-import <vector>;
-import <thread>;
-import <deque>;
 
 namespace Florencia {
 
@@ -38,7 +39,7 @@ namespace Florencia {
 }
 
 module: private;
-import <iostream>;
+#include <iostream>
 
 namespace Florencia {
 

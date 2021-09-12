@@ -1,5 +1,5 @@
 module;
-#include <glad/glad.h>
+//#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 export module RenderContext;
 import Window;
@@ -27,10 +27,10 @@ namespace Florencia {
 
 	RenderContext::RenderContext(Window& window) { Init(window); }
 
-	RenderContext::~RenderContext() { glfwDestroyWindow(m_Window); glfwTerminate(); }
+	RenderContext::~RenderContext() { /*glfwDestroyWindow(m_Window); glfwTerminate();*/ }
 
 	void RenderContext::Init(Window& window) {
-		if(!glfwInit()) {
+		/*if(!glfwInit()) {
 			return;
 		}
 		m_Window = AttachToWindowHandle(window, nullptr);
@@ -38,9 +38,9 @@ namespace Florencia {
 
 		glfwMakeContextCurrent(m_Window);
 		gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-		glfwSwapInterval(1);
+		glfwSwapInterval(1);*/
 	}
 
-	void RenderContext::SwapBuffers() { glfwSwapBuffers(m_Window); }
+	void RenderContext::SwapBuffers() { /*glfwSwapBuffers(m_Window);*/ }
 
 }

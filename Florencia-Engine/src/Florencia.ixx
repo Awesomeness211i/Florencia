@@ -13,3 +13,7 @@ export import MouseCodes;
 export import Event;
 export import KeyEvent;
 export import MouseEvent;
+
+//Math
+export import FloMath;
+export import FloPhysics;
