@@ -4,7 +4,7 @@
 		#define FLO_PLATFORM_WINDOWS_64
 	#else
 		#define FLO_PLATFORM_WINDOWS_32
-		//#error "Windows 32 bit isn't supported"
+		#error "Windows 32 bit isn't supported"
 	#endif
 #elif defined(__APPLE__) || defined(__MACH__)
 	#include <TargetConditionals.h>

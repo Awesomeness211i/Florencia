@@ -2,6 +2,7 @@ module;
 #include <deque>
 #include <thread>
 #include <vector>
+#include <iostream>
 #include <functional>
 export module CommandQueue;
 
@@ -39,7 +40,6 @@ namespace Florencia {
 }
 
 module: private;
-#include <iostream>
 
 namespace Florencia {
 
