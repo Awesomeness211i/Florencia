@@ -1,0 +1,4 @@
+# Ensure GitHub detects our C++ code as C++ code.
+FloEditor/src/**.ixx linguist-language=C++
+Florencia-Engine/src/**.ixx linguist-language=C++
+*.h linguist-language=C++
