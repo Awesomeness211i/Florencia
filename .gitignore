@@ -1,14 +1,15 @@
 # Binaries
 **/bin/
 **/bin-int/
+**/build/
 
 # Visual Studio files and folder
-.vs/
+**/*.vs/
 **.vcxproj
 **.vcxproj.filters
 **.vcxproj.user
 **.sln
 
 #Anything Else
-.vscode/
-build/
+**/*.kdev4
+**/*.vscode/

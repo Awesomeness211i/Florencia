@@ -1,7 +1,7 @@
 #pragma once
 #include <filesystem>
 #include <Florencia/Core/PlatformDetection.h>
-import Application;
+#include "Application.h"
 
 #if defined(FLO_PLATFORM_WINDOWS_64)
 #include <Windows.h>
@@ -14,7 +14,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 }
 #elif defined(FLO_PLATFORM_LINUX)
 int main(int argc, char** argv) {
-	auto app = Florencia::CreateApplication({ argc, argv });
+	auto app = Florencia::CreateApplication({});
 	app->Run();
 	delete app;
 }

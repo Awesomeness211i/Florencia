@@ -8,13 +8,7 @@ set(CMAKE_CXX_STANDARD 20)
 add_subdirectory("vendor/glad")
 add_subdirectory("vendor/glfw")
 
-file(GLOB SOURCES
-	"src/Florencia/*/*/*.ixx",
-	"src/Florencia/*/*.ixx",
-	"src/Platform/*/*.ixx",
-	"src/*.ixx"
-)
-
+file(GLOB_RECURSE SOURCES ${PROJECT_SOURCE_DIR}/src/*)
 add_library(${PROJECT_NAME} ${SOURCES})
 
 target_include_directories(${PROJECT_NAME}
