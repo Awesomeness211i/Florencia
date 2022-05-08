@@ -7,7 +7,7 @@ namespace FloMath {
 	//In radians
 	template<typename T>
 	inline T cos(T x) noexcept {
-		constexpr T tp = 1.0 / (2.0 * Pi());
+		const T tp = 1.0 / (2.0 * Pi());
 		x *= tp;
 		x -= T(0.25) + FloMath::floor(x + T(0.25));
 		x *= T(16.0) * (FloMath::abs(x) - T(0.5));

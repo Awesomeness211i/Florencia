@@ -2,8 +2,8 @@
 namespace FloMath {
 
 	template<typename T>
-	inline double DefiniteDerivative(T function, double x, double h) {
-		return (function(x + h) - function(x)) / h;
+	inline double DefiniteDerivative(T function, double x, double h = 0.01) {
+		return (function(x + h) - function(x - h)) / (2 * h);
 	}
 
 	template<typename T>
@@ -15,18 +15,6 @@ namespace FloMath {
 			result += function(a + delta * i) * delta;
 		}
 		return result;
-	}
-
-	//use n for better accuracy (make it bigger)
-	template<typename T>
-	inline double Integral(double a, double b, T function, int n = 1000) {
-		return DefiniteIntegral(a, b, function, n);
-	}
-
-	//use h for better accuracy (make it smaller)
-	template<typename T>
-	inline double Derivative(T function, double x, double h = 0.001) {
-		return DefiniteDerivative(function, x, h);
 	}
 
 }

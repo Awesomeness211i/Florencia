@@ -4,18 +4,12 @@
 
 namespace Florencia {
 
-	export class Renderer {
+	class Renderer {
 	public:
 		Renderer(RenderContext& context);
 
 	private:
 		RenderContext& m_Contexts;
 	};
-
-}
-
-namespace Florencia {
-
-	Renderer::Renderer(RenderContext& context) : m_Contexts(context) {}
 
 }
