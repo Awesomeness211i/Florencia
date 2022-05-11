@@ -1,5 +1,6 @@
 #pragma once
-#ifdef MEOW
+#include "../../Florencia/Core/PlatformDetection.h"
+#if defined(FLO_PLATFORM_WINDOWS_64) || defined(FLO_PLATFORM_WINDOWS_32)
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 import ApplicationEvent;
@@ -11,7 +12,7 @@ import Window;
 
 #include <stdint.h>
 
-export namespace Florencia {
+namespace Florencia {
 
 	class WindowsWindow final : public Window {
 	public:

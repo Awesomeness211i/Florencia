@@ -1,4 +1,6 @@
 #pragma once
+#include "../../Florencia/Core/PlatformDetection.h"
+#if defined(FLO_PLATFORM_LINUX)
 #include <stdint.h>
 #include "GLFW/glfw3.h"
 #include "../../Florencia/Core/Window.h"
@@ -39,3 +41,4 @@ namespace Florencia {
 	};
 
 }
+#endif
