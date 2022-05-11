@@ -13,9 +13,7 @@ namespace Florencia {
 
 		void Update() override;
 
-		void Render() override {
-
-		}
+		void Render() override;
 
 		WindowProps GetProperties() const override {
 			return m_Properties;

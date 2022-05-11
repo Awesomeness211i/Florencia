@@ -74,7 +74,11 @@ namespace Florencia {
 				MouseMovedEvent e(xPos, yPos);
 				data.CallbackFunction(e);
 			});
-			//glfwSetCharCallback(m_Window, [](GLFWwindow*){});
+			glfwSetCharCallback(m_Window, [](GLFWwindow* window, unsigned int character){
+				WindowProps& data = *(WindowProps*)glfwGetWindowUserPointer(window);
+				CharacterTypedEvent e((Character)character);
+				data.CallbackFunction(e);
+			});
 		}
 
 		LinuxWindow::~LinuxWindow() {
@@ -86,6 +90,10 @@ namespace Florencia {
 
 		void LinuxWindow::Update() {
 			glfwPollEvents();
+		}
+
+		void LinuxWindow::Render() {
+
 		}
 
 }
