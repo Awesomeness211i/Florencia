@@ -153,4 +153,3 @@ if (GLFW_INSTALL)
         set_target_properties(uninstall PROPERTIES FOLDER "GLFW3")
     endif()
 endif()
-
