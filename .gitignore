@@ -13,4 +13,4 @@
 #Anything Else
 **/*.kdev4
 **/*.vscode/
-Florencia-Engine/src/TODO.h
+**/*TODO*
