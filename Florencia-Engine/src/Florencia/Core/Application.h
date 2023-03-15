@@ -1,12 +1,11 @@
 #pragma once
 #include <filesystem>
-#include "LayerStack.h"
-#include "TimeStep.h"
-//import Renderer;
-#include "Console.h"
+
 #include "Window.h"
-#include "../Events/Event.h"
-#include "../Events/ApplicationEvent.h"
+#include "TimeStep.h"
+#include "LayerStack.h"
+#include "Florencia/Renderer/Renderer.h"
+#include "Florencia/Events/ApplicationEvent.h"
 
 namespace Florencia {
 
@@ -43,9 +42,7 @@ namespace Florencia {
 		TimePoint m_LastTick;
 		LayerStack m_LayerStack;
 		Window* m_Window{ nullptr };
-		Console* m_Console{ nullptr };
-		EventDispatcher EventHandler;
-		//Renderer* m_Renderer{ nullptr };
+		Renderer* m_Renderer{ nullptr };
 		bool m_Running{ true }, m_Minimized{ false };
 		ApplicationCommandLineArgs m_CommandLineArgs{};
 	};

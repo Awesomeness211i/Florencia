@@ -1,11 +1,13 @@
-#include "LinuxWindow.h"
-#include "../../Florencia/Events/KeyEvent.h"
-#include "../../Florencia/Events/MouseEvent.h"
-#include "../../Florencia/Events/ApplicationEvent.h"
+#include <GLFW/glfw3.h>
+
+#include "Window.h"
+#include "Florencia/Events/KeyEvent.h"
+#include "Florencia/Events/MouseEvent.h"
+#include "Florencia/Events/ApplicationEvent.h"
 
 namespace Florencia {
 
-	LinuxWindow::LinuxWindow(const WindowProps& props) : m_Properties(props) {
+	Window::Window(const WindowProps& props) : m_Properties(props) {
 			if(!glfwInit()) {
 				glfwTerminate();
 			}
@@ -81,18 +83,18 @@ namespace Florencia {
 			});
 		}
 
-		LinuxWindow::~LinuxWindow() {
+		Window::~Window() {
 			if(m_Window) {
 				glfwDestroyWindow(m_Window);
 				glfwTerminate();
 			}
 		}
 
-		void LinuxWindow::Update() {
+		void Window::Update() {
 			glfwPollEvents();
 		}
 
-		void LinuxWindow::Render() {
+		void Window::Render() {
 
 		}
 

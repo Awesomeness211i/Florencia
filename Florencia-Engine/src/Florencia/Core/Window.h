@@ -2,7 +2,10 @@
 #include <stdint.h>
 #include <functional>
 #include <string_view>
-#include "../Events/Event.h"
+
+#include "Florencia/Events/Event.h"
+
+struct GLFWwindow;
 
 namespace Florencia {
 
@@ -17,24 +20,24 @@ namespace Florencia {
 
 	class Window {
 	public:
-		Window() = default;
-		virtual ~Window() = default;
+		Window(const WindowProps& props);
+		~Window();
 
-		virtual void Update() = 0;
-		virtual void Render() = 0;
-
-		virtual uint32_t GetWidth() const = 0;
-		virtual uint32_t GetHeight() const = 0;
-
-		virtual WindowProps GetProperties() const = 0;
-
-		virtual void SetEventCallback(const EventCallback function) = 0;
+		void Update();
+		void Render();
+		uint32_t GetWidth() const { return m_Properties.Width; }
+		uint32_t GetHeight() const { return m_Properties.Height; }
+		WindowProps GetProperties() const { return m_Properties; }
+		void SetEventCallback(const EventCallback function) { m_Properties.CallbackFunction = function; }
 
 		//Window Attributes
-		virtual void SetWidth(uint32_t width) = 0;
-		virtual void SetHeight(uint32_t height) = 0;
+		void SetWidth(uint32_t width) { m_Properties.Width = width; }
+		void SetHeight(uint32_t height) { m_Properties.Height = height; };
 
-		virtual void* GetWindowHandle() const = 0;
+		void* GetWindowHandle() const { return m_Window; };
+	private:
+		GLFWwindow* m_Window{ nullptr };
+		WindowProps m_Properties;
 	};
 
 }

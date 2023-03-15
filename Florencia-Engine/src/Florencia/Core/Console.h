@@ -4,11 +4,11 @@ namespace Florencia {
 
 	class Console {
 	public:
-		Console() = default;
-		virtual ~Console() = default;
+		Console();
+		~Console();
 
-		virtual bool AllocateConsole() = 0;
-		virtual bool ReleaseConsole() = 0;
+		bool AllocateConsole();
+		bool ReleaseConsole();
 	};
 
 }

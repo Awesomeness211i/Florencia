@@ -32,8 +32,6 @@ namespace Florencia {
 		bool OnMouseScrolled(MouseScrolledEvent& e);
 
 		const char* GetName() const { return "EditorLayer"; }
-	private:
-		EventDispatcher EventHandler;
 	};
 
 }

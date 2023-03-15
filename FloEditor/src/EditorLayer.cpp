@@ -19,6 +19,7 @@ namespace Florencia {
 	}
 
 	void EditorLayer::OnEvent(Event& e) {
+		EventDispatcher EventHandler;
 		EventHandler.Dispatch<KeyPressedEvent>(e, [this](KeyPressedEvent& e) -> bool { return EditorLayer::OnKeyPressed(e); });
 		EventHandler.Dispatch<KeyReleasedEvent>(e, [this](KeyReleasedEvent& e) -> bool { return EditorLayer::OnKeyReleased(e); });
 		EventHandler.Dispatch<CharacterTypedEvent>(e, [this](CharacterTypedEvent& e) -> bool { return EditorLayer::OnCharacterTyped(e); });

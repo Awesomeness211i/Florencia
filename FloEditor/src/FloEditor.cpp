@@ -1,5 +1,7 @@
 #include <string_view>
+
 #include <Florencia/Core/EntryPoint.h>
+
 #include "EditorLayer.h"
 #include "Florencia.h"
 

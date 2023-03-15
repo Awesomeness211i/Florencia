@@ -1,6 +1,8 @@
 #include "Application.h"
-#include "../Utilities/CreateFunctionsParts/CreateFunctions-Window.h"
+#include "Window.h"
 #include "Layer.h"
+
+#include "Florencia/Events/Event.h"
 
 #include <stdexcept>
 #include <filesystem>
@@ -17,7 +19,7 @@ namespace Florencia {
 
 	Application::Application(std::string_view name, ApplicationCommandLineArgs args) {
 		m_CommandLineArgs = args;
-		m_Window = CreateWindow(WindowProps(name, 1080, 720));
+		m_Window = new Window(WindowProps(name, 1080, 720));
 		if(m_Window) [[likely]] {
 			m_Window->SetEventCallback([this](Event& e) -> void { return Application::OnEvent(e); });
 			//m_Renderer = new Renderer(*m_RenderContext);
@@ -29,7 +31,6 @@ namespace Florencia {
 			//delete m_Renderer;
 			delete m_Window;
 		}
-		if (m_Console) [[likely]] { m_Console->ReleaseConsole(); delete m_Console; }
 	}
 
 	void Application::Run() {
@@ -51,6 +52,7 @@ namespace Florencia {
 	}
 
 	void Application::OnEvent(Event& e) {
+		EventDispatcher EventHandler;
 		EventHandler.Dispatch<WindowCloseEvent>(e, [this](WindowCloseEvent& e) -> bool { return OnWindowClose(e); });
 		EventHandler.Dispatch<WindowResizeEvent>(e, [this](WindowResizeEvent& e) -> bool { return OnWindowResize(e); });
 
