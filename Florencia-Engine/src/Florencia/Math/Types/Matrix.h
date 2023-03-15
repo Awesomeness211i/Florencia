@@ -125,5 +125,4 @@ namespace FloMath {
 		}
 		return retval;
 	}
-
 }

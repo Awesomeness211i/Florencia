@@ -46,5 +46,4 @@ namespace FloMath {
 	template<typename T> using Vec2 = Vector<T, 2>;
 	template<typename T> using Vec3 = Vector<T, 3>;
 	template<typename T> using Vec4 = Vector<T, 4>;
-
 }
