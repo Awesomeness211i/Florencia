@@ -13,4 +13,4 @@
 #Anything Else
 **/*.kdev4
 **/*.vscode/
-**/*TODO*
+/target
