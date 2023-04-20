@@ -1,3 +1,4 @@
+#define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 
 #include "Window.h"
@@ -11,6 +12,7 @@ namespace Florencia {
 			if(!glfwInit()) {
 				glfwTerminate();
 			}
+			glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 			m_Window = glfwCreateWindow(m_Properties.Width, m_Properties.Height, m_Properties.Title.data(), NULL, NULL);
 			if (!m_Window){
 				// Window or OpenGL context creation failed
