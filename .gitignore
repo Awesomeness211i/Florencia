@@ -14,3 +14,4 @@
 **/*.kdev4
 **/*.vscode/
 /target
+*/tests

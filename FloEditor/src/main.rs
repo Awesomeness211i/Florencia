@@ -1,11 +1,13 @@
-#![allow(non_snake_case)]
+#![allow(bad_style)]
 
-use FlorenciaEngine::{
-	Application::Application,
-	Window::Window
-};
+use FloEditor::*;
+use FlorenciaEngine::*;
 
 fn main() {
-	let mut app = Application::Create(Some(Window::Create("FloEditor", 800, 400)));
+	let mut app = Application::new(Some(Window::Create(WindowData {
+		m_Title: "FloEditor",
+		m_Dimensions: (1280, 720),
+		m_Polling: true,
+	})));
 	app.Run();
 }
