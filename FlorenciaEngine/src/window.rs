@@ -1,8 +1,8 @@
 use std::sync::mpsc;
 use glfw::{Action, Context, Key, WindowEvent};
 
-pub struct WindowData<'a> {
-	pub m_Title: &'a str,
+pub struct WindowData {
+	pub m_Title: String,
 	pub m_Dimensions: (u32, u32),
 	pub m_Polling: bool,
 }
@@ -20,7 +20,7 @@ impl Window {
 	pub fn Create(data: WindowData) -> Self {
 		let mut glfw = glfw::init(glfw::FAIL_ON_ERRORS).unwrap();
 		let (mut window, events)
-		= glfw.create_window(data.m_Dimensions.0, data.m_Dimensions.1, data.m_Title, glfw::WindowMode::Windowed).expect("Failed to create GLFW window.");
+		= glfw.create_window(data.m_Dimensions.0, data.m_Dimensions.1, data.m_Title.as_str(), glfw::WindowMode::Windowed).expect("Failed to create GLFW window.");
 		window.make_current();
 		window.set_all_polling(data.m_Polling);
 		Window{

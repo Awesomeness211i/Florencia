@@ -1,4 +1,4 @@
-#![allow(non_snake_case)]
+#![allow(bad_style)]
 
 //! # FloEditor
 //! This library encompasses the specific behaviors I want
@@ -6,16 +6,25 @@
 
 use FlorenciaEngine::*;
 
-fn new() {
-	let args: Vec<String> = std::env::args().collect();
-	let data = WindowData {
-		m_Dimensions: (800, 400),
-		m_Polling: true,
-		m_Title: "FloEditor",
-	};
-	/*Editor {
-		m_Running: true,
-		m_LayerStack: LayerStack::new(),
-		m_Window: Some(Window::Create(data)),
-	}*/
+pub struct FloEditor {
+	application: Application,
+}
+
+impl ApplicationEngine for FloEditor {
+	fn Get(self: &mut Self) -> &mut Application { return &mut self.application; }
+	fn new() -> Self {
+		let windowData = WindowData {
+			m_Title: String::from("FloEditor"),
+			m_Dimensions: (800, 400),
+			m_Polling: true,
+		};
+		let appConfig = ApplicationConfig {
+			windowData: windowData,
+			commandLineArgs: std::env::args().collect(),
+			workingDirectory: std::env::current_dir().unwrap(),
+		};
+		return FloEditor {
+			application: Application::new(appConfig),
+		};
+	}
 }
