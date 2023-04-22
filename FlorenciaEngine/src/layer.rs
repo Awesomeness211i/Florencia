@@ -5,17 +5,25 @@ pub trait Layer {
 	fn OnRemove(self: &Self);
 	fn OnEvent(self: &Self, e: &dyn Event);
 	fn Render(self: &Self);
-	fn Update(self: &Self);
+	fn Update(self: &Self, ts: f64);
 	fn GetUUID(&self) -> u64;
 
 	//Debug purposes
-	fn GetName(self: &Self) -> &str;
+	fn GetName(self: &Self) -> &str { return "Unnamed"; }
 }
 
 pub struct LayerStack {
 	layers: Vec<Box<dyn Layer>>,
 	layerInsertIndex: usize,
 	overlayInsertIndex: usize,
+}
+
+impl Drop for LayerStack {
+	fn drop(self: &mut Self) {
+		for layer in &self.layers {
+			layer.OnRemove();
+		}
+	}
 }
 
 impl LayerStack {

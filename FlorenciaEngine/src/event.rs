@@ -1,15 +1,27 @@
-pub trait Event {
+pub trait Event: std::fmt::Debug {
 	fn GetName(self: &Self) -> &str;
 	fn GetCategoryFlags(self: &Self) -> u64;
 	fn GetEventType(self: &Self) -> EventType;
 	fn ToString(self: &Self) -> String { String::from(self.GetName()) }
 	fn IsInCategory(self: &Self, category: EventCategory) -> u64 { self.GetCategoryFlags() & category as u64 }
 }
+impl std::fmt::Display for dyn Event {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		return write!(f, "{:#?}", self);
+	}
+}
+
+#[derive(Debug)]
 pub enum EventType {
 	None = 0,
 	AppClose, AppResize, AppFocus, AppLostFocus, AppMoved, AppTick, AppUpdate, AppRender,
 	KeyPressed, KeyReleased, CharacterTyped,
 	MousePressed, MouseReleased, MouseMoved, MouseScrolled
+}
+impl std::fmt::Display for EventType {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		return write!(f, "{:#?}", self);
+	}
 }
 pub enum EventCategory {
 	None = 0,
@@ -49,6 +61,7 @@ impl std::ops::BitAnd<EventCategory> for u64 {
 	}
 }
 
+#[derive(Debug)]
 pub enum ApplicationEvent {
 	Resize{ width: u32, height: u32 },
 	Update,
@@ -80,6 +93,7 @@ impl Event for ApplicationEvent {
 	}
 }
 
+#[derive(Debug)]
 pub enum KeyEvent {
 	KeyPressed{ keyCode: u64, repeatCount: u64 },
 	KeyReleased{ keyCode: u64 },
@@ -105,6 +119,7 @@ impl Event for KeyEvent {
     }
 }
 
+#[derive(Debug)]
 pub enum MouseEvent {
 	MouseMoved{ x: u64, y: u64 },
 	MouseScrolled{ x: u64, y: u64 },

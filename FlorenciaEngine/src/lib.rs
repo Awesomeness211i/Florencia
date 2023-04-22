@@ -19,7 +19,6 @@ pub use event::ApplicationEvent;
 pub use layer::Layer;
 pub use layer::LayerStack;
 
-pub use window::Window;
 pub use window::WindowData;
 
 pub use application::Application;

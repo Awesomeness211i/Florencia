@@ -1,6 +1,6 @@
 use super::{
 	Layer,
-	Window,
+	window,
 	WindowData,
 	LayerStack,
 };
@@ -15,7 +15,7 @@ pub struct Application {
 	m_Running: bool,
 	m_Minimized: bool,
 
-	m_Window: Window,
+	m_Window: window::Window,
 	m_LayerStack: LayerStack,
 }
 
@@ -29,7 +29,7 @@ impl Application {
 	pub fn new(appData: ApplicationConfig) -> Self {
 		//println!("Current Dir: {:#?}", appData.workingDirectory);
 		return Self {
-			m_Window: Window::Create(appData.windowData),
+			m_Window: window::Window::Create(appData.windowData),
 			m_Running: true,
 			m_Minimized: true,
 			m_LayerStack: LayerStack::new(),
@@ -52,8 +52,13 @@ impl Application {
 	}
 	pub fn Run(self: &mut Self) {
 		while self.m_Running {
+			if !self.m_Minimized {
+				for layer in self.m_LayerStack.iter() {
+					layer.Update(1.0);
+					layer.Render();
+				}
+			}
 			self.m_Window.Update();
-			self.m_Window.SwapBuffers();
 			self.m_Running = !self.m_Window.ShouldClose();
 		}
 		/*
