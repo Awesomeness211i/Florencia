@@ -1,8 +1,8 @@
-#![allow(bad_style, dead_code)]
+#![allow(bad_style)]
 
 //! # FlorenciaEngine
 //! This is a set of functions and data structures made specifically for
-//! the purpose of making developing games and applications easier
+//! the purpose of making developing games and applications easier for me
 
 mod event;
 mod layer;
@@ -24,10 +24,3 @@ pub use window::WindowData;
 pub use application::Application;
 pub use application::ApplicationEngine;
 pub use application::ApplicationConfig;
-
-pub trait Algebraic<Rhs = Self>
-where
-    Self: Sized + std::ops::Add<Rhs> + std::ops::Sub<Rhs> + std::ops::Mul<Rhs> + std::ops::Div<Rhs> + std::ops::Rem<Rhs>
-{
-
-}

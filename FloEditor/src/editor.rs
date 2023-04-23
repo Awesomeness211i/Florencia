@@ -1,34 +1,33 @@
 use FlorenciaEngine::*;
 
 pub struct EditorLayer {
-
 }
 
 impl Layer for EditorLayer {
-	fn OnAdd(self: &Self) {
+	fn GetUUID(self: &Self) -> u64 {
+		return 0;
+	}
+	
+	fn OnAdd(self: &mut Self) {
 		
 	}
-	fn OnRemove(self: &Self) {
+	fn OnRemove(self: &mut Self) {
 		
 	}
-	fn OnEvent(self: &Self, e: &dyn Event) {
+	fn OnEvent(self: &mut Self, _e: &dyn Event) {
 		
 	}
-	fn Update(self: &Self, ts: std::time::Duration) {
-		
+	fn Update(self: &Self, _ts: std::time::Duration) {
+
 	}
 	fn Render(self: &Self) {
 		
-	}
-	fn GetUUID(self: &Self) -> u64 {
-		0
 	}
 }
 
 impl EditorLayer {
 	pub fn new() -> Box<Self> {
         return Box::new(Self {
-			
 		});
     }
 }

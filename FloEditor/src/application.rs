@@ -19,10 +19,10 @@ impl ApplicationEngine for FloEditor {
 			commandLineArgs: std::env::args().collect(),
 			workingDirectory: std::env::current_dir().unwrap(),
 		};
-		let layer = editor::EditorLayer::new();
 		let mut application = Application::new(appConfig);
+		let layer = editor::EditorLayer::new();
 		application.AddLayer(layer);
-		return FloEditor {
+		return Self {
 			application: application,
 		};
 	}

@@ -33,11 +33,7 @@ impl Window {
 		}
 	}
 	
-	///Returns from glfw if the window is open
-	pub fn IsOpen(self: &Self) -> bool {
-		!self.m_Window.should_close()
-	}
-
+	///Returns from glfw if the window should close
 	pub fn ShouldClose(self: &Self) -> bool {
 		self.m_Window.should_close()
 	}
@@ -49,13 +45,13 @@ impl Window {
 	pub fn Update(self: &mut Self) {
 		self.m_Instance.poll_events();
 		self.m_Window.swap_buffers();
-		/*for (_, event) in glfw::flush_messages(&self.m_Events) {
-			match event {
+		for (_, _event) in glfw::flush_messages(&self.m_Events) {
+			/*match event {
 				glfw::WindowEvent::Key(Key::Escape, _, Action::Press, _) => {
 					self.m_Window.set_should_close(true);
 				}
 				_ => {}
-			}
-		}*/
+			}*/
+		}
 	}
 }

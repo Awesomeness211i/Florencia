@@ -1,9 +1,9 @@
 use super::Event;
 
 pub trait Layer {
-	fn OnAdd(self: &Self);
-	fn OnRemove(self: &Self);
-	fn OnEvent(self: &Self, e: &dyn Event);
+	fn OnAdd(self: &mut Self);
+	fn OnRemove(self: &mut Self);
+	fn OnEvent(self: &mut Self, e: &dyn Event);
 	fn Render(self: &Self);
 	fn Update(self: &Self, ts: std::time::Duration);
 	fn GetUUID(&self) -> u64;
@@ -20,7 +20,7 @@ pub struct LayerStack {
 
 impl Drop for LayerStack {
 	fn drop(self: &mut Self) {
-		for layer in &self.layers {
+		for layer in &mut self.layers {
 			layer.OnRemove();
 		}
 	}
@@ -34,25 +34,25 @@ impl LayerStack {
 			overlayInsertIndex: 0,
 		};
 	}
-	pub fn iter(&self) -> impl Iterator<Item = &Box<dyn Layer>> {
+	pub fn iter(self: &mut Self) -> impl Iterator<Item = &Box<dyn Layer>> {
 		return self.layers.iter().rev();
 	}
 
-	pub fn AddOverlay(&mut self, layer: Box<dyn Layer>) {
-		layer.OnAdd();
+	pub fn AddOverlay(self: &mut Self, layer: Box<dyn Layer>) {
 		self.layers.push(layer);
+		self.layers[self.layerInsertIndex + self.overlayInsertIndex].OnAdd();
 		self.overlayInsertIndex += 1;
 	}
 	pub fn RemoveOverlay(&mut self, uuid: u64) {
-		if let Some(i) = self.layers[self.layerInsertIndex..self.overlayInsertIndex].iter().position(|l| { return l.GetUUID() == uuid; }) {
+		if let Some(i) = self.layers[self.layerInsertIndex..].iter().position(|l| { return l.GetUUID() == uuid; }) {
 			self.layers[i].OnRemove();
 			self.layers.remove(i);
 			self.overlayInsertIndex -= 1;
 		}
 	}
 	pub fn AddLayer(self: &mut Self, layer: Box<dyn Layer>) {
-		layer.OnAdd();
 		self.layers.insert(self.layerInsertIndex, layer);
+		self.layers[self.layerInsertIndex].OnAdd();
 		self.layerInsertIndex += 1;
 	}
 	pub fn RemoveLayer(self: &mut Self, uuid: u64) {
