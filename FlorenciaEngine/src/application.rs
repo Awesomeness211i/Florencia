@@ -17,6 +17,7 @@ pub struct Application {
 
 	m_Window: window::Window,
 	m_LayerStack: LayerStack,
+	m_Instant: std::time::Instant,
 }
 
 pub trait ApplicationEngine {
@@ -33,6 +34,7 @@ impl Application {
 			m_Running: true,
 			m_Minimized: true,
 			m_LayerStack: LayerStack::new(),
+			m_Instant: std::time::Instant::now(),
 		};
 	}
 	pub fn AddLayer(self: &mut Self, layer: Box<dyn Layer>) {
@@ -52,14 +54,16 @@ impl Application {
 	}
 	pub fn Run(self: &mut Self) {
 		while self.m_Running {
-			if !self.m_Minimized {
+			let ts = self.m_Instant.elapsed();
+			//if !self.m_Minimized {
 				for layer in self.m_LayerStack.iter() {
-					layer.Update(1.0);
+					layer.Update(ts);
 					layer.Render();
 				}
-			}
+			//}
 			self.m_Window.Update();
 			self.m_Running = !self.m_Window.ShouldClose();
+			self.m_Instant = std::time::Instant::now();
 		}
 		/*
 		for (index, value) in v.iter().enumerate() {

@@ -24,3 +24,10 @@ pub use window::WindowData;
 pub use application::Application;
 pub use application::ApplicationEngine;
 pub use application::ApplicationConfig;
+
+pub trait Algebraic<Rhs = Self>
+where
+    Self: Sized + std::ops::Add<Rhs> + std::ops::Sub<Rhs> + std::ops::Mul<Rhs> + std::ops::Div<Rhs> + std::ops::Rem<Rhs>
+{
+
+}

@@ -1,7 +1,7 @@
 use FlorenciaEngine::*;
 
 pub struct EditorLayer {
-	uuid: u64,
+
 }
 
 impl Layer for EditorLayer {
@@ -14,21 +14,21 @@ impl Layer for EditorLayer {
 	fn OnEvent(self: &Self, e: &dyn Event) {
 		
 	}
-	fn Update(self: &Self, ts: f64) {
-
+	fn Update(self: &Self, ts: std::time::Duration) {
+		
 	}
 	fn Render(self: &Self) {
 		
 	}
 	fn GetUUID(self: &Self) -> u64 {
-		self.uuid
+		0
 	}
 }
 
 impl EditorLayer {
 	pub fn new() -> Box<Self> {
         return Box::new(Self {
-			uuid: 0,
+			
 		});
     }
 }

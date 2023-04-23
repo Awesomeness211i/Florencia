@@ -5,7 +5,7 @@ pub trait Layer {
 	fn OnRemove(self: &Self);
 	fn OnEvent(self: &Self, e: &dyn Event);
 	fn Render(self: &Self);
-	fn Update(self: &Self, ts: f64);
+	fn Update(self: &Self, ts: std::time::Duration);
 	fn GetUUID(&self) -> u64;
 
 	//Debug purposes
