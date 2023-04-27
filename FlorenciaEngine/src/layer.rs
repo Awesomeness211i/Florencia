@@ -8,7 +8,7 @@ pub trait Layer {
 	fn Update(self: &Self, ts: std::time::Duration);
 	fn GetUUID(&self) -> u64;
 
-	//Debug purposes
+	/** Debug purposes */
 	fn GetName(self: &Self) -> &str { return "Unnamed"; }
 }
 
