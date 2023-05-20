@@ -21,8 +21,8 @@ impl Event for ApplicationEvent {
 	fn GetEventType(self: &Self) -> EventType {
 		return match self {
 			ApplicationEvent::Resize{ width: _, height: _ } => EventType::AppResize,
-            ApplicationEvent::Update => EventType::AppUpdate,
-            ApplicationEvent::Render => EventType::AppRender,
+			ApplicationEvent::Update => EventType::AppUpdate,
+			ApplicationEvent::Render => EventType::AppRender,
 			ApplicationEvent::Close => EventType::AppClose,
 			ApplicationEvent::Tick => EventType::AppTick,
 		};

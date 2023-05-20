@@ -22,6 +22,6 @@ impl Event for KeyEvent {
 		};
 	}
 	fn GetCategoryFlags(self: &Self) -> u64 {
-        return EventCategory::Input | EventCategory::Keyboard;
-    }
+		return EventCategory::Input | EventCategory::Keyboard;
+	}
 }
