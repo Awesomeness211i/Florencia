@@ -1,5 +1,8 @@
 use FlorenciaEngine::*;
-use super::editor;
+use super::{
+	Result,
+	editor,
+};
 
 pub struct FloEditor {
 	application: Application,
@@ -7,7 +10,7 @@ pub struct FloEditor {
 
 impl ApplicationEngine for FloEditor {
 	fn Get(self: &mut Self) -> &mut Application { return &mut self.application; }
-	fn new() -> Self {
+	fn new() -> Result<Self> {
 		let windowData = WindowData {
 			m_Title: String::from("FloEditor"),
 			m_Dimensions: (800, 400),
@@ -15,15 +18,15 @@ impl ApplicationEngine for FloEditor {
 			m_Vsync: false,
 		};
 		let appConfig = ApplicationConfig {
-			windowData: windowData,
+			windowData,
 			commandLineArgs: std::env::args().collect(),
-			workingDirectory: std::env::current_dir().unwrap(),
+			workingDirectory: std::env::current_dir()?,
 		};
-		let mut application = Application::new(appConfig);
+		let mut application = Application::new(appConfig)?;
 		let layer = editor::EditorLayer::new();
 		application.AddLayer(layer);
-		return Self {
-			application: application,
-		};
+		return Ok(Self {
+			application,
+		});
 	}
 }

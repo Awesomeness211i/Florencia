@@ -7,4 +7,6 @@
 mod editor;
 mod application;
 
+use anyhow::Result;
+
 pub use application::FloEditor;

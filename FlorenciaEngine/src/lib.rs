@@ -13,6 +13,8 @@ mod renderer;
 mod threadpool;
 mod application;
 
+use anyhow::Result;
+
 pub use event::Event;
 pub use event::EventCategory;
 pub use event::keyevent::KeyEvent;

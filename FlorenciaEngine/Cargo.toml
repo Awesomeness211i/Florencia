@@ -5,6 +5,14 @@ edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[dependencies.glfw]
+version = "*"
+features = [
+	"vulkan",
+]
+
+[dependencies.ash]
+version = "*"
+
 [dependencies]
-ash = "0.37"
-glfw = "0.51"
+anyhow = "*"

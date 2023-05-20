@@ -7,12 +7,17 @@ use std::{
 	},
 };
 
+use super::{
+	Result,
+};
+
 type Job = Box<dyn FnOnce() -> () + Send + 'static>;
 
 pub struct ThreadPool {
 	workers: Vec<Worker>,
 	sender: Option<mpsc::Sender<Job>>,
 }
+
 impl ThreadPool {
 	/**
 	Create a new [`ThreadPool`].
@@ -23,29 +28,29 @@ impl ThreadPool {
 	# Panics
 	The `new` function will panic if `thread::available_parallelism() - 1` is zero.
 	*/
-	pub fn new() -> Result<Self, std::io::Error> {
-		let size = thread::available_parallelism().unwrap().get();
+	pub fn new() -> Result<Self> {
+		let size = thread::available_parallelism()?.get();
 		assert!(size - 1 > 0);
 		let (sender, receiver) = mpsc::channel();
 		let mut workers = Vec::<Worker>::with_capacity(size);
 		let receiver = Arc::new(Mutex::new(receiver));
 		for _ in 0..size {
-			let result = Worker::new(Arc::clone(&receiver));
-			let worker = match result {
-				Ok(w) => w,
-				Err(e) => return Err(e),
-			};
+			let worker = Worker::new(Arc::clone(&receiver))?;
 			workers.push(worker);
 		}
-		return Ok(ThreadPool {
-			workers: workers,
+		Ok(ThreadPool {
+			workers,
 			sender: Some(sender),
-		});
+		})
 	}
 	/**
 	Creates a job that is then queued for the threads to run.
-
 	The f is a function or closure that will be executed as a job in the thread pool.
+
+	# Panics
+	- If you send a job that panics to the thread pool it will cause the entire program
+	to panic. This is because the thread panic causes a lock to not be unlocked and causes
+	an unrecoverable error.
 	*/
 	pub fn execute<F>(self: &Self, f: F)
 	where
@@ -70,18 +75,15 @@ impl Drop for ThreadPool {
 struct Worker {
 	thread: Option<thread::JoinHandle<()>>,
 }
+
 impl Worker {
 	/** 
 	Creates a new [`Worker`].
 
 	# Errors
 	If the `thread::Builder::new().spawn()` fails it will return an error.
-
-	# Panics
-	It could panic if another worker panics while it still has the lock on the receiver.
-	This is because if the other worker panics while it still has the lock it won't be able to recover.
 	*/
-	fn new(receiver: Arc<Mutex<mpsc::Receiver<Job>>>) -> Result<Self, std::io::Error> {
+	fn new(receiver: Arc<Mutex<mpsc::Receiver<Job>>>) -> Result<Self> {
 		let func = move || {
 			loop {
 				match receiver.lock().unwrap().recv() {
@@ -90,9 +92,8 @@ impl Worker {
 				}
 			}
 		};
-		return match thread::Builder::new().spawn(func) {
-			Ok(thread) => Ok(Worker{ thread: Some(thread) }),
-			Err(e) => Err(e), 
-		};
+		Ok(Worker{
+			thread: Some(thread::Builder::new().spawn(func)?)
+		})
 	}
 }

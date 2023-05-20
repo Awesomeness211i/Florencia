@@ -11,16 +11,20 @@ impl Layer for EditorLayer {
 	fn OnAdd(self: &mut Self) {
 		
 	}
+
 	fn OnRemove(self: &mut Self) {
 		
 	}
-	fn OnEvent(self: &mut Self, _e: &dyn Event) {
+
+	fn OnEvent(self: &mut Self, e: &dyn Event) {
 		
 	}
-	fn Update(self: &Self, _ts: std::time::Duration) {
+
+	fn Update(self: &mut Self, ts: std::time::Duration) {
 
 	}
-	fn Render(self: &Self) {
+
+	fn Render(self: &mut Self) {
 		
 	}
 }

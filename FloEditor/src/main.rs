@@ -3,7 +3,9 @@
 use FloEditor::FloEditor;
 use FlorenciaEngine::*;
 
-fn main() {
-	let mut app = FloEditor::new();
-	app.Run();
+use anyhow::Result;
+
+fn main() -> Result<()> {
+	let mut app = FloEditor::new()?;
+	return app.Run();
 }
