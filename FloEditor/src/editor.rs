@@ -31,7 +31,7 @@ impl Layer for EditorLayer {
 
 impl EditorLayer {
 	pub fn new() -> Box<Self> {
-        return Box::new(Self {
+		return Box::new(Self {
 		});
-    }
+	}
 }
