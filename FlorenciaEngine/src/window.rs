@@ -67,7 +67,6 @@ impl Window {
 		*/
 
 		assert!(glfw.vulkan_supported());
-
 		let entry = unsafe { ash::Entry::load() }?;
 
 		let requiredExtensions = glfw.get_required_instance_extensions();
