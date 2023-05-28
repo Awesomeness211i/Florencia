@@ -69,10 +69,10 @@ impl Window {
 		assert!(glfw.vulkan_supported());
 		let entry = unsafe { ash::Entry::load() }?;
 
-		let requiredExtensions = glfw.get_required_instance_extensions();
+		let requiredExtensions = glfw.get_required_instance_extensions().unwrap_or(vec![]);
 		println!("Vulkan required extensions: {:?}", requiredExtensions);
 		let info = renderer::InstanceInfo::new(requiredExtensions, None);
-		let instance = renderer::Instance::new(entry, Some(info))?;
+		let instance = renderer::Instance::new(entry, info)?;
 
 		let mut surface = std::mem::MaybeUninit::uninit();
 		if window.create_window_surface(instance.handle(), std::ptr::null(), surface.as_mut_ptr()) != ash::vk::Result::SUCCESS {

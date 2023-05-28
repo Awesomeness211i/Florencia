@@ -19,14 +19,14 @@ pub struct Instance {
 
 pub struct InstanceInfo {
 	appInfo: vk::ApplicationInfo,
+	extensions: Vec<std::ffi::CString>,
+	extensionPointers: Vec<*const i8>,
 	instanceInfo: vk::InstanceCreateInfo,
 	allocationCallbacks: Option<vk::AllocationCallbacks>,
-	extensions: Option<Vec<std::ffi::CString>>,
-	extensionPointers: Option<Vec<*const i8>>,
 }
 
 impl InstanceInfo {
-	pub fn new(requiredExtensions: Option<Vec<String>>, allocationCallbacks: Option<vk::AllocationCallbacks>) -> Self {
+	pub fn new(requiredExtensions: Vec<String>, allocationCallbacks: Option<vk::AllocationCallbacks>) -> Self {
 		let appInfo = vk::ApplicationInfo {
 			s_type: vk::StructureType::APPLICATION_INFO,
 			p_next: std::ptr::null(),
@@ -36,36 +36,17 @@ impl InstanceInfo {
 			engine_version: 0,
 			api_version: vk::API_VERSION_1_3,
 		};
-		let (instanceInfo, extensions, extensionPointers) = match requiredExtensions {
-			Some(exts) => {
-				assert!(exts.contains(&"VK_KHR_surface".to_string()));
-				let extensions: Vec<_> = exts.iter().map(|ext| { std::ffi::CString::new(ext.clone()).expect("Failed to convert extension name") }).collect();
-				let extensionPointers: Vec<_> = extensions.iter().map(|ext| { ext.as_ptr() }).collect();
-				let instanceInfo = vk::InstanceCreateInfo {
-					s_type: vk::StructureType::INSTANCE_CREATE_INFO,
-					p_next: std::ptr::null(),
-					flags: vk::InstanceCreateFlags::empty(),
-					p_application_info: &appInfo,
-					enabled_layer_count: 0,
-					pp_enabled_layer_names: std::ptr::null(),
-					enabled_extension_count: extensionPointers.len() as _,
-					pp_enabled_extension_names: extensionPointers.as_ptr(),
-				};
-				(instanceInfo, Some(extensions), Some(extensionPointers))
-			},
-			None => {
-				let instanceInfo = vk::InstanceCreateInfo {
-					s_type: vk::StructureType::INSTANCE_CREATE_INFO,
-					p_next: std::ptr::null(),
-					flags: vk::InstanceCreateFlags::empty(),
-					p_application_info: &appInfo,
-					enabled_layer_count: 0,
-					pp_enabled_layer_names: std::ptr::null(),
-					enabled_extension_count: 0,
-					pp_enabled_extension_names: std::ptr::null(),
-				};
-				(instanceInfo, None, None)
-			},
+		let extensions: Vec<_> = requiredExtensions.iter().map(|ext| { std::ffi::CString::new(ext.clone()).expect("Failed to convert extension name") }).collect();
+		let extensionPointers: Vec<_> = extensions.iter().map(|ext| { ext.as_ptr() }).collect();
+		let instanceInfo = vk::InstanceCreateInfo {
+			s_type: vk::StructureType::INSTANCE_CREATE_INFO,
+			p_next: std::ptr::null(),
+			flags: vk::InstanceCreateFlags::empty(),
+			p_application_info: &appInfo,
+			enabled_layer_count: 0,
+			pp_enabled_layer_names: std::ptr::null(),
+			enabled_extension_count: extensionPointers.len() as _,
+			pp_enabled_extension_names: extensionPointers.as_ptr(),
 		};
 		Self {
 			appInfo,
@@ -78,36 +59,9 @@ impl InstanceInfo {
 }
 
 impl Instance {
-	pub fn new(entry: ash::Entry, info: Option<InstanceInfo>) -> Result<Self> {
-		match info {
-			Some(i) => {
-				let instance = unsafe { entry.create_instance(&i.instanceInfo, i.allocationCallbacks.as_ref()) }?;
-				Ok(Self { entry, instance, allocationCallbacks: i.allocationCallbacks })
-			},
-			None => {
-				let applicationInfo = vk::ApplicationInfo {
-					s_type: vk::StructureType::APPLICATION_INFO,
-					p_next: std::ptr::null(),
-					p_application_name: std::ptr::null(),
-					application_version: 0,
-					p_engine_name: std::ptr::null(),
-					engine_version: 0,
-					api_version: vk::API_VERSION_1_3,
-				};
-				let instanceInfo = vk::InstanceCreateInfo {
-					s_type: vk::StructureType::INSTANCE_CREATE_INFO,
-					p_next: std::ptr::null(),
-					flags: vk::InstanceCreateFlags::empty(),
-					p_application_info: &applicationInfo,
-					enabled_layer_count: 0,
-					pp_enabled_layer_names: std::ptr::null(),
-					enabled_extension_count: 0,
-					pp_enabled_extension_names: std::ptr::null(),
-				};
-				let instance = unsafe { entry.create_instance(&instanceInfo, None) }?;
-				Ok(Self { entry, instance, allocationCallbacks: None })
-			},
-		}
+	pub fn new(entry: ash::Entry, info: InstanceInfo) -> Result<Self> {
+		let instance = unsafe { entry.create_instance(&info.instanceInfo, info.allocationCallbacks.as_ref()) }?;
+		Ok(Self { entry, instance, allocationCallbacks: info.allocationCallbacks })
 	}
 
 	pub fn handle(self: &Self) -> vk::Instance {
