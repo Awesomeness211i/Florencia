@@ -124,7 +124,7 @@ impl Application {
 			self.m_Running = !self.m_Window.ShouldClose();
 			self.m_Instant = std::time::Instant::now();
 		}
-		self.m_Window.temp();
+		//self.m_Window.temp();
 		return Ok(());
 		/*
 		for (index, value) in v.iter().enumerate() {

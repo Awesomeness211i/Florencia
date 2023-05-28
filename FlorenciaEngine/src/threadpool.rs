@@ -18,19 +18,34 @@ pub struct ThreadPool {
 	sender: Option<mpsc::Sender<Job>>,
 }
 
+pub enum ThreadPoolMode {
+    Manual(usize),
+    Automatic,
+}
+
 impl ThreadPool {
 	/**
 	Create a new [`ThreadPool`].
 
 	# Errors
-	If the pool fails to create any worker it will return an error.
+	- If the pool fails to create any worker it will return an error.
 
 	# Panics
-	The `new` function will panic if `thread::available_parallelism() - 1` is zero.
+	- Manual mode lets you set threads manually (has to be greater than 0)
+	- Automatic mode will set threads using `thread::available_parallelism() - 1` (has to be greater than 0)
 	*/
-	pub fn new() -> Result<Self> {
-		let size = thread::available_parallelism()?.get();
-		assert!(size - 1 > 0);
+	pub fn new(mode: ThreadPoolMode) -> Result<Self> {
+		let size = match mode {
+			ThreadPoolMode::Manual(num) => {
+				assert!(num > 0);
+				num
+			},
+			ThreadPoolMode::Automatic => {
+				let num = thread::available_parallelism()?.get() - 1;
+				assert!(num > 0);
+				num
+			},
+		};
 		let (sender, receiver) = mpsc::channel();
 		let mut workers = Vec::<Worker>::with_capacity(size);
 		let receiver = Arc::new(Mutex::new(receiver));
@@ -49,8 +64,8 @@ impl ThreadPool {
 
 	# Panics
 	- If you send a job that panics to the thread pool it will cause the entire program
-	to panic. This is because the thread panic causes a lock to not be unlocked and causes
-	an unrecoverable error.
+	to panic. This is because the thread panic during job execution will not unlock the
+	reciever and as such is unrecoverable.
 	*/
 	pub fn execute<F>(self: &Self, f: F)
 	where

@@ -1,6 +1,5 @@
 use std::{
 	sync::mpsc,
-	thread::Builder,
 };
 
 use glfw::{
@@ -12,6 +11,7 @@ use glfw::{
 
 use super::{
 	Result,
+	renderer,
 };
 
 pub struct WindowData {
@@ -28,7 +28,7 @@ This is a wrapper over data needed for using glfw
 pub struct Window {
 	m_Instance: glfw::Glfw,
 	m_Window: glfw::Window,
-	m_Sender: mpsc::Sender<()>,
+	//m_Sender: mpsc::Sender<()>,
 	m_Events: mpsc::Receiver<(f64,WindowEvent)>,
 }
 
@@ -47,9 +47,9 @@ impl Window {
 
 		window.set_all_polling(data.m_Polling);
 
+		/*
 		let mut renderContext = window.render_context();
 		let (send, recieve) = mpsc::channel();
-
 		let renderTask = Builder::new().name("render task".to_string());
 		let renderTaskDone = renderTask.spawn(move || {
 			renderContext.make_current();
@@ -64,22 +64,16 @@ impl Window {
 			}
 			glfw::make_context_current(None);
 		});
+		*/
 
 		assert!(glfw.vulkan_supported());
 
-		let requiredExtensions = glfw.get_required_instance_extensions().unwrap_or(vec![]);
-
-		assert!(requiredExtensions.contains(&"VK_KHR_surface".to_string()));
-
-		println!("Vulkan required extensions: {:?}", requiredExtensions);
-		
 		let entry = unsafe { ash::Entry::load() }?;
 
-		let extensions: Vec<_> = requiredExtensions.iter().map(|ext| { std::ffi::CString::new(ext.clone()).expect("Failed to convert extension name") }).collect();
-		let extensionPointers: Vec<_> = extensions.iter().map(|ext| { ext.as_ptr() }).collect();
-		let info = ash::vk::InstanceCreateInfo::builder().enabled_extension_names(&extensionPointers);
-
-		let instance = unsafe { entry.create_instance(&info, None) }?;
+		let requiredExtensions = glfw.get_required_instance_extensions();
+		println!("Vulkan required extensions: {:?}", requiredExtensions);
+		let info = renderer::InstanceInfo::new(requiredExtensions, None);
+		let instance = renderer::Instance::new(entry, Some(info))?;
 
 		let mut surface = std::mem::MaybeUninit::uninit();
 		if window.create_window_surface(instance.handle(), std::ptr::null(), surface.as_mut_ptr()) != ash::vk::Result::SUCCESS {
@@ -89,7 +83,7 @@ impl Window {
 		Ok(Window{
 			m_Instance: glfw,
 			m_Window: window,
-			m_Sender: send,
+			//m_Sender: send,
 			m_Events: events,
 		})
 	}
@@ -117,7 +111,7 @@ impl Window {
 		}
 	}
 
-	pub fn temp(self: &Self) {
+	/*pub fn temp(self: &Self) {
 		self.m_Sender.send(()).unwrap();
-	}
+	}*/
 }
