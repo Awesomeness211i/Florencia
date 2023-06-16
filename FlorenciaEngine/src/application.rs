@@ -69,62 +69,62 @@ pub struct Application {
 	pub commandLineArgs: Vec<String>,
 	pub workingDirectory: std::path::PathBuf,
 
-	m_Running: bool,
-	m_Minimized: bool,
+	running: bool,
+	minimized: bool,
 
-	m_Window: window::Window,
-	m_LayerStack: LayerStack,
-	m_Instant: std::time::Instant,
+	window: window::Window,
+	layerStack: LayerStack,
+	instant: std::time::Instant,
 }
 
 impl Application {
 	pub fn new(appData: ApplicationConfig) -> Result<Self> {
 		return Ok(Self {
-			m_Running: true,
+			running: true,
 			commandLineArgs: appData.commandLineArgs,
 			workingDirectory: appData.workingDirectory,
-			m_Minimized: appData.windowData.m_Dimensions.0 == 0 || appData.windowData.m_Dimensions.1 == 0,
+			minimized: false,
+			// minimized: appData.windowData.m_Dimensions.0 == 0 || appData.windowData.m_Dimensions.1 == 0,
 
-			m_LayerStack: LayerStack::new(),
-			m_Instant: std::time::Instant::now(),
-			m_Window: window::Window::new(appData.windowData)?,
+			layerStack: LayerStack::new(),
+			instant: std::time::Instant::now(),
+			window: window::Window::new(appData.windowData)?,
 		});
 	}
 
 	pub fn AddLayer(self: &mut Self, layer: Box<dyn Layer>) {
-		self.m_LayerStack.AddLayer(layer);
+		self.layerStack.AddLayer(layer);
 	}
 
 	pub fn AddOverlay(self: &mut Self, overlay: Box<dyn Layer>) {
-		self.m_LayerStack.AddOverlay(overlay);
+		self.layerStack.AddOverlay(overlay);
 	}
 
 	pub fn RemoveLayer(self: &mut Self, uuid: u64) {
-		self.m_LayerStack.RemoveLayer(uuid);
+		self.layerStack.RemoveLayer(uuid);
 	}
 
 	pub fn RemoveOverlay(self: &mut Self, uuid: u64) {
-		self.m_LayerStack.RemoveOverlay(uuid);
+		self.layerStack.RemoveOverlay(uuid);
 	}
 
 	pub fn Close(self: &mut Self) {
-		self.m_Running = false;
+		self.running = false;
 	}
 
 	pub fn Run(self: &mut Self) -> Result<()> {
-		while self.m_Running {
-			let ts = self.m_Instant.elapsed();
-			if !self.m_Minimized {
-				for layer in self.m_LayerStack.iter() {
+		while self.running {
+			let ts = self.instant.elapsed();
+			if !self.minimized {
+				for layer in self.layerStack.iter() {
 					layer.Update(ts);
 					layer.Render();
 				}
 			}
-			self.m_Window.Update();
-			self.m_Running = !self.m_Window.ShouldClose();
-			self.m_Instant = std::time::Instant::now();
+			// self.window.Update();
+			// self.running = !self.m_Window.ShouldClose();
+			self.instant = std::time::Instant::now();
 		}
-		//self.m_Window.temp();
 		return Ok(());
 		/*
 		for (index, value) in v.iter().enumerate() {

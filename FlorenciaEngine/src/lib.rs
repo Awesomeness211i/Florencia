@@ -26,6 +26,8 @@ pub use layer::LayerStack;
 
 pub use window::WindowData;
 
+pub use renderer::test;
+
 pub use application::Application;
 pub use application::ApplicationEngine;
 pub use application::ApplicationConfig;

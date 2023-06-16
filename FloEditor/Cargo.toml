@@ -7,6 +7,4 @@ edition = "2021"
 
 [dependencies]
 FlorenciaEngine = { path = "../FlorenciaEngine" }
-
-[dependencies.anyhow]
-version = "*"
+anyhow = "*"

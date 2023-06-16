@@ -12,10 +12,10 @@ impl ApplicationEngine for FloEditor {
 	fn Get(self: &mut Self) -> &mut Application { return &mut self.application; }
 	fn new() -> Result<Self> {
 		let windowData = WindowData {
-			m_Title: String::from("FloEditor"),
-			m_Dimensions: (800, 400),
-			m_Polling: true,
-			m_Vsync: false,
+			title: String::from("FloEditor"),
+			dimensions: (800, 400),
+			polling: true,
+			vsync: false,
 		};
 		let appConfig = ApplicationConfig {
 			windowData,
