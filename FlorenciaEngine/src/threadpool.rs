@@ -19,8 +19,8 @@ pub struct ThreadPool {
 }
 
 pub enum ThreadPoolMode {
-    Manual(usize),
-    Automatic,
+	Manual(usize),
+	Automatic,
 }
 
 impl ThreadPool {
