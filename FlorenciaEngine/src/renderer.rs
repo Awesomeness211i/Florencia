@@ -1,9 +1,23 @@
-use ash::{self, vk};
+use ash::{
+	self,
+	vk,
+};
+use winit::{
+	event_loop::EventLoop,
+	window::WindowBuilder,
+};
 
 use super::Result;
 
 pub fn test() -> Result<()> {
+	let eventLoop = EventLoop::new();
+	let window = WindowBuilder::new().with_title("TEST").with_inner_size(winit::dpi::LogicalSize::new(1920, 1080)).build(&eventLoop)?;
 	let entry = unsafe { ash::Entry::load() }?;
+	let appName = unsafe { std::ffi::CStr::from_bytes_with_nul_unchecked(b"TEST\0") };
+	let layerNames = [
+		unsafe { std::ffi::CStr::from_bytes_with_nul_unchecked(b"VK_LAYER_KHRONOS_validation\0") },
+	];
+	let layerNamesRaw: Vec<_> = layerNames.iter().map(|raw| { raw.as_ptr() }).collect();
 	let applicationInfo = vk::ApplicationInfo {
 		s_type: vk::StructureType::APPLICATION_INFO,
 		p_next: std::ptr::null(),
@@ -13,17 +27,13 @@ pub fn test() -> Result<()> {
 		engine_version: 0,
 		api_version: vk::API_VERSION_1_3,
 	};
-	let instanceCreateInfo = vk::InstanceCreateInfo {
-		s_type: vk::StructureType::INSTANCE_CREATE_INFO,
-		p_next: std::ptr::null(),
-		flags: vk::InstanceCreateFlags::default(),
-		p_application_info: &applicationInfo,
-		enabled_layer_count: 0,
-		pp_enabled_layer_names: std::ptr::null(),
-		enabled_extension_count: 0,
-		pp_enabled_extension_names: std::ptr::null(),
-	};
+	let instanceCreateInfo = vk::InstanceCreateInfo::builder()
+		.application_info(&applicationInfo)
+		.enabled_layer_names(&layerNamesRaw);
 	let instance = unsafe { entry.create_instance(&instanceCreateInfo, None) }?;
+	let debugInfo = vk::DebugUtilsMessengerCreateInfoEXT::builder()
+		.message_severity(vk::DebugUtilsMessageSeverityFlagsEXT::ERROR | vk::DebugUtilsMessageSeverityFlagsEXT::WARNING | vk::DebugUtilsMessageSeverityFlagsEXT::INFO)
+		.message_type(vk::DebugUtilsMessageTypeFlagsEXT::GENERAL | vk::DebugUtilsMessageTypeFlagsEXT::VALIDATION | vk::DebugUtilsMessageTypeFlagsEXT::PERFORMANCE);
 	let physicalDevice = unsafe { instance.enumerate_physical_devices() }?[0];
 	let queueFamilyProperties = unsafe { instance.get_physical_device_queue_family_properties(physicalDevice) };
 	let deviceCreateInfo = vk::DeviceCreateInfo {
