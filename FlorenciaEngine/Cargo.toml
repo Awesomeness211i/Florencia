@@ -13,3 +13,4 @@ ash = { version = "*", features = ["debug"] }
 winit = { version = "*" }
 ash-window = { version = "*" }
 raw-window-handle = { version = "*" }
+shaderc = "*"
