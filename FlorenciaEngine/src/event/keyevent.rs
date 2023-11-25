@@ -7,21 +7,21 @@ pub enum KeyEvent {
 	CharacterTyped{ charCode: u64 },
 }
 impl Event for KeyEvent {
-	fn GetName(self: &Self) -> &str {
-		return match self {
+	fn GetName(&self) -> &str {
+		match self {
 			KeyEvent::KeyPressed{ keyCode: _, repeatCount: _ } => "KeyPressed",
 			KeyEvent::KeyReleased{ keyCode: _ } => "KeyReleased",
 			KeyEvent::CharacterTyped{ charCode: _ } => "CharacterTyped",
-		};
+		}
 	}
-	fn GetEventType(self: &Self) -> EventType {
-		return match self {
+	fn GetEventType(&self) -> EventType {
+		match self {
 			KeyEvent::KeyPressed{ keyCode: _, repeatCount: _ } => EventType::KeyPressed,
 			KeyEvent::KeyReleased{ keyCode: _ } => EventType::KeyReleased,
 			KeyEvent::CharacterTyped{ charCode: _ } => EventType::CharacterTyped,
-		};
+		}
 	}
-	fn GetCategoryFlags(self: &Self) -> u64 {
-		return EventCategory::Input | EventCategory::Keyboard;
+	fn GetCategoryFlags(&self) -> u64 {
+		EventCategory::Input | EventCategory::Keyboard
 	}
 }

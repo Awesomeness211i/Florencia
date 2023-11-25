@@ -11,7 +11,7 @@ use super::{
 	Result,
 };
 
-type Job = Box<dyn FnOnce() -> () + Send + 'static>;
+type Job = Box<dyn FnOnce() + Send + 'static>;
 
 pub struct ThreadPool {
 	workers: Vec<Worker>,
@@ -67,9 +67,9 @@ impl ThreadPool {
 	to panic. This is because the thread panic during job execution will not unlock the
 	reciever and as such is unrecoverable.
 	*/
-	pub fn execute<F>(self: &Self, f: F)
+	pub fn execute<F>(&self, f: F)
 	where
-		F: FnOnce() -> () + Send + 'static,
+		F: FnOnce() + Send + 'static,
 	{
 		let job = Box::new(f);
 		self.sender.as_ref().expect("ThreadPool destroyed?").send(job).expect("Reciever is gone?");
@@ -77,7 +77,7 @@ impl ThreadPool {
 }
 
 impl Drop for ThreadPool {
-	fn drop(self: &mut Self) {
+	fn drop(&mut self) {
 		drop(self.sender.take());
 		for worker in &mut self.workers {
 			if let Some(thread) = worker.thread.take() {
@@ -100,11 +100,8 @@ impl Worker {
 	*/
 	fn new(receiver: Arc<Mutex<mpsc::Receiver<Job>>>) -> Result<Self> {
 		let func = move || {
-			loop {
-				match receiver.lock().unwrap().recv() {
-					Ok(job) => job(),
-					Err(_) => break,
-				}
+			while let Ok(job) = receiver.lock().unwrap().recv() {
+				job();
 			}
 		};
 		Ok(Worker{

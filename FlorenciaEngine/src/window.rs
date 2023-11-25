@@ -46,10 +46,10 @@ impl Window {
 		})
 	}
 
-	pub fn GetSize(self: &Self) -> (i32, i32) {
+	pub fn GetSize(&self) -> (i32, i32) {
 		(0, 0)
 	}
 	
-	pub fn Update(self: &mut Self) {
+	pub fn Update(&mut self) {
 	}
 }

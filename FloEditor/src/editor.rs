@@ -4,34 +4,34 @@ pub struct EditorLayer {
 }
 
 impl Layer for EditorLayer {
-	fn GetUUID(self: &Self) -> u64 {
-		return 0;
+	fn GetUUID(&self) -> u64 {
+		0
 	}
 	
-	fn OnAdd(self: &mut Self) {
+	fn OnAdd(&mut self) {
 		
 	}
 
-	fn OnRemove(self: &mut Self) {
+	fn OnRemove(&mut self) {
 		
 	}
 
-	fn OnEvent(self: &mut Self, e: &dyn Event) {
+	fn OnEvent(&mut self, e: &dyn Event) {
 		
 	}
 
-	fn Update(self: &mut Self, ts: std::time::Duration) {
+	fn Update(&mut self, ts: std::time::Duration) {
 
 	}
 
-	fn Render(self: &mut Self) {
+	fn Render(&mut self) {
 		
 	}
 }
 
 impl EditorLayer {
 	pub fn new() -> Box<Self> {
-		return Box::new(Self {
-		});
+		Box::new(Self {
+		})
 	}
 }

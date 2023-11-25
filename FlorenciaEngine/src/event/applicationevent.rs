@@ -9,25 +9,25 @@ pub enum ApplicationEvent {
 	Tick,
 }
 impl Event for ApplicationEvent {
-	fn GetName(self: &Self) -> &str {
-		return match self {
+	fn GetName(&self) -> &str {
+		match self {
 			ApplicationEvent::Resize{ width: _, height: _ } => "AppResize",
 			ApplicationEvent::Update => "AppUpdate",
 			ApplicationEvent::Render => "AppRender",
 			ApplicationEvent::Close => "AppClose",
 			ApplicationEvent::Tick => "AppTick",
-		};
+		}
 	}
-	fn GetEventType(self: &Self) -> EventType {
-		return match self {
+	fn GetEventType(&self) -> EventType {
+		match self {
 			ApplicationEvent::Resize{ width: _, height: _ } => EventType::AppResize,
 			ApplicationEvent::Update => EventType::AppUpdate,
 			ApplicationEvent::Render => EventType::AppRender,
 			ApplicationEvent::Close => EventType::AppClose,
 			ApplicationEvent::Tick => EventType::AppTick,
-		};
+		}
 	}
-	fn GetCategoryFlags(self: &Self) -> u64 {
-		return EventCategory::Application.ToU64();
+	fn GetCategoryFlags(&self) -> u64 {
+		EventCategory::Application.ToU64()
 	}
 }

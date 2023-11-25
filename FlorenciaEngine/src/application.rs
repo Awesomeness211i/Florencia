@@ -13,8 +13,8 @@ use cases I didn't think of.
 */
 pub trait ApplicationEngine {
 	fn new() -> Result<Self> where Self: Sized;
-	fn Get(self: &mut Self) -> &mut Application;
-	fn Run(self: &mut Self) -> Result<()> { self.Get().Run() }
+	fn Get(&mut self) -> &mut Application;
+	fn Run(&mut self) -> Result<()> { self.Get().Run() }
 }
 
 /**
@@ -79,40 +79,40 @@ pub struct Application {
 
 impl Application {
 	pub fn new(appData: ApplicationConfig) -> Result<Self> {
-		return Ok(Self {
+		Ok(Self {
 			running: true,
 			commandLineArgs: appData.commandLineArgs,
 			workingDirectory: appData.workingDirectory,
 			minimized: false,
 			// minimized: appData.windowData.m_Dimensions.0 == 0 || appData.windowData.m_Dimensions.1 == 0,
 
-			layerStack: LayerStack::new(),
+			layerStack: LayerStack::default(),
 			instant: std::time::Instant::now(),
 			window: window::Window::new(appData.windowData)?,
-		});
+		})
 	}
 
-	pub fn AddLayer(self: &mut Self, layer: Box<dyn Layer>) {
+	pub fn AddLayer(&mut self, layer: Box<dyn Layer>) {
 		self.layerStack.AddLayer(layer);
 	}
 
-	pub fn AddOverlay(self: &mut Self, overlay: Box<dyn Layer>) {
+	pub fn AddOverlay(&mut self, overlay: Box<dyn Layer>) {
 		self.layerStack.AddOverlay(overlay);
 	}
 
-	pub fn RemoveLayer(self: &mut Self, uuid: u64) {
+	pub fn RemoveLayer(&mut self, uuid: u64) {
 		self.layerStack.RemoveLayer(uuid);
 	}
 
-	pub fn RemoveOverlay(self: &mut Self, uuid: u64) {
+	pub fn RemoveOverlay(&mut self, uuid: u64) {
 		self.layerStack.RemoveOverlay(uuid);
 	}
 
-	pub fn Close(self: &mut Self) {
+	pub fn Close(&mut self) {
 		self.running = false;
 	}
 
-	pub fn Run(self: &mut Self) -> Result<()> {
+	pub fn Run(&mut self) -> Result<()> {
 		while self.running {
 			let ts = self.instant.elapsed();
 			if !self.minimized {
@@ -125,7 +125,7 @@ impl Application {
 			// self.running = !self.m_Window.ShouldClose();
 			self.instant = std::time::Instant::now();
 		}
-		return Ok(());
+		Ok(())
 		/*
 		for (index, value) in v.iter().enumerate() {
 			println!("{} is at index {}", value, index);

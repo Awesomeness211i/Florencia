@@ -1,5 +1,3 @@
-#![allow(bad_style)]
-
 use FloEditor::FloEditor;
 use FlorenciaEngine::*;
 

@@ -4,8 +4,12 @@ version = "0.0.1"
 edition = "2021"
 authors = ["Awesomeness211i"]
 
+[lints]
+workspace = true
+
 [dependencies]
-winit = { version = "*" }
-ash = { version = "*", features = ["debug"] }
 anyhow = { version = "*" }
+ash = { version = "*", features = ["debug"] }
+winit = { version = "*" }
 ash-window = { version = "*" }
+raw-window-handle = { version = "*" }

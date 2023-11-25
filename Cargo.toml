@@ -1,9 +1,15 @@
 [workspace]
-
 members = [
 	"FloEditor",
 	"FlorenciaEngine",
 ]
+resolver = "2"
+
+[workspace.lints.rust]
+bad_style = "allow"
+
+[workspace.lints.clippy]
+tabs_in_doc_comments = "allow"
 
 [profile.dev]
 opt-level = 0

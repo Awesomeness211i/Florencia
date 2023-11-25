@@ -1,5 +1,3 @@
-#![allow(bad_style)]
-
 //! # FloEditor
 //! This library encompasses the specific behaviors I want
 //! in my game engine

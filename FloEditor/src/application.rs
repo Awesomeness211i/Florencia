@@ -9,7 +9,7 @@ pub struct FloEditor {
 }
 
 impl ApplicationEngine for FloEditor {
-	fn Get(self: &mut Self) -> &mut Application { return &mut self.application; }
+	fn Get(&mut self) -> &mut Application { &mut self.application }
 	fn new() -> Result<Self> {
 		let windowData = WindowData {
 			title: String::from("FloEditor"),
@@ -25,8 +25,8 @@ impl ApplicationEngine for FloEditor {
 		let mut application = Application::new(appConfig)?;
 		let layer = editor::EditorLayer::new();
 		application.AddLayer(layer);
-		return Ok(Self {
+		Ok(Self {
 			application,
-		});
+		})
 	}
 }
