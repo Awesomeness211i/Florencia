@@ -21,9 +21,6 @@ pub struct WindowData {
 	pub dimensions: (u32, u32),
 }
 
-/**
-This is a wrapper over data needed for using glfw
-*/
 pub struct Window {
 	window: winit::window::Window,
 	eventLoop: winit::event_loop::EventLoop<()>,
@@ -31,12 +28,15 @@ pub struct Window {
 
 impl Window {
 	/**
-	This function is used for construction of a glfw window
-	This takes a type that abstracts over the needed parameters and options that glfw gives
+	This function is used for construction of a window
+	This takes a type that abstracts over the needed parameters and options
 	*/
 	pub fn new(data: WindowData) -> Result<Self> {
 		let eventLoop = EventLoop::new();
-		let window = WindowBuilder::new().with_title(data.title).with_inner_size(winit::dpi::LogicalSize::new(data.dimensions.0, data.dimensions.1)).build(&eventLoop)?;
+		let window = WindowBuilder::new()
+			.with_title(data.title)
+			.with_inner_size(winit::dpi::LogicalSize::new(data.dimensions.0, data.dimensions.1))
+			.build(&eventLoop)?;
 
 		// let entry = ash::Entry::load()?;
 		// let instance = renderer::Instance::new(entry, info)?;
@@ -46,9 +46,7 @@ impl Window {
 		})
 	}
 
-	pub fn GetSize(&self) -> (i32, i32) {
-		(0, 0)
-	}
+	pub fn GetSize(&self) -> (u32, u32) { (0, 0) }
 	
 	pub fn Update(&mut self) {
 	}

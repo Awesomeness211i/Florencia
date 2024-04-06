@@ -16,11 +16,11 @@ impl Layer for EditorLayer {
 		
 	}
 
-	fn OnEvent(&mut self, e: &dyn Event) {
+	fn OnEvent(&mut self, _e: &dyn Event) {
 		
 	}
 
-	fn Update(&mut self, ts: std::time::Duration) {
+	fn Update(&mut self, _ts: std::time::Duration) {
 
 	}
 

@@ -11,12 +11,12 @@ pub struct FloEditor {
 impl ApplicationEngine for FloEditor {
 	fn Get(&mut self) -> &mut Application { &mut self.application }
 	fn new() -> Result<Self> {
-		let windowData = WindowData {
+		let windowData = Some(WindowData {
 			title: String::from("FloEditor"),
 			dimensions: (800, 400),
 			polling: true,
 			vsync: false,
-		};
+		});
 		let appConfig = ApplicationConfig {
 			windowData,
 			commandLineArgs: std::env::args().collect(),

@@ -6,7 +6,7 @@ members = [
 resolver = "2"
 
 [workspace.lints.rust]
-bad_style = "allow"
+non_snake_case = "allow"
 
 [workspace.lints.clippy]
 tabs_in_doc_comments = "allow"

@@ -1,19 +1,17 @@
 use ash::{
 	self,
 	vk,
-	extensions::{
-		khr,
-	},
+	extensions::khr,
 };
 use winit::{
 	event_loop::EventLoop,
-	window::{
-		WindowBuilder,
+	window::WindowBuilder,
+	event::{
+		WindowEvent,
+		Event
 	},
-	event::{WindowEvent, Event},
 };
 use raw_window_handle::{HasRawDisplayHandle, HasRawWindowHandle};
-
 use super::Result;
 
 pub fn test() -> Result<()> {
@@ -21,7 +19,7 @@ pub fn test() -> Result<()> {
 	let eventLoop = EventLoop::new();
 	let window = WindowBuilder::new()
 		.with_title("TEST")
-		// .with_inner_size(winit::dpi::LogicalSize::new(1920, 1080))
+		.with_inner_size(winit::dpi::LogicalSize::new(800, 800))
 		.with_visible(true)
 		.with_resizable(true)
 		.build(&eventLoop)?;
@@ -131,7 +129,7 @@ pub fn test() -> Result<()> {
 
 	let windowSize = window.inner_size();
 
-	let grapicsPipeline = {
+	let graphicsPipeline = {
 		let dynamicStateCreateInfo = vk::PipelineDynamicStateCreateInfo::builder();
 		let vertexInputStateCreateInfo = vk::PipelineVertexInputStateCreateInfo::builder();
 		let inputAssemblyStateCreateInfo = vk::PipelineInputAssemblyStateCreateInfo::builder()
@@ -224,14 +222,46 @@ pub fn test() -> Result<()> {
 
 	let mut shouldRecreateSwapchain = true;
 
-	eventLoop.run(move |event, window_target, controlflow| {
+	eventLoop.run(move |event, windowTarget, controlFlow| {
 		match event {
-			Event::WindowEvent { event, window_id } => match event {
-				WindowEvent::CloseRequested => { controlflow.set_exit() },
-				_ => {},
+			Event::Resumed => {},
+			Event::Suspended => {},
+			Event::LoopDestroyed => {},
+			Event::NewEvents(cause) => {},
+			Event::RedrawEventsCleared => {},
+			Event::MainEventsCleared => { window.request_redraw() },
+			Event::UserEvent(_) => {},
+			Event::DeviceEvent { device_id, event } => {},
+			Event::WindowEvent { event, window_id } => {
+				match event {
+					WindowEvent::CloseRequested => {
+						if window_id == window.id() {
+							controlFlow.set_exit();
+						}
+					},
+					WindowEvent::Destroyed => {
+						unsafe {
+							device.destroy_pipeline_layout(pipelineLayout, None);
+							device.destroy_pipeline(graphicsPipeline, None);
+							device.destroy_command_pool(commandPool, None);
+							device.destroy_semaphore(imageAvailableSemaphore, None);
+							device.destroy_semaphore(renderFinishedSemaphore, None);
+							device.destroy_fence(inFlightFence, None);
+							for imageView in &swapchainImageViews {
+								device.destroy_image_view(*imageView, None);
+							}
+							for image in &swapchainImages {
+								device.destroy_image(*image, None);
+							}
+							swapchainExtension.destroy_swapchain(swapchain, None);
+							device.destroy_device(None);
+							instance.destroy_instance(None);
+						}
+					}
+					_ => {},
+				}
 			},
-			Event::MainEventsCleared => window.request_redraw(),
-			Event::RedrawRequested(id) => {
+			Event::RedrawRequested(windowId) => {
 				if shouldRecreateSwapchain {
 					swapchain = {
 						let queueFamilyIndices = [
@@ -332,7 +362,7 @@ pub fn test() -> Result<()> {
 						.color_attachments(&renderingAttachmentInfos);
 					device.cmd_begin_rendering(commandBuffer, &renderingInfo);
 
-					device.cmd_bind_pipeline(commandBuffer, vk::PipelineBindPoint::GRAPHICS, grapicsPipeline);
+					device.cmd_bind_pipeline(commandBuffer, vk::PipelineBindPoint::GRAPHICS, graphicsPipeline);
 					device.cmd_draw(commandBuffer, 3, 1, 0, 0);
 
 					device.cmd_end_rendering(commandBuffer);
@@ -381,17 +411,8 @@ pub fn test() -> Result<()> {
 					let submitInfos = [
 						submitInfo.build(),
 					];
-					match device.queue_submit2(queue, &submitInfos, inFlightFence) {
-						Ok(_) => {
-							shouldRecreateSwapchain = false;
-						},
-						Err(err) if err == vk::Result::SUBOPTIMAL_KHR => {
-							shouldRecreateSwapchain = true;
-						},
-						Err(err) if err == vk::Result::ERROR_OUT_OF_DATE_KHR => {
-							shouldRecreateSwapchain = true;
-						},
-						Err(err) => { panic!("{err}") },
+					if device.queue_submit2(queue, &submitInfos, inFlightFence).is_ok() {
+						shouldRecreateSwapchain = false;
 					}
 				}
 
@@ -418,7 +439,7 @@ pub fn test() -> Result<()> {
 					device.reset_command_pool(commandPool, vk::CommandPoolResetFlags::empty()).unwrap();
 				}
 			},
-			_ => {},
+			// _ => { panic!("Not All Cases Covered") },
 		}
 	});
 }

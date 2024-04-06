@@ -21,7 +21,7 @@ pub trait ApplicationEngine {
 Configuration information for the `Application` type.
 */
 pub struct ApplicationConfig {
-	pub windowData: WindowData,
+	pub windowData: Option<WindowData>,
 	pub commandLineArgs: Vec<String>,
 	pub workingDirectory: std::path::PathBuf,
 }
@@ -70,26 +70,35 @@ pub struct Application {
 	pub workingDirectory: std::path::PathBuf,
 
 	running: bool,
-	minimized: bool,
 
-	window: window::Window,
 	layerStack: LayerStack,
 	instant: std::time::Instant,
 }
 
 impl Application {
 	pub fn new(appData: ApplicationConfig) -> Result<Self> {
-		Ok(Self {
-			running: true,
-			commandLineArgs: appData.commandLineArgs,
-			workingDirectory: appData.workingDirectory,
-			minimized: false,
-			// minimized: appData.windowData.m_Dimensions.0 == 0 || appData.windowData.m_Dimensions.1 == 0,
+		match appData.windowData {
+			Some(data) => {
+				Ok(Self {
+					running: true,
+					commandLineArgs: appData.commandLineArgs,
+					workingDirectory: appData.workingDirectory,
 
-			layerStack: LayerStack::default(),
-			instant: std::time::Instant::now(),
-			window: window::Window::new(appData.windowData)?,
-		})
+					layerStack: LayerStack::default(),
+					instant: std::time::Instant::now(),
+				})
+			},
+			None => {
+				Ok(Self {
+					running: true,
+					commandLineArgs: appData.commandLineArgs,
+					workingDirectory: appData.workingDirectory,
+
+					layerStack: LayerStack::default(),
+					instant: std::time::Instant::now(),
+				})
+			},
+		}
 	}
 
 	pub fn AddLayer(&mut self, layer: Box<dyn Layer>) {
@@ -114,22 +123,15 @@ impl Application {
 
 	pub fn Run(&mut self) -> Result<()> {
 		while self.running {
-			let ts = self.instant.elapsed();
-			if !self.minimized {
-				for layer in self.layerStack.iter() {
-					layer.Update(ts);
-					layer.Render();
-				}
-			}
-			// self.window.Update();
-			// self.running = !self.m_Window.ShouldClose();
-			self.instant = std::time::Instant::now();
+			// let ts = self.instant.elapsed();
+			// for layer in self.layerStack.iter() {
+			// 	layer.Update(ts);
+			// 	layer.Render();
+			// }
+			// self.instant = std::time::Instant::now();
+			let eventLoop = winit::event_loop::EventLoop::new();
+			eventLoop.run(|event, windowTarget, controlFlow| {});
 		}
 		Ok(())
-		/*
-		for (index, value) in v.iter().enumerate() {
-			println!("{} is at index {}", value, index);
-		}
-		*/
 	}
 }
