@@ -90,12 +90,17 @@ pub fn test() -> Result<()> {
 	// then use the already compiled ones if they exist
 	let compiler = shaderc::Compiler::new().unwrap();
 	let options = shaderc::CompileOptions::new().unwrap();
-	let vertexShader = std::fs::read_to_string("assets/shaders/vertexshader.glsl")?;
-	let vertexArtifact = compiler.compile_into_spirv(&vertexShader, shaderc::ShaderKind::Vertex, "vertexshader.glsl", "main", Some(&options))?;
+	let vertexShaderString = std::fs::read_to_string("assets/shaders/vertexshader.glsl")?;
+	let vertexArtifact = compiler.compile_into_spirv(&vertexShaderString, shaderc::ShaderKind::Vertex, "vertexshader.glsl", "main", Some(&options))?;
 	std::fs::write("assets/shaders/vertexshader.spirv", vertexArtifact.as_binary_u8())?;
-	let fragmentShader = std::fs::read_to_string("assets/shaders/fragmentshader.glsl")?;
-	let fragmentArtifact = compiler.compile_into_spirv(&fragmentShader, shaderc::ShaderKind::Fragment, "fragmentshader.glsl", "main", Some(&options))?;
+	let fragmentShaderString = std::fs::read_to_string("assets/shaders/fragmentshader.glsl")?;
+	let fragmentArtifact = compiler.compile_into_spirv(&fragmentShaderString, shaderc::ShaderKind::Fragment, "fragmentshader.glsl", "main", Some(&options))?;
 	std::fs::write("assets/shaders/fragmentshader.spirv", fragmentArtifact.as_binary_u8())?;
+	// let mut vertexShaderBinary = std::fs::File::open("assets/shaders/vertexshader.spirv")?;
+	// let vertexShader = ash::util::read_spv(&mut vertexShaderBinary)?;
+	// let mut fragmentShaderBinary = std::fs::File::open("assets/shaders/fragmentshader.spirv")?;
+	// let fragmentShader = ash::util::read_spv(&mut fragmentShaderBinary)?;
+	// let vertexShader = match std::fs::File::open("assets/shaders/vertexshader.spirv") {
 
 	let vertexShaderModule = {
 		let shaderModuleCreateInfo = vk::ShaderModuleCreateInfo::builder()
