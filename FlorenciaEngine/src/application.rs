@@ -1,70 +1,22 @@
 use super::{
 	Layer,
 	Result,
-	window,
 	WindowData,
 	LayerStack,
 };
 
-/**
-This trait is implemented by all types that can be used as an application
-generally you should only have one of these types but there could be other
-use cases I didn't think of.
-*/
 pub trait ApplicationEngine {
 	fn new() -> Result<Self> where Self: Sized;
 	fn Get(&mut self) -> &mut Application;
 	fn Run(&mut self) -> Result<()> { self.Get().Run() }
 }
 
-/**
-Configuration information for the `Application` type.
-*/
 pub struct ApplicationConfig {
 	pub windowData: Option<WindowData>,
 	pub commandLineArgs: Vec<String>,
 	pub workingDirectory: std::path::PathBuf,
 }
 
-/**
-Your application type needs to own one of these types to
-interface with the rest of the library.
-
-Example:
-```
-use FlorenciaEngine::Application;
-
-struct Type {
-	application: Application
-}
-```
-
-The `Get()` method is used in the library to implement the `Run()` method
-on your type automatically. So please don't implement the `Run()` method yourself.
-
-You create an instance of `Application` by calling
-`Application::new()` with an `ApplicationConfig`.
-
-Example:
-```
-use FlorenciaEngine::{WindowData, ApplicationConfig, ApplicationEngine, Application};
-
-impl ApplicationEngine for Type {
-	fn new() -> Result<Self> {
-		let windowData = WindowData {
-			...
-		};
-		let appConfig = ApplicationConfig {
-			windowData: windowData,
-			...
-		};
-		return Self {
-			application: Application::new(appConfig),
-		};
-	}
-}
-```
-*/
 pub struct Application {
 	pub commandLineArgs: Vec<String>,
 	pub workingDirectory: std::path::PathBuf,
@@ -78,7 +30,7 @@ pub struct Application {
 impl Application {
 	pub fn new(appData: ApplicationConfig) -> Result<Self> {
 		match appData.windowData {
-			Some(data) => {
+			Some(_data) => {
 				Ok(Self {
 					running: true,
 					commandLineArgs: appData.commandLineArgs,
@@ -123,14 +75,6 @@ impl Application {
 
 	pub fn Run(&mut self) -> Result<()> {
 		while self.running {
-			// let ts = self.instant.elapsed();
-			// for layer in self.layerStack.iter() {
-			// 	layer.Update(ts);
-			// 	layer.Render();
-			// }
-			// self.instant = std::time::Instant::now();
-			let eventLoop = winit::event_loop::EventLoop::new();
-			eventLoop.run(|event, windowTarget, controlFlow| {});
 		}
 		Ok(())
 	}
