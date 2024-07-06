@@ -1,6 +1,11 @@
+use std::collections::HashMap;
+
 use super::Result;
 use ash::{
-	self, khr, vk::{self, Handle}
+	self,
+	khr,
+	ext,
+	vk::{self, Handle}
 };
 use raw_window_handle::{HasDisplayHandle, HasWindowHandle};
 use winit::{
@@ -37,27 +42,96 @@ struct Application {
 	surfaceInstance: khr::surface::Instance,
 	surface: vk::SurfaceKHR,
 
-	window: Option<Window>,
+	windows: HashMap<WindowId, Window>,
 }
 
 impl Application {
+	const VALIDATION: bool = true;
+	const VALIDATION_LAYERS: [&'static std::ffi::CStr; 1] = [
+		c"VK_LAYER_KHRONOS_validation",
+	];
+	unsafe extern "system" fn vulkanDebugUtilsCallback(messageSeverity: vk::DebugUtilsMessageSeverityFlagsEXT, messageType: vk::DebugUtilsMessageTypeFlagsEXT, pCallbackData: *const vk::DebugUtilsMessengerCallbackDataEXT, _pUserData: *mut std::ffi::c_void) -> vk::Bool32 {
+		let severity = match messageSeverity {
+			vk::DebugUtilsMessageSeverityFlagsEXT::VERBOSE => "[Verbose]",
+			vk::DebugUtilsMessageSeverityFlagsEXT::WARNING => "[Warning]",
+			vk::DebugUtilsMessageSeverityFlagsEXT::ERROR => "[Error]",
+			vk::DebugUtilsMessageSeverityFlagsEXT::INFO => "[Info]",
+			_ => "[Unknown]",
+		};
+		let types = match messageType {
+			vk::DebugUtilsMessageTypeFlagsEXT::GENERAL => "[General]",
+			vk::DebugUtilsMessageTypeFlagsEXT::PERFORMANCE => "[Performance]",
+			vk::DebugUtilsMessageTypeFlagsEXT::VALIDATION => "[Validation]",
+			_ => "[Unknown]",
+		};
+		let message = std::ffi::CStr::from_ptr((*pCallbackData).p_message);
+		println!("[Debug]{}{}: {:?}", severity, types, message);
+
+		vk::FALSE
+	}
+	fn createInstance(entry: &ash::Entry, eventLoop: &EventLoop<()>) -> Result<ash::Instance> {
+		if Self::VALIDATION && !Self::checkValidationLayerSupport(entry) {
+			println!("No Validation");
+		}
+		let applicationInfo = vk::ApplicationInfo::default()
+			.application_name(c"App Name")
+			.application_version(vk::make_api_version(0, 0, 0, 0))
+			.engine_name(c"Engine Name")
+			.engine_version(vk::make_api_version(0, 0, 0, 0))
+			.api_version(vk::API_VERSION_1_3);
+		let mut debugCreateInfo = Self::createDebugCreateInfo(entry);
+		let requiredExtensions = Self::getRequiredExtensions(eventLoop)?;
+		let instanceCreateInfo = vk::InstanceCreateInfo::default()
+			.push_next(&mut debugCreateInfo)
+			.application_info(&applicationInfo)
+			.enabled_extension_names(&requiredExtensions);
+		Ok(unsafe { entry.create_instance(&instanceCreateInfo, None) }?)
+	}
+	fn getRequiredExtensions(eventLoop: &EventLoop<()>) -> Result<Vec<*const std::ffi::c_char>> {
+		let mut requiredExtensions = Vec::new();
+		for a in ash_window::enumerate_required_extensions(eventLoop.display_handle()?.into())? {
+			requiredExtensions.push(*a);
+		}
+		requiredExtensions.push(ext::debug_utils::NAME.as_ptr());
+		Ok(requiredExtensions)
+	}
+	fn checkValidationLayerSupport(entry: &ash::Entry) -> bool {
+		let layerProperties = unsafe { entry.enumerate_instance_layer_properties() }.unwrap();
+		for properties in &layerProperties {
+			println!("{:?}", properties.layer_name_as_c_str().unwrap());
+		}
+		for layerName in Self::VALIDATION_LAYERS {
+			let mut found = false;
+			for properties in &layerProperties {
+				if layerName == properties.layer_name_as_c_str().unwrap() {
+					found = true;
+					break;
+				}
+			}
+			if !found {
+				return false;
+			}
+		}
+		true
+	}
+	fn createDebugCreateInfo(_entry: &ash::Entry) -> vk::DebugUtilsMessengerCreateInfoEXT {
+		vk::DebugUtilsMessengerCreateInfoEXT::default()
+			.flags(vk::DebugUtilsMessengerCreateFlagsEXT::empty())
+			.message_severity(vk::DebugUtilsMessageSeverityFlagsEXT::VERBOSE | vk::DebugUtilsMessageSeverityFlagsEXT::WARNING | vk::DebugUtilsMessageSeverityFlagsEXT::ERROR)
+			.message_type(vk::DebugUtilsMessageTypeFlagsEXT::GENERAL | vk::DebugUtilsMessageTypeFlagsEXT::VALIDATION | vk::DebugUtilsMessageTypeFlagsEXT::PERFORMANCE)
+			.pfn_user_callback(Some(Self::vulkanDebugUtilsCallback))
+	}
+	fn setupDebugMessenger(entry: &ash::Entry, instance: &ash::Instance) -> Result<(ext::debug_utils::Instance, vk::DebugUtilsMessengerEXT)> {
+		let debugLoader = ext::debug_utils::Instance::new(entry, instance);
+		let createInfo = Self::createDebugCreateInfo(entry);
+		let messenger = unsafe { debugLoader.create_debug_utils_messenger(&createInfo, None) }?;
+		Ok((debugLoader, messenger))
+	}
 	pub fn new(eventLoop: &EventLoop<()>) -> Result<Self> {
 		let entry = unsafe { ash::Entry::load() }?;
-		let instance = {
-			let appName = c"App Name";
-			let engineName = c"Engine Name";
-			let applicationInfo = vk::ApplicationInfo::default()
-				.application_name(appName)
-				.application_version(0)
-				.engine_name(engineName)
-				.engine_version(0)
-				.api_version(vk::API_VERSION_1_3);
-			let requiredExtensions = ash_window::enumerate_required_extensions(eventLoop.display_handle()?.into())?;
-			let instanceCreateInfo = vk::InstanceCreateInfo::default()
-				.application_info(&applicationInfo)
-				.enabled_extension_names(requiredExtensions);
-			unsafe { entry.create_instance(&instanceCreateInfo, None) }?
-		};
+		let instance = Self::createInstance(&entry, eventLoop)?;
+
+		let _stuff = Self::setupDebugMessenger(&entry, &instance);
 
 		let physicalDevice = unsafe { instance.enumerate_physical_devices() }?[0];
 
@@ -276,7 +350,7 @@ impl Application {
 			surfaceInstance,
 			surface: vk::SurfaceKHR::null(),
 
-			window: None,
+			windows: HashMap::new(),
 		})
 	}
 }
@@ -312,16 +386,15 @@ impl ApplicationHandler for Application {
 			.with_visible(true)
 			.with_resizable(true)
 			.with_window_icon(None);
-		self.window = Some(event_loop.create_window(windowAttributes).unwrap());
+		let window = event_loop.create_window(windowAttributes).unwrap();
+		self.windows.insert(window.id(), window);
 	}
 	fn window_event(&mut self, event_loop: &ActiveEventLoop, window_id: WindowId, event: WindowEvent) {
 		// Event::MainEventsCleared => { window.request_redraw() },
 		match event {
 			WindowEvent::ActivationTokenDone { serial, token } => {},
 			WindowEvent::AxisMotion { device_id, axis, value } => {},
-			WindowEvent::CloseRequested => {
-				if window_id == self.window.as_ref().unwrap().id() { self.window.take(); }
-			},
+			WindowEvent::CloseRequested => { self.windows.remove(&window_id); },
 			WindowEvent::CursorEntered { device_id } => {},
 			WindowEvent::CursorLeft { device_id } => {},
 			WindowEvent::CursorMoved { device_id, position } => {},
@@ -344,12 +417,12 @@ impl ApplicationHandler for Application {
 				if self.recreateSwapchain {
 					self.surface = if self.surface.is_null() {
 						unsafe {
-							ash_window::create_surface(&self.entry, &self.instance, self.window.as_ref().unwrap().display_handle().unwrap().into(), self.window.as_ref().unwrap().window_handle().unwrap().into(), None)
+							ash_window::create_surface(&self.entry, &self.instance, self.windows[&window_id].display_handle().unwrap().into(), self.windows[&window_id].window_handle().unwrap().into(), None)
 						}
 					} else {
 						unsafe {
 							self.surfaceInstance.destroy_surface(self.surface, None);
-							ash_window::create_surface(&self.entry, &self.instance, self.window.as_ref().unwrap().display_handle().unwrap().into(), self.window.as_ref().unwrap().window_handle().unwrap().into(), None)
+							ash_window::create_surface(&self.entry, &self.instance, self.windows[&window_id].display_handle().unwrap().into(), self.windows[&window_id].window_handle().unwrap().into(), None)
 						}
 					}.unwrap();
 					self.swapchain = {
@@ -520,7 +593,7 @@ impl ApplicationHandler for Application {
 					self.logicalDevice.reset_command_pool(self.commandPool, vk::CommandPoolResetFlags::empty()).unwrap();
 				}
 			},
-			WindowEvent::Resized(size) => {
+			WindowEvent::Resized(_size) => {
 				// self.width = size.width;
 				// self.height = size.height;
 				// self.recreateSwapchain = true;

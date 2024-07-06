@@ -15,5 +15,6 @@ pkgs.mkShell {
   buildInputs = run;
   shellHook = ''
     export LD_LIBRARY_PATH=${lib.makeLibraryPath run}
+    export VK_LAYER_PATH=${pkgs.vulkan-validation-layers}/share/vulkan/explicit_layer.d
   '';
 }
