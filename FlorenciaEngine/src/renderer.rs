@@ -5,15 +5,16 @@ use ash::{
 	self,
 	khr,
 	ext,
-	vk::{self, Handle}
+	vk,
 };
 use raw_window_handle::{HasDisplayHandle, HasWindowHandle};
 use winit::{
 	application::ApplicationHandler,
+	dpi,
 	event::WindowEvent,
 	event_loop::{ ActiveEventLoop, EventLoop },
 	window::{ Window, WindowAttributes, WindowId },
-	dpi,
+	platform::startup_notify::{ self, EventLoopExtStartupNotify, WindowAttributesExtStartupNotify, WindowExtStartupNotify },
 };
 
 struct Application {
@@ -23,6 +24,7 @@ struct Application {
 	logicalDevice: ash::Device,
 	queue: vk::Queue,
 	swapchainFormat: vk::Format,
+	swapchainInstance: khr::swapchain::Instance,
 	swapchainDevice: khr::swapchain::Device,
 	swapchain: vk::SwapchainKHR,
 	swapchainImages: Vec<vk::Image>,
@@ -42,6 +44,9 @@ struct Application {
 	surfaceInstance: khr::surface::Instance,
 	surface: vk::SurfaceKHR,
 
+	debugInstance: ext::debug_utils::Instance,
+	debugMessenger: vk::DebugUtilsMessengerEXT,
+
 	windows: HashMap<WindowId, Window>,
 }
 
@@ -50,25 +55,6 @@ impl Application {
 	const VALIDATION_LAYERS: [&'static std::ffi::CStr; 1] = [
 		c"VK_LAYER_KHRONOS_validation",
 	];
-	unsafe extern "system" fn vulkanDebugUtilsCallback(messageSeverity: vk::DebugUtilsMessageSeverityFlagsEXT, messageType: vk::DebugUtilsMessageTypeFlagsEXT, pCallbackData: *const vk::DebugUtilsMessengerCallbackDataEXT, _pUserData: *mut std::ffi::c_void) -> vk::Bool32 {
-		let severity = match messageSeverity {
-			vk::DebugUtilsMessageSeverityFlagsEXT::VERBOSE => "[Verbose]",
-			vk::DebugUtilsMessageSeverityFlagsEXT::WARNING => "[Warning]",
-			vk::DebugUtilsMessageSeverityFlagsEXT::ERROR => "[Error]",
-			vk::DebugUtilsMessageSeverityFlagsEXT::INFO => "[Info]",
-			_ => "[Unknown]",
-		};
-		let types = match messageType {
-			vk::DebugUtilsMessageTypeFlagsEXT::GENERAL => "[General]",
-			vk::DebugUtilsMessageTypeFlagsEXT::PERFORMANCE => "[Performance]",
-			vk::DebugUtilsMessageTypeFlagsEXT::VALIDATION => "[Validation]",
-			_ => "[Unknown]",
-		};
-		let message = std::ffi::CStr::from_ptr((*pCallbackData).p_message);
-		println!("[Debug]{}{}: {:?}", severity, types, message);
-
-		vk::FALSE
-	}
 	fn createInstance(entry: &ash::Entry, eventLoop: &EventLoop<()>) -> Result<ash::Instance> {
 		if Self::VALIDATION && !Self::checkValidationLayerSupport(entry) {
 			println!("No Validation");
@@ -79,13 +65,23 @@ impl Application {
 			.engine_name(c"Engine Name")
 			.engine_version(vk::make_api_version(0, 0, 0, 0))
 			.api_version(vk::API_VERSION_1_3);
-		let mut debugCreateInfo = Self::createDebugCreateInfo(entry);
 		let requiredExtensions = Self::getRequiredExtensions(eventLoop)?;
-		let instanceCreateInfo = vk::InstanceCreateInfo::default()
-			.push_next(&mut debugCreateInfo)
-			.application_info(&applicationInfo)
-			.enabled_extension_names(&requiredExtensions);
-		Ok(unsafe { entry.create_instance(&instanceCreateInfo, None) }?)
+		match Self::VALIDATION {
+			true => {
+				let mut debugCreateInfo = Self::createDebugCreateInfo(entry);
+				let instanceCreateInfo = vk::InstanceCreateInfo::default()
+					.push_next(&mut debugCreateInfo)
+					.application_info(&applicationInfo)
+					.enabled_extension_names(&requiredExtensions);
+				Ok(unsafe { entry.create_instance(&instanceCreateInfo, None) }?)
+			},
+			false => {
+				let instanceCreateInfo = vk::InstanceCreateInfo::default()
+					.application_info(&applicationInfo)
+					.enabled_extension_names(&requiredExtensions);
+				Ok(unsafe { entry.create_instance(&instanceCreateInfo, None) }?)
+			},
+		}
 	}
 	fn getRequiredExtensions(eventLoop: &EventLoop<()>) -> Result<Vec<*const std::ffi::c_char>> {
 		let mut requiredExtensions = Vec::new();
@@ -115,11 +111,31 @@ impl Application {
 		true
 	}
 	fn createDebugCreateInfo(_entry: &ash::Entry) -> vk::DebugUtilsMessengerCreateInfoEXT {
+		extern "system" fn vulkanDebugUtilsCallback(messageSeverity: vk::DebugUtilsMessageSeverityFlagsEXT, messageType: vk::DebugUtilsMessageTypeFlagsEXT, pCallbackData: *const vk::DebugUtilsMessengerCallbackDataEXT, pUserData: *mut std::ffi::c_void) -> vk::Bool32 {
+			let (severity, color) = match messageSeverity {
+				vk::DebugUtilsMessageSeverityFlagsEXT::VERBOSE => ("Verbose", (199, 0, 240)),
+				vk::DebugUtilsMessageSeverityFlagsEXT::WARNING => ("Warning", (255, 255, 0)),
+				vk::DebugUtilsMessageSeverityFlagsEXT::ERROR => ("Error", (255, 50, 0)),
+				vk::DebugUtilsMessageSeverityFlagsEXT::INFO => ("Info", (100, 200, 0)),
+				_ => ("Unknown", (255u8, 255u8, 255u8)),
+			};
+			let types = match messageType {
+				vk::DebugUtilsMessageTypeFlagsEXT::GENERAL => "General",
+				vk::DebugUtilsMessageTypeFlagsEXT::PERFORMANCE => "Performance",
+				vk::DebugUtilsMessageTypeFlagsEXT::VALIDATION => "Validation",
+				_ => "Unknown",
+			};
+			let _ = pUserData;
+			let message = unsafe { std::ffi::CStr::from_ptr((*pCallbackData).p_message) };
+			println!("[Debug][{}][{}]: \x1b[38;2;{};{};{}m{:?}\x1B[0m", severity, types, color.0, color.1, color.2, message);
+
+			vk::FALSE
+		}
 		vk::DebugUtilsMessengerCreateInfoEXT::default()
 			.flags(vk::DebugUtilsMessengerCreateFlagsEXT::empty())
-			.message_severity(vk::DebugUtilsMessageSeverityFlagsEXT::VERBOSE | vk::DebugUtilsMessageSeverityFlagsEXT::WARNING | vk::DebugUtilsMessageSeverityFlagsEXT::ERROR)
-			.message_type(vk::DebugUtilsMessageTypeFlagsEXT::GENERAL | vk::DebugUtilsMessageTypeFlagsEXT::VALIDATION | vk::DebugUtilsMessageTypeFlagsEXT::PERFORMANCE)
-			.pfn_user_callback(Some(Self::vulkanDebugUtilsCallback))
+			.message_severity(vk::DebugUtilsMessageSeverityFlagsEXT::VERBOSE | vk::DebugUtilsMessageSeverityFlagsEXT::WARNING | vk::DebugUtilsMessageSeverityFlagsEXT::ERROR | vk::DebugUtilsMessageSeverityFlagsEXT::INFO)
+			.message_type(vk::DebugUtilsMessageTypeFlagsEXT::GENERAL | vk::DebugUtilsMessageTypeFlagsEXT::VALIDATION | vk::DebugUtilsMessageTypeFlagsEXT::PERFORMANCE | vk::DebugUtilsMessageTypeFlagsEXT::DEVICE_ADDRESS_BINDING)
+			.pfn_user_callback(Some(vulkanDebugUtilsCallback))
 	}
 	fn setupDebugMessenger(entry: &ash::Entry, instance: &ash::Instance) -> Result<(ext::debug_utils::Instance, vk::DebugUtilsMessengerEXT)> {
 		let debugLoader = ext::debug_utils::Instance::new(entry, instance);
@@ -131,7 +147,11 @@ impl Application {
 		let entry = unsafe { ash::Entry::load() }?;
 		let instance = Self::createInstance(&entry, eventLoop)?;
 
-		let _stuff = Self::setupDebugMessenger(&entry, &instance);
+		let (debugInstance,  debugMessenger) = if Self::VALIDATION {
+			Self::setupDebugMessenger(&entry, &instance)?
+		} else {
+			(ext::debug_utils::Instance::new(&entry, &instance), vk::DebugUtilsMessengerEXT::null())
+		};
 
 		let physicalDevice = unsafe { instance.enumerate_physical_devices() }?[0];
 
@@ -166,8 +186,8 @@ impl Application {
 		let queue = unsafe { logicalDevice.get_device_queue(0, 0) };
 
 		let swapchainFormat = vk::Format::B8G8R8A8_UNORM;
-		// let swapchainInstance = khr::swapchain::Instance::new(&entry, &instance);
 		let swapchain = vk::SwapchainKHR::null();
+		let swapchainInstance = khr::swapchain::Instance::new(&entry, &instance);
 		let swapchainDevice = khr::swapchain::Device::new(&instance, &logicalDevice);
 		let swapchainImages = Vec::new();
 		let swapchainImageViews = Vec::new();
@@ -331,6 +351,7 @@ impl Application {
 			logicalDevice,
 			queue,
 			swapchainFormat,
+			swapchainInstance,
 			swapchainDevice,
 			swapchain,
 			swapchainImages,
@@ -349,6 +370,9 @@ impl Application {
 
 			surfaceInstance,
 			surface: vk::SurfaceKHR::null(),
+
+			debugInstance,
+			debugMessenger,
 
 			windows: HashMap::new(),
 		})
@@ -370,62 +394,93 @@ impl Drop for Application {
 			for image in &self.swapchainImages {
 				self.logicalDevice.destroy_image(*image, None);
 			}
-			self.swapchainDevice.destroy_swapchain(self.swapchain, None);
+			// self.surfaceInstance.destroy_surface(self.surface, None);
+			// self.swapchainDevice.destroy_swapchain(self.swapchain, None);
+			if Self::VALIDATION {
+				self.debugInstance.destroy_debug_utils_messenger(self.debugMessenger, None);
+			}
 			self.logicalDevice.destroy_device(None);
-			self.surfaceInstance.destroy_surface(self.surface, None);
 			self.instance.destroy_instance(None);
 		}
 	}
 }
 
 impl ApplicationHandler for Application {
-	fn resumed(&mut self, event_loop: &ActiveEventLoop) {
-		let windowAttributes = WindowAttributes::default()
+	fn new_events(&mut self, eventLoop: &ActiveEventLoop, cause: winit::event::StartCause) {
+		let _ = eventLoop;
+		let _ = cause;
+	}
+	fn exiting(&mut self, eventLoop: &ActiveEventLoop) {
+		let _ = eventLoop;
+	}
+	fn suspended(&mut self, eventLoop: &ActiveEventLoop) {
+		let _ = eventLoop;
+	}
+	fn user_event(&mut self, eventLoop: &ActiveEventLoop, event: ()) {
+		let _ = eventLoop;
+		let _ = event;
+	}
+	fn device_event(&mut self, eventLoop: &ActiveEventLoop, device_id: winit::event::DeviceId, event: winit::event::DeviceEvent) {
+		let _ = eventLoop;
+		let _ = device_id;
+		let _ = event;
+	}
+	fn about_to_wait(&mut self, eventLoop: &ActiveEventLoop) {
+		let _ = eventLoop;
+	}
+	fn memory_warning(&mut self, eventLoop: &ActiveEventLoop) {
+		let _ = eventLoop;
+	}
+	fn resumed(&mut self, eventLoop: &ActiveEventLoop) {
+		let mut windowAttributes = WindowAttributes::default()
 			.with_title("TEST")
 			.with_inner_size(dpi::LogicalSize::new(self.width, self.height))
 			.with_visible(true)
 			.with_resizable(true)
 			.with_window_icon(None);
-		let window = event_loop.create_window(windowAttributes).unwrap();
+		if let Some(token) = eventLoop.read_token_from_env() {
+			startup_notify::reset_activation_token_env();
+			windowAttributes = windowAttributes.with_activation_token(token);
+		}
+		let window = eventLoop.create_window(windowAttributes).unwrap();
+		self.surface = unsafe { ash_window::create_surface(&self.entry, &self.instance, window.display_handle().unwrap().into(), window.window_handle().unwrap().into(), None) }.unwrap();
 		self.windows.insert(window.id(), window);
 	}
-	fn window_event(&mut self, event_loop: &ActiveEventLoop, window_id: WindowId, event: WindowEvent) {
+	fn window_event(&mut self, eventLoop: &ActiveEventLoop, window_id: WindowId, event: WindowEvent) {
 		// Event::MainEventsCleared => { window.request_redraw() },
 		match event {
-			WindowEvent::ActivationTokenDone { serial, token } => {},
-			WindowEvent::AxisMotion { device_id, axis, value } => {},
-			WindowEvent::CloseRequested => { self.windows.remove(&window_id); },
-			WindowEvent::CursorEntered { device_id } => {},
-			WindowEvent::CursorLeft { device_id } => {},
-			WindowEvent::CursorMoved { device_id, position } => {},
+			WindowEvent::ActivationTokenDone { serial: _, token: _ } => {},
+			WindowEvent::AxisMotion { device_id: _, axis: _, value: _ } => {},
+			WindowEvent::CloseRequested => {
+				unsafe {
+					self.surfaceInstance.destroy_surface(self.surface, None);
+					self.swapchainDevice.destroy_swapchain(self.swapchain, None);
+				}
+				self.windows.remove(&window_id);
+				eventLoop.exit();
+			},
+			WindowEvent::CursorEntered { device_id: _ } => {},
+			WindowEvent::CursorLeft { device_id: _ } => {},
+			WindowEvent::CursorMoved { device_id: _, position: _ } => {},
 			WindowEvent::Destroyed => {},
-			WindowEvent::DoubleTapGesture { device_id } => {},
+			WindowEvent::DoubleTapGesture { device_id: _ } => {},
 			WindowEvent::DroppedFile(_path) => {},
 			WindowEvent::Focused(_isFocused) => {},
 			WindowEvent::HoveredFile(_) => {},
 			WindowEvent::HoveredFileCancelled => {},
 			WindowEvent::Ime(_) => {},
-			WindowEvent::KeyboardInput { device_id, event, is_synthetic } => {},
+			WindowEvent::KeyboardInput { device_id: _, event: _, is_synthetic: _ } => {},
 			WindowEvent::ModifiersChanged(_) => {},
-			WindowEvent::MouseInput { device_id, state, button } => {},
-			WindowEvent::MouseWheel { device_id, delta, phase } => {},
+			WindowEvent::MouseInput { device_id: _, state: _, button: _ } => {},
+			WindowEvent::MouseWheel { device_id: _, delta: _, phase: _ } => {},
 			WindowEvent::Moved(_) => {},
 			WindowEvent::Occluded(_isOccluded) => {},
-			WindowEvent::PanGesture { device_id, delta, phase } => {},
-			WindowEvent::PinchGesture { device_id, delta, phase } => {},
+			WindowEvent::PanGesture { device_id: _, delta: _, phase: _ } => {},
+			WindowEvent::PinchGesture { device_id: _, delta: _, phase: _ } => {},
 			WindowEvent::RedrawRequested => {
 				if self.recreateSwapchain {
-					self.surface = if self.surface.is_null() {
-						unsafe {
-							ash_window::create_surface(&self.entry, &self.instance, self.windows[&window_id].display_handle().unwrap().into(), self.windows[&window_id].window_handle().unwrap().into(), None)
-						}
-					} else {
-						unsafe {
-							self.surfaceInstance.destroy_surface(self.surface, None);
-							ash_window::create_surface(&self.entry, &self.instance, self.windows[&window_id].display_handle().unwrap().into(), self.windows[&window_id].window_handle().unwrap().into(), None)
-						}
-					}.unwrap();
 					self.swapchain = {
+						unsafe { self.swapchainDevice.destroy_swapchain(self.swapchain, None); }
 						let queueFamilyIndices = [
 							0,
 						];
@@ -448,25 +503,22 @@ impl ApplicationHandler for Application {
 							.image_usage(vk::ImageUsageFlags::COLOR_ATTACHMENT)
 							.present_mode(vk::PresentModeKHR::FIFO)
 							.queue_family_indices(&queueFamilyIndices);
-
 						unsafe { self.swapchainDevice.create_swapchain(&swapchainCreateInfo, None) }.unwrap()
 					};
-
 					self.swapchainImages = unsafe { self.swapchainDevice.get_swapchain_images(self.swapchain) }.unwrap();
-
 					self.swapchainImageViews.clear();
-					self.swapchainImages.iter().copied().map(|image| {
+					for image in &self.swapchainImages {
 						let imageSubresourceRange = vk::ImageSubresourceRange::default()
 							.aspect_mask(vk::ImageAspectFlags::COLOR)
 							.level_count(1)
 							.layer_count(1);
 						let imageViewCreateInfo = vk::ImageViewCreateInfo::default()
-							.image(image)
+							.image(*image)
 							.format(self.swapchainFormat)
 							.view_type(vk::ImageViewType::TYPE_2D)
 							.subresource_range(imageSubresourceRange);
-						unsafe { self.logicalDevice.create_image_view(&imageViewCreateInfo, None) }.unwrap()
-					}).for_each(|imageView| { self.swapchainImageViews.push(imageView); });
+						self.swapchainImageViews.push(unsafe { self.logicalDevice.create_image_view(&imageViewCreateInfo, None) }.unwrap());
+					}
 				}
 
 				let (imageIndex, _isSuboptimal) = unsafe {
@@ -593,16 +645,16 @@ impl ApplicationHandler for Application {
 					self.logicalDevice.reset_command_pool(self.commandPool, vk::CommandPoolResetFlags::empty()).unwrap();
 				}
 			},
-			WindowEvent::Resized(_size) => {
-				// self.width = size.width;
-				// self.height = size.height;
-				// self.recreateSwapchain = true;
+			WindowEvent::Resized(size) => {
+				self.width = size.width;
+				self.height = size.height;
+				self.recreateSwapchain = true;
 			},
-			WindowEvent::RotationGesture { device_id, delta, phase } => {},
-			WindowEvent::ScaleFactorChanged { scale_factor, inner_size_writer } => {},
+			WindowEvent::RotationGesture { device_id: _, delta: _, phase: _ } => {},
+			WindowEvent::ScaleFactorChanged { scale_factor: _, inner_size_writer: _ } => {},
 			WindowEvent::ThemeChanged(_) => {},
 			WindowEvent::Touch(_) => {},
-			WindowEvent::TouchpadPressure { device_id, pressure, stage } => {},
+			WindowEvent::TouchpadPressure { device_id: _, pressure: _, stage: _ } => {},
 		}
 	}
 }
