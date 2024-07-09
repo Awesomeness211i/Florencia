@@ -3,9 +3,9 @@ use std::collections::HashMap;
 use super::Result;
 use ash::{
 	self,
-	khr,
 	ext,
-	vk,
+	khr,
+	vk
 };
 use raw_window_handle::{HasDisplayHandle, HasWindowHandle};
 use winit::{
@@ -14,7 +14,6 @@ use winit::{
 	event::WindowEvent,
 	event_loop::{ ActiveEventLoop, EventLoop },
 	window::{ Window, WindowAttributes, WindowId },
-	platform::startup_notify::{ self, EventLoopExtStartupNotify, WindowAttributesExtStartupNotify, WindowExtStartupNotify },
 };
 
 struct Application {
@@ -22,7 +21,8 @@ struct Application {
 	instance: ash::Instance,
 	physicalDevice: vk::PhysicalDevice,
 	logicalDevice: ash::Device,
-	queue: vk::Queue,
+	graphicsQueue: vk::Queue,
+	presentQueue: vk::Queue,
 	swapchainFormat: vk::Format,
 	swapchainInstance: khr::swapchain::Instance,
 	swapchainDevice: khr::swapchain::Device,
@@ -38,9 +38,6 @@ struct Application {
 	renderFinishedSemaphore: vk::Semaphore,
 	inFlightFence: vk::Fence,
 
-	width: u32,
-	height: u32,
-
 	surfaceInstance: khr::surface::Instance,
 	surface: vk::SurfaceKHR,
 
@@ -50,38 +47,42 @@ struct Application {
 	windows: HashMap<WindowId, Window>,
 }
 
+#[derive(Default)]
+struct QueueFamilyIndices {
+	graphicsFamily: Option<usize>,
+	presentFamily: Option<usize>,
+}
+
+impl QueueFamilyIndices {
+	pub fn complete(&self) -> bool {
+		self.graphicsFamily.is_some() && self.presentFamily.is_some()
+	}
+}
+
 impl Application {
 	const VALIDATION: bool = true;
-	const VALIDATION_LAYERS: [&'static std::ffi::CStr; 1] = [
-		c"VK_LAYER_KHRONOS_validation",
+	const VALIDATION_LAYERS: [*const std::ffi::c_char; 1] = [
+		c"VK_LAYER_KHRONOS_validation".as_ptr(),
 	];
-	fn createInstance(entry: &ash::Entry, eventLoop: &EventLoop<()>) -> Result<ash::Instance> {
-		if Self::VALIDATION && !Self::checkValidationLayerSupport(entry) {
-			println!("No Validation");
-		}
-		let applicationInfo = vk::ApplicationInfo::default()
-			.application_name(c"App Name")
-			.application_version(vk::make_api_version(0, 0, 0, 0))
-			.engine_name(c"Engine Name")
-			.engine_version(vk::make_api_version(0, 0, 0, 0))
-			.api_version(vk::API_VERSION_1_3);
-		let requiredExtensions = Self::getRequiredExtensions(eventLoop)?;
-		match Self::VALIDATION {
-			true => {
-				let mut debugCreateInfo = Self::createDebugCreateInfo(entry);
-				let instanceCreateInfo = vk::InstanceCreateInfo::default()
-					.push_next(&mut debugCreateInfo)
-					.application_info(&applicationInfo)
-					.enabled_extension_names(&requiredExtensions);
-				Ok(unsafe { entry.create_instance(&instanceCreateInfo, None) }?)
-			},
-			false => {
-				let instanceCreateInfo = vk::InstanceCreateInfo::default()
-					.application_info(&applicationInfo)
-					.enabled_extension_names(&requiredExtensions);
-				Ok(unsafe { entry.create_instance(&instanceCreateInfo, None) }?)
-			},
-		}
+	const DEVICE_EXTENSIONS: [*const std::ffi::c_char; 1] = [
+		khr::swapchain::NAME.as_ptr(),
+	];
+	fn createWindow((width, height): (u32, u32), title: &str, eventLoop: &EventLoop<()>) -> (HashMap<WindowId, Window>, WindowId) {
+		let mut windows = HashMap::new();
+		let windowAttributes = WindowAttributes::default()
+			.with_title(title)
+			.with_inner_size(dpi::LogicalSize::new(width, height))
+			.with_visible(true)
+			.with_resizable(true)
+			.with_window_icon(None);
+		// if let Some(token) = eventLoop.read_token_from_env() {
+		// 	startup_notify::reset_activation_token_env();
+		// 	windowAttributes = windowAttributes.with_activation_token(token);
+		// }
+		let window = eventLoop.create_window(windowAttributes).unwrap();
+		let windowID = window.id();
+		windows.insert(windowID, window);
+		(windows, windowID)
 	}
 	fn getRequiredExtensions(eventLoop: &EventLoop<()>) -> Result<Vec<*const std::ffi::c_char>> {
 		let mut requiredExtensions = Vec::new();
@@ -90,25 +91,6 @@ impl Application {
 		}
 		requiredExtensions.push(ext::debug_utils::NAME.as_ptr());
 		Ok(requiredExtensions)
-	}
-	fn checkValidationLayerSupport(entry: &ash::Entry) -> bool {
-		let layerProperties = unsafe { entry.enumerate_instance_layer_properties() }.unwrap();
-		for properties in &layerProperties {
-			println!("{:?}", properties.layer_name_as_c_str().unwrap());
-		}
-		for layerName in Self::VALIDATION_LAYERS {
-			let mut found = false;
-			for properties in &layerProperties {
-				if layerName == properties.layer_name_as_c_str().unwrap() {
-					found = true;
-					break;
-				}
-			}
-			if !found {
-				return false;
-			}
-		}
-		true
 	}
 	fn createDebugCreateInfo(_entry: &ash::Entry) -> vk::DebugUtilsMessengerCreateInfoEXT {
 		extern "system" fn vulkanDebugUtilsCallback(messageSeverity: vk::DebugUtilsMessageSeverityFlagsEXT, messageType: vk::DebugUtilsMessageTypeFlagsEXT, pCallbackData: *const vk::DebugUtilsMessengerCallbackDataEXT, pUserData: *mut std::ffi::c_void) -> vk::Bool32 {
@@ -133,62 +115,187 @@ impl Application {
 		}
 		vk::DebugUtilsMessengerCreateInfoEXT::default()
 			.flags(vk::DebugUtilsMessengerCreateFlagsEXT::empty())
-			.message_severity(vk::DebugUtilsMessageSeverityFlagsEXT::VERBOSE | vk::DebugUtilsMessageSeverityFlagsEXT::WARNING | vk::DebugUtilsMessageSeverityFlagsEXT::ERROR | vk::DebugUtilsMessageSeverityFlagsEXT::INFO)
-			.message_type(vk::DebugUtilsMessageTypeFlagsEXT::GENERAL | vk::DebugUtilsMessageTypeFlagsEXT::VALIDATION | vk::DebugUtilsMessageTypeFlagsEXT::PERFORMANCE | vk::DebugUtilsMessageTypeFlagsEXT::DEVICE_ADDRESS_BINDING)
+			.message_severity(vk::DebugUtilsMessageSeverityFlagsEXT::VERBOSE | vk::DebugUtilsMessageSeverityFlagsEXT::WARNING | vk::DebugUtilsMessageSeverityFlagsEXT::ERROR /* | vk::DebugUtilsMessageSeverityFlagsEXT::INFO */)
+			.message_type(vk::DebugUtilsMessageTypeFlagsEXT::GENERAL | vk::DebugUtilsMessageTypeFlagsEXT::VALIDATION | vk::DebugUtilsMessageTypeFlagsEXT::PERFORMANCE /* | vk::DebugUtilsMessageTypeFlagsEXT::DEVICE_ADDRESS_BINDING */)
 			.pfn_user_callback(Some(vulkanDebugUtilsCallback))
+	}
+	fn checkValidationLayerSupport(entry: &ash::Entry) -> bool {
+		let layerProperties = unsafe { entry.enumerate_instance_layer_properties() }.unwrap();
+		// for properties in &layerProperties {
+		// 	println!("{:?}", properties.layer_name_as_c_str().unwrap());
+		// }
+		for layerName in Self::VALIDATION_LAYERS {
+			let mut found = false;
+			for properties in &layerProperties {
+				let layerName = unsafe { std::ffi::CStr::from_ptr(layerName) };
+				if layerName == properties.layer_name_as_c_str().unwrap() {
+					found = true;
+					break;
+				}
+			}
+			if !found {
+				return false;
+			}
+		}
+		true
+	}
+	fn checkDeviceExtensionSupport(instance: &ash::Instance, physicalDevice: vk::PhysicalDevice) -> bool {
+		let extensionProperties = unsafe { instance.enumerate_device_extension_properties(physicalDevice) }.unwrap();
+		for deviceExtensions in Self::DEVICE_EXTENSIONS {
+			let mut found = false;
+			for properties in &extensionProperties {
+				let extensionName = unsafe { std::ffi::CStr::from_ptr(deviceExtensions) };
+				if extensionName == properties.extension_name_as_c_str().unwrap() {
+					found = true;
+					break;
+				}
+			}
+			if !found {
+				return false;
+			}
+		}
+		true
+	}
+	fn createInstance(entry: &ash::Entry, eventLoop: &EventLoop<()>) -> Result<ash::Instance> {
+		if Self::VALIDATION && !Self::checkValidationLayerSupport(entry) {
+			println!("No Validation");
+		}
+		let applicationInfo = vk::ApplicationInfo::default()
+			.application_name(c"App Name")
+			.application_version(vk::make_api_version(0, 0, 0, 0))
+			.engine_name(c"Engine Name")
+			.engine_version(vk::make_api_version(0, 0, 0, 0))
+			.api_version(vk::API_VERSION_1_3);
+		let requiredExtensions = Self::getRequiredExtensions(eventLoop)?;
+		match Self::VALIDATION {
+			true => {
+				let mut debugCreateInfo = Self::createDebugCreateInfo(entry);
+				let instanceCreateInfo = vk::InstanceCreateInfo::default()
+					.push_next(&mut debugCreateInfo)
+					.application_info(&applicationInfo)
+					.enabled_extension_names(&requiredExtensions)
+					.enabled_layer_names(&Self::VALIDATION_LAYERS);
+				Ok(unsafe { entry.create_instance(&instanceCreateInfo, None) }?)
+			},
+			false => {
+				let instanceCreateInfo = vk::InstanceCreateInfo::default()
+					.application_info(&applicationInfo)
+					.enabled_extension_names(&requiredExtensions);
+				Ok(unsafe { entry.create_instance(&instanceCreateInfo, None) }?)
+			},
+		}
 	}
 	fn setupDebugMessenger(entry: &ash::Entry, instance: &ash::Instance) -> Result<(ext::debug_utils::Instance, vk::DebugUtilsMessengerEXT)> {
 		let debugLoader = ext::debug_utils::Instance::new(entry, instance);
 		let createInfo = Self::createDebugCreateInfo(entry);
-		let messenger = unsafe { debugLoader.create_debug_utils_messenger(&createInfo, None) }?;
+		let messenger = match Self::VALIDATION {
+			true => { unsafe { debugLoader.create_debug_utils_messenger(&createInfo, None) }? },
+			false => { vk::DebugUtilsMessengerEXT::null() },
+		};
 		Ok((debugLoader, messenger))
 	}
+	fn findQueueFamilies(instance: &ash::Instance, surfaceInstance: &khr::surface::Instance, surface: &vk::SurfaceKHR, physicalDevice: vk::PhysicalDevice) -> QueueFamilyIndices {
+		let mut indices = QueueFamilyIndices::default();
+		let queueFamilyProperties = unsafe { instance.get_physical_device_queue_family_properties(physicalDevice) };
+		for (i, queueFamily) in queueFamilyProperties.iter().enumerate() {
+			if queueFamily.queue_flags.contains(vk::QueueFlags::GRAPHICS) {
+				indices.graphicsFamily = Some(i);
+			}
+			if unsafe { surfaceInstance.get_physical_device_surface_support(physicalDevice, i as u32, *surface) }.unwrap() {
+				indices.presentFamily = Some(i);
+			}
+
+			if indices.complete() {
+				break;
+			}
+		}
+		indices
+	}
+	fn physicalDeviceSuitable(instance: &ash::Instance, surfaceInstance: &khr::surface::Instance, surface: &vk::SurfaceKHR, physicalDevice: vk::PhysicalDevice) -> bool {
+		// let properties = unsafe { instance.get_physical_device_properties(physicalDevice) };
+		// let features = unsafe { instance.get_physical_device_features(physicalDevice) };
+		// properties.device_type == vk::PhysicalDeviceType::DISCRETE_GPU && features.geometry_shader == vk::TRUE
+		let indices = Self::findQueueFamilies(instance, surfaceInstance, surface, physicalDevice);
+		indices.complete() && Self::checkDeviceExtensionSupport(instance, physicalDevice)
+	}
+	fn pickPhysicalDevice(instance: &ash::Instance, surfaceInstance: &khr::surface::Instance, surface: &vk::SurfaceKHR) -> Result<vk::PhysicalDevice> {
+		let mut result = Err(vk::Result::ERROR_FEATURE_NOT_PRESENT);
+		for physicalDevice in unsafe { instance.enumerate_physical_devices() }? {
+			if Self::physicalDeviceSuitable(instance, surfaceInstance, surface, physicalDevice) {
+				result = Ok(physicalDevice);
+				break;
+			}
+		}
+		Ok(result?)
+	}
+	fn createLogicalDevice(instance: &ash::Instance, surfaceInstance: &khr::surface::Instance, surface: &vk::SurfaceKHR, physicalDevice: vk::PhysicalDevice) -> Result<(ash::Device, vk::Queue, vk::Queue)> {
+		let indices = Self::findQueueFamilies(instance, surfaceInstance, surface, physicalDevice);
+
+		let deviceQueuePriorities = [
+			1.0,
+		];
+		let uniqueQueueFamilies = {
+			let mut uniqueQueueFamilies = std::collections::BTreeSet::new();
+			uniqueQueueFamilies.insert(indices.graphicsFamily.unwrap());
+			uniqueQueueFamilies.insert(indices.presentFamily.unwrap());
+			uniqueQueueFamilies
+		};
+		let deviceQueueCreateInfos = {
+			let mut deviceQueueCreateInfos = Vec::new();
+			for queueFamily in uniqueQueueFamilies {
+				deviceQueueCreateInfos.push(vk::DeviceQueueCreateInfo::default()
+					.queue_family_index(queueFamily as u32)
+					.queue_priorities(&deviceQueuePriorities))
+			}
+			deviceQueueCreateInfos
+		};
+		let mut dynamicRenderingFeatures = vk::PhysicalDeviceDynamicRenderingFeatures::default()
+			.dynamic_rendering(true);
+		let mut physicalDeviceSynchronization2Features = vk::PhysicalDeviceSynchronization2Features::default()
+			.synchronization2(true);
+		let mut physicalDeviceFeatures2 = vk::PhysicalDeviceFeatures2::default()
+			.push_next(&mut physicalDeviceSynchronization2Features);
+		let deviceCreateInfo = match Self::VALIDATION {
+			true => {
+				vk::DeviceCreateInfo::default()
+					.queue_create_infos(&deviceQueueCreateInfos)
+					.enabled_extension_names(&Self::DEVICE_EXTENSIONS)
+					.enabled_layer_names(&Self::VALIDATION_LAYERS)
+					.push_next(&mut dynamicRenderingFeatures)
+					.push_next(&mut physicalDeviceFeatures2)
+			},
+			false => {
+				vk::DeviceCreateInfo::default()
+					.queue_create_infos(&deviceQueueCreateInfos)
+					.enabled_extension_names(&Self::DEVICE_EXTENSIONS)
+					.push_next(&mut dynamicRenderingFeatures)
+					.push_next(&mut physicalDeviceFeatures2)
+			},
+		};
+		let logicalDevice = unsafe { instance.create_device(physicalDevice, &deviceCreateInfo, None) }?;
+		let graphicsQueue = unsafe { logicalDevice.get_device_queue(indices.graphicsFamily.unwrap() as u32, 0) };
+		let presentQueue = unsafe { logicalDevice.get_device_queue(indices.presentFamily.unwrap() as u32, 0) };
+		Ok((logicalDevice, graphicsQueue, presentQueue))
+	}
+	fn createSurface(entry: &ash::Entry, instance: &ash::Instance, window: &Window) -> Result<vk::SurfaceKHR> {
+		Ok(unsafe { ash_window::create_surface(entry, instance, window.display_handle().unwrap().into(), window.window_handle().unwrap().into(), None) }?)
+	}
 	pub fn new(eventLoop: &EventLoop<()>) -> Result<Self> {
+		let (windows, windowID) = Self::createWindow((800, 800), "TEST", eventLoop);
+
 		let entry = unsafe { ash::Entry::load() }?;
 		let instance = Self::createInstance(&entry, eventLoop)?;
+		let (debugInstance,  debugMessenger) = Self::setupDebugMessenger(&entry, &instance)?;
 
-		let (debugInstance,  debugMessenger) = if Self::VALIDATION {
-			Self::setupDebugMessenger(&entry, &instance)?
-		} else {
-			(ext::debug_utils::Instance::new(&entry, &instance), vk::DebugUtilsMessengerEXT::null())
-		};
+		let surfaceInstance = khr::surface::Instance::new(&entry, &instance);
+		let surface = Self::createSurface(&entry, &instance, &windows[&windowID])?;
+		let physicalDevice = Self::pickPhysicalDevice(&instance, &surfaceInstance, &surface)?;
+		let (logicalDevice, graphicsQueue, presentQueue) = Self::createLogicalDevice(&instance, &surfaceInstance, &surface, physicalDevice)?;
 
-		let physicalDevice = unsafe { instance.enumerate_physical_devices() }?[0];
-
-		// let queuefamilyproperties = unsafe { instance.get_physical_device_queue_family_properties(physicalDevice) };
-
-		let logicalDevice = {
-			let deviceQueuePriorities = [
-				0.0,
-			];
-			let deviceQueueCreateInfos = [
-				vk::DeviceQueueCreateInfo::default()
-					.queue_family_index(0)
-					.queue_priorities(&deviceQueuePriorities),
-			];
-			let deviceExtensionNames = [
-				khr::swapchain::NAME.as_ptr(),
-			];
-			let mut dynamicRenderingFeatures = vk::PhysicalDeviceDynamicRenderingFeatures::default()
-				.dynamic_rendering(true);
-			let mut physicalDeviceSynchronization2Features = vk::PhysicalDeviceSynchronization2Features::default()
-				.synchronization2(true);
-			let mut physicalDeviceFeatures2 = vk::PhysicalDeviceFeatures2::default()
-				.push_next(&mut physicalDeviceSynchronization2Features);
-			let deviceCreateInfo = vk::DeviceCreateInfo::default()
-				.queue_create_infos(&deviceQueueCreateInfos)
-				.enabled_extension_names(&deviceExtensionNames)
-				.push_next(&mut dynamicRenderingFeatures)
-				.push_next(&mut physicalDeviceFeatures2);
-			unsafe { instance.create_device(physicalDevice, &deviceCreateInfo, None) }?
-		};
-
-		let queue = unsafe { logicalDevice.get_device_queue(0, 0) };
-
-		let swapchainFormat = vk::Format::B8G8R8A8_UNORM;
 		let swapchain = vk::SwapchainKHR::null();
-		let swapchainInstance = khr::swapchain::Instance::new(&entry, &instance);
 		let swapchainDevice = khr::swapchain::Device::new(&instance, &logicalDevice);
+		let swapchainInstance = khr::swapchain::Instance::new(&entry, &instance);
+		let swapchainFormat = vk::Format::B8G8R8A8_UNORM;
 		let swapchainImages = Vec::new();
 		let swapchainImageViews = Vec::new();
 
@@ -238,23 +345,20 @@ impl Application {
 			unsafe { logicalDevice.create_pipeline_layout(&pipelineLayoutCreateInfo, None) }?
 		};
 
-		let width = 800;
-		let height = 800;
-
 		let graphicsPipeline = {
 			let dynamicStateCreateInfo = vk::PipelineDynamicStateCreateInfo::default();
 			let vertexInputStateCreateInfo = vk::PipelineVertexInputStateCreateInfo::default();
 			let inputAssemblyStateCreateInfo = vk::PipelineInputAssemblyStateCreateInfo::default()
 				.topology(vk::PrimitiveTopology::TRIANGLE_LIST);
 			let viewport = vk::Viewport::default()
-				.width(width as f32)
-				.height(height as f32);
+				.width(windows[&windowID].inner_size().width as f32)
+				.height(windows[&windowID].inner_size().height as f32);
 			let viewports = [
 				viewport,
 			];
 			let extent = vk::Extent2D::default()
-				.width(width)
-				.height(height);
+				.width(windows[&windowID].inner_size().width)
+				.height(windows[&windowID].inner_size().height);
 			let scissor = vk::Rect2D::default()
 				.extent(extent);
 			let scissors = [
@@ -331,25 +435,13 @@ impl Application {
 			unsafe { logicalDevice.create_fence(&fenceCreateInfo, None) }?
 		};
 
-		// let window = WindowBuilder::new()
-		// 	.with_title("TEST")
-		// 	.with_inner_size(winit::dpi::LogicalSize::new(800, 800))
-		// 	.with_visible(true)
-		// 	.with_resizable(true)
-		// 	.with_window_icon(None)
-		// 	.build(&eventLoop)?;
-
-		let surfaceInstance = khr::surface::Instance::new(&entry, &instance);
-		// let window = eventLoop.create_window(window_attributes)?;
-		// let surface = unsafe {
-		// 	ash_window::create_surface(&entry, &instance, eventLoop.raw_display_handle()?, window.raw_window_handle()?, None)
-		// }?;
 		Ok(Self {
 			entry,
 			instance,
 			physicalDevice,
 			logicalDevice,
-			queue,
+			graphicsQueue,
+			presentQueue,
 			swapchainFormat,
 			swapchainInstance,
 			swapchainDevice,
@@ -365,16 +457,13 @@ impl Application {
 			renderFinishedSemaphore,
 			inFlightFence,
 
-			width,
-			height,
-
 			surfaceInstance,
-			surface: vk::SurfaceKHR::null(),
+			surface,
 
 			debugInstance,
 			debugMessenger,
 
-			windows: HashMap::new(),
+			windows,
 		})
 	}
 }
@@ -391,15 +480,11 @@ impl Drop for Application {
 			for imageView in &self.swapchainImageViews {
 				self.logicalDevice.destroy_image_view(*imageView, None);
 			}
-			for image in &self.swapchainImages {
-				self.logicalDevice.destroy_image(*image, None);
-			}
-			// self.surfaceInstance.destroy_surface(self.surface, None);
-			// self.swapchainDevice.destroy_swapchain(self.swapchain, None);
-			if Self::VALIDATION {
-				self.debugInstance.destroy_debug_utils_messenger(self.debugMessenger, None);
-			}
+			// for image in &self.swapchainImages {
+			// 	self.logicalDevice.destroy_image(*image, None);
+			// }
 			self.logicalDevice.destroy_device(None);
+			if Self::VALIDATION { self.debugInstance.destroy_debug_utils_messenger(self.debugMessenger, None); }
 			self.instance.destroy_instance(None);
 		}
 	}
@@ -432,19 +517,7 @@ impl ApplicationHandler for Application {
 		let _ = eventLoop;
 	}
 	fn resumed(&mut self, eventLoop: &ActiveEventLoop) {
-		let mut windowAttributes = WindowAttributes::default()
-			.with_title("TEST")
-			.with_inner_size(dpi::LogicalSize::new(self.width, self.height))
-			.with_visible(true)
-			.with_resizable(true)
-			.with_window_icon(None);
-		if let Some(token) = eventLoop.read_token_from_env() {
-			startup_notify::reset_activation_token_env();
-			windowAttributes = windowAttributes.with_activation_token(token);
-		}
-		let window = eventLoop.create_window(windowAttributes).unwrap();
-		self.surface = unsafe { ash_window::create_surface(&self.entry, &self.instance, window.display_handle().unwrap().into(), window.window_handle().unwrap().into(), None) }.unwrap();
-		self.windows.insert(window.id(), window);
+		let _ = eventLoop;
 	}
 	fn window_event(&mut self, eventLoop: &ActiveEventLoop, window_id: WindowId, event: WindowEvent) {
 		// Event::MainEventsCleared => { window.request_redraw() },
@@ -453,8 +526,8 @@ impl ApplicationHandler for Application {
 			WindowEvent::AxisMotion { device_id: _, axis: _, value: _ } => {},
 			WindowEvent::CloseRequested => {
 				unsafe {
-					self.surfaceInstance.destroy_surface(self.surface, None);
 					self.swapchainDevice.destroy_swapchain(self.swapchain, None);
+					self.surfaceInstance.destroy_surface(self.surface, None);
 				}
 				self.windows.remove(&window_id);
 				eventLoop.exit();
@@ -480,15 +553,20 @@ impl ApplicationHandler for Application {
 			WindowEvent::RedrawRequested => {
 				if self.recreateSwapchain {
 					self.swapchain = {
-						unsafe { self.swapchainDevice.destroy_swapchain(self.swapchain, None); }
+						unsafe {
+							for imageView in &self.swapchainImageViews { self.logicalDevice.destroy_image_view(*imageView, None); }
+							self.swapchainDevice.destroy_swapchain(self.swapchain, None);
+						}
+						self.swapchainImageViews.clear();
+
 						let queueFamilyIndices = [
 							0,
 						];
 						let surfaceCapabilities = unsafe { self.surfaceInstance.get_physical_device_surface_capabilities(self.physicalDevice, self.surface) }.unwrap();
 						// let surfaceFormats = unsafe { self.surfaceInstance.get_physical_device_surface_formats(physicalDevice, surface) }.unwrap();
 						let extent = vk::Extent2D::default()
-							.width(self.width)
-							.height(self.height);
+							.width(self.windows[&window_id].inner_size().width)
+							.height(self.windows[&window_id].inner_size().height);
 						let swapchainCreateInfo = vk::SwapchainCreateInfoKHR::default()
 							.surface(self.surface)
 							.clipped(true)
@@ -506,7 +584,6 @@ impl ApplicationHandler for Application {
 						unsafe { self.swapchainDevice.create_swapchain(&swapchainCreateInfo, None) }.unwrap()
 					};
 					self.swapchainImages = unsafe { self.swapchainDevice.get_swapchain_images(self.swapchain) }.unwrap();
-					self.swapchainImageViews.clear();
 					for image in &self.swapchainImages {
 						let imageSubresourceRange = vk::ImageSubresourceRange::default()
 							.aspect_mask(vk::ImageAspectFlags::COLOR)
@@ -551,8 +628,8 @@ impl ApplicationHandler for Application {
 					.image_memory_barriers(&imageMemoryBarriersTop);
 				unsafe { self.logicalDevice.cmd_pipeline_barrier2(self.commandBuffer, &dependencyInfoTop) };
 				let extent = vk::Extent2D::default()
-					.width(self.width)
-					.height(self.height);
+					.width(self.windows[&window_id].inner_size().width)
+					.height(self.windows[&window_id].inner_size().height);
 				let renderArea = vk::Rect2D::default()
 					.extent(extent);
 				let renderingAttachmentInfo = vk::RenderingAttachmentInfo::default()
@@ -618,7 +695,7 @@ impl ApplicationHandler for Application {
 				let submitInfos = [
 					submitInfo,
 				];
-				if unsafe { self.logicalDevice.queue_submit2(self.queue, &submitInfos, self.inFlightFence) }.is_ok() {
+				if unsafe { self.logicalDevice.queue_submit2(self.graphicsQueue, &submitInfos, self.inFlightFence) }.is_ok() {
 					self.recreateSwapchain = false;
 				}
 
@@ -635,7 +712,7 @@ impl ApplicationHandler for Application {
 					.swapchains(&swapchains)
 					.image_indices(&imageIndices)
 					.wait_semaphores(&renderFinishedSemaphores);
-				let _isSuboptimalPost = unsafe { self.swapchainDevice.queue_present(self.queue, &presentInfo) }.unwrap();
+				let _isSuboptimalPost = unsafe { self.swapchainDevice.queue_present(self.graphicsQueue, &presentInfo) }.unwrap();
 				unsafe {
 					let inFlightFences = [
 						self.inFlightFence,
@@ -645,9 +722,9 @@ impl ApplicationHandler for Application {
 					self.logicalDevice.reset_command_pool(self.commandPool, vk::CommandPoolResetFlags::empty()).unwrap();
 				}
 			},
-			WindowEvent::Resized(size) => {
-				self.width = size.width;
-				self.height = size.height;
+			WindowEvent::Resized(_size) => {
+				// self.width = size.width;
+				// self.height = size.height;
 				self.recreateSwapchain = true;
 			},
 			WindowEvent::RotationGesture { device_id: _, delta: _, phase: _ } => {},
