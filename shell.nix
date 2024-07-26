@@ -2,6 +2,7 @@
 let
   run = with pkgs; [
     libxkbcommon
+    python3
     shaderc
     vulkan-extension-layer
     vulkan-loader

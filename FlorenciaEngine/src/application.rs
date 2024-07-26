@@ -75,6 +75,7 @@ impl Application {
 
 	pub fn Run(&mut self) -> Result<()> {
 		while self.running {
+			self.running = false
 		}
 		Ok(())
 	}
